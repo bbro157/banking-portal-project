@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>iso.d.ts</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+iso.d.ts</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s2">* as </span><span class="s1">core from </span><span class="s3">&quot;../core/index.js&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s2">* as </span><span class="s1">schemas from </span><span class="s3">&quot;./schemas.js&quot;</span><span class="s2">;</span>
+<span class="s0">export interface </span><span class="s1">ZodISODateTime </span><span class="s0">extends </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">ZodStringFormat </span><span class="s2">{</span>
+    <span class="s1">_zod</span><span class="s2">: </span><span class="s1">core</span><span class="s2">.</span><span class="s1">$ZodISODateTimeInternals</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">const </span><span class="s1">ZodISODateTime</span><span class="s2">: </span><span class="s1">core</span><span class="s2">.</span><span class="s1">$constructor</span><span class="s2">&lt;</span><span class="s1">ZodISODateTime</span><span class="s2">&gt;;</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">function </span><span class="s1">datetime</span><span class="s2">(</span><span class="s1">params</span><span class="s2">?: </span><span class="s1">string </span><span class="s2">| </span><span class="s1">core</span><span class="s2">.</span><span class="s1">$ZodISODateTimeParams</span><span class="s2">): </span><span class="s1">ZodISODateTime</span><span class="s2">;</span>
+<span class="s0">export interface </span><span class="s1">ZodISODate </span><span class="s0">extends </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">ZodStringFormat </span><span class="s2">{</span>
+    <span class="s1">_zod</span><span class="s2">: </span><span class="s1">core</span><span class="s2">.</span><span class="s1">$ZodISODateInternals</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">const </span><span class="s1">ZodISODate</span><span class="s2">: </span><span class="s1">core</span><span class="s2">.</span><span class="s1">$constructor</span><span class="s2">&lt;</span><span class="s1">ZodISODate</span><span class="s2">&gt;;</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">function </span><span class="s1">date</span><span class="s2">(</span><span class="s1">params</span><span class="s2">?: </span><span class="s1">string </span><span class="s2">| </span><span class="s1">core</span><span class="s2">.</span><span class="s1">$ZodISODateParams</span><span class="s2">): </span><span class="s1">ZodISODate</span><span class="s2">;</span>
+<span class="s0">export interface </span><span class="s1">ZodISOTime </span><span class="s0">extends </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">ZodStringFormat </span><span class="s2">{</span>
+    <span class="s1">_zod</span><span class="s2">: </span><span class="s1">core</span><span class="s2">.</span><span class="s1">$ZodISOTimeInternals</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">const </span><span class="s1">ZodISOTime</span><span class="s2">: </span><span class="s1">core</span><span class="s2">.</span><span class="s1">$constructor</span><span class="s2">&lt;</span><span class="s1">ZodISOTime</span><span class="s2">&gt;;</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">function </span><span class="s1">time</span><span class="s2">(</span><span class="s1">params</span><span class="s2">?: </span><span class="s1">string </span><span class="s2">| </span><span class="s1">core</span><span class="s2">.</span><span class="s1">$ZodISOTimeParams</span><span class="s2">): </span><span class="s1">ZodISOTime</span><span class="s2">;</span>
+<span class="s0">export interface </span><span class="s1">ZodISODuration </span><span class="s0">extends </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">ZodStringFormat </span><span class="s2">{</span>
+    <span class="s1">_zod</span><span class="s2">: </span><span class="s1">core</span><span class="s2">.</span><span class="s1">$ZodISODurationInternals</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">const </span><span class="s1">ZodISODuration</span><span class="s2">: </span><span class="s1">core</span><span class="s2">.</span><span class="s1">$constructor</span><span class="s2">&lt;</span><span class="s1">ZodISODuration</span><span class="s2">&gt;;</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">function </span><span class="s1">duration</span><span class="s2">(</span><span class="s1">params</span><span class="s2">?: </span><span class="s1">string </span><span class="s2">| </span><span class="s1">core</span><span class="s2">.</span><span class="s1">$ZodISODurationParams</span><span class="s2">): </span><span class="s1">ZodISODuration</span><span class="s2">;</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<html>
+<head>
+<title>TransferPage.jsx</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #d5b778;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+TransferPage.jsx</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s2">{ </span><span class="s1">useState </span><span class="s2">} </span><span class="s1">from </span><span class="s3">&quot;react&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s2">{ </span><span class="s1">useNavigate</span><span class="s2">, </span><span class="s1">useParams </span><span class="s2">} </span><span class="s1">from </span><span class="s3">&quot;react-router-dom&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">API from </span><span class="s3">&quot;../api&quot;</span><span class="s2">;</span>
+
+<span class="s0">function </span><span class="s1">TransferPage</span><span class="s2">() {</span>
+  <span class="s0">const </span><span class="s2">{ </span><span class="s1">userId </span><span class="s2">} = </span><span class="s1">useParams</span><span class="s2">();</span>
+  <span class="s0">const </span><span class="s1">navigate </span><span class="s2">= </span><span class="s1">useNavigate</span><span class="s2">();</span>
+
+  <span class="s0">const </span><span class="s2">[</span><span class="s1">fromAccountId</span><span class="s2">, </span><span class="s1">setFromAccountId</span><span class="s2">] = </span><span class="s1">useState</span><span class="s2">(</span><span class="s3">&quot;&quot;</span><span class="s2">);</span>
+  <span class="s0">const </span><span class="s2">[</span><span class="s1">toAccountId</span><span class="s2">, </span><span class="s1">setToAccountId</span><span class="s2">] = </span><span class="s1">useState</span><span class="s2">(</span><span class="s3">&quot;&quot;</span><span class="s2">);</span>
+  <span class="s0">const </span><span class="s2">[</span><span class="s1">amount</span><span class="s2">, </span><span class="s1">setAmount</span><span class="s2">] = </span><span class="s1">useState</span><span class="s2">(</span><span class="s3">&quot;&quot;</span><span class="s2">);</span>
+
+  <span class="s0">const </span><span class="s1">handleTransfer </span><span class="s2">= </span><span class="s1">async </span><span class="s2">() =&gt; {</span>
+    <span class="s0">try </span><span class="s2">{</span>
+      <span class="s0">await </span><span class="s1">API</span><span class="s2">.</span><span class="s1">post</span><span class="s2">(</span><span class="s3">&quot;/transfer&quot;</span><span class="s2">, {</span>
+        <span class="s1">from_account_id</span><span class="s2">: </span><span class="s1">Number</span><span class="s2">(</span><span class="s1">fromAccountId</span><span class="s2">),</span>
+        <span class="s1">to_account_id</span><span class="s2">: </span><span class="s1">Number</span><span class="s2">(</span><span class="s1">toAccountId</span><span class="s2">),</span>
+        <span class="s1">amount</span><span class="s2">: </span><span class="s1">Number</span><span class="s2">(</span><span class="s1">amount</span><span class="s2">),</span>
+      <span class="s2">});</span>
+
+      <span class="s1">alert</span><span class="s2">(</span><span class="s3">&quot;Transfer successful&quot;</span><span class="s2">);</span>
+      <span class="s1">navigate</span><span class="s2">(</span><span class="s3">`/dashboard/</span><span class="s1">$</span><span class="s2">{</span><span class="s1">userId</span><span class="s2">}</span><span class="s3">`</span><span class="s2">);</span>
+    <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">error</span><span class="s2">) {</span>
+      <span class="s1">console</span><span class="s2">.</span><span class="s1">error</span><span class="s2">(</span><span class="s3">&quot;Transfer error:&quot;</span><span class="s2">, </span><span class="s1">error</span><span class="s2">);</span>
+      <span class="s1">alert</span><span class="s2">(</span><span class="s3">&quot;Transfer failed&quot;</span><span class="s2">);</span>
+    <span class="s2">}</span>
+  <span class="s2">};</span>
+
+  <span class="s0">return </span><span class="s2">(</span>
+    <span class="s4">&lt;div </span><span class="s2">style</span><span class="s3">=</span><span class="s2">{{ </span><span class="s1">padding</span><span class="s2">: </span><span class="s3">&quot;2rem&quot; </span><span class="s2">}}</span><span class="s4">&gt;</span>
+      <span class="s4">&lt;h1&gt;</span><span class="s1">Transfer Money</span><span class="s4">&lt;/h1&gt;</span>
+
+      <span class="s4">&lt;div </span><span class="s2">style</span><span class="s3">=</span><span class="s2">{{ </span><span class="s1">marginBottom</span><span class="s2">: </span><span class="s3">&quot;1rem&quot; </span><span class="s2">}}</span><span class="s4">&gt;</span>
+        <span class="s4">&lt;label&gt;</span><span class="s1">From Account ID: </span><span class="s4">&lt;/label&gt;</span>
+        <span class="s4">&lt;input</span>
+          <span class="s2">value</span><span class="s3">=</span><span class="s2">{</span><span class="s1">fromAccountId</span><span class="s2">}</span>
+          <span class="s2">onChange</span><span class="s3">=</span><span class="s2">{(</span><span class="s1">e</span><span class="s2">) =&gt; </span><span class="s1">setFromAccountId</span><span class="s2">(</span><span class="s1">e</span><span class="s2">.</span><span class="s1">target</span><span class="s2">.</span><span class="s1">value</span><span class="s2">)}</span>
+        <span class="s4">/&gt;</span>
+      <span class="s4">&lt;/div&gt;</span>
+
+      <span class="s4">&lt;div </span><span class="s2">style</span><span class="s3">=</span><span class="s2">{{ </span><span class="s1">marginBottom</span><span class="s2">: </span><span class="s3">&quot;1rem&quot; </span><span class="s2">}}</span><span class="s4">&gt;</span>
+        <span class="s4">&lt;label&gt;</span><span class="s1">To Account ID: </span><span class="s4">&lt;/label&gt;</span>
+        <span class="s4">&lt;input</span>
+          <span class="s2">value</span><span class="s3">=</span><span class="s2">{</span><span class="s1">toAccountId</span><span class="s2">}</span>
+          <span class="s2">onChange</span><span class="s3">=</span><span class="s2">{(</span><span class="s1">e</span><span class="s2">) =&gt; </span><span class="s1">setToAccountId</span><span class="s2">(</span><span class="s1">e</span><span class="s2">.</span><span class="s1">target</span><span class="s2">.</span><span class="s1">value</span><span class="s2">)}</span>
+        <span class="s4">/&gt;</span>
+      <span class="s4">&lt;/div&gt;</span>
+
+      <span class="s4">&lt;div </span><span class="s2">style</span><span class="s3">=</span><span class="s2">{{ </span><span class="s1">marginBottom</span><span class="s2">: </span><span class="s3">&quot;1rem&quot; </span><span class="s2">}}</span><span class="s4">&gt;</span>
+        <span class="s4">&lt;label&gt;</span><span class="s1">Amount: </span><span class="s4">&lt;/label&gt;</span>
+        <span class="s4">&lt;input</span>
+          <span class="s2">value</span><span class="s3">=</span><span class="s2">{</span><span class="s1">amount</span><span class="s2">}</span>
+          <span class="s2">onChange</span><span class="s3">=</span><span class="s2">{(</span><span class="s1">e</span><span class="s2">) =&gt; </span><span class="s1">setAmount</span><span class="s2">(</span><span class="s1">e</span><span class="s2">.</span><span class="s1">target</span><span class="s2">.</span><span class="s1">value</span><span class="s2">)}</span>
+        <span class="s4">/&gt;</span>
+      <span class="s4">&lt;/div&gt;</span>
+
+      <span class="s4">&lt;button </span><span class="s2">onClick</span><span class="s3">=</span><span class="s2">{</span><span class="s1">handleTransfer</span><span class="s2">}</span><span class="s4">&gt;</span><span class="s1">Submit Transfer</span><span class="s4">&lt;/button&gt;</span>
+      <span class="s4">&lt;button</span>
+        <span class="s2">onClick</span><span class="s3">=</span><span class="s2">{() =&gt; </span><span class="s1">navigate</span><span class="s2">(</span><span class="s3">`/dashboard/</span><span class="s1">$</span><span class="s2">{</span><span class="s1">userId</span><span class="s2">}</span><span class="s3">`</span><span class="s2">)}</span>
+        <span class="s2">style</span><span class="s3">=</span><span class="s2">{{ </span><span class="s1">marginLeft</span><span class="s2">: </span><span class="s3">&quot;1rem&quot; </span><span class="s2">}}</span>
+      <span class="s4">&gt;</span>
+        <span class="s1">Back</span>
+      <span class="s4">&lt;/button&gt;</span>
+    <span class="s4">&lt;/div&gt;</span>
+  <span class="s2">);</span>
+<span class="s2">}</span>
+
+<span class="s0">export default </span><span class="s1">TransferPage</span><span class="s2">;</span></pre>
+</body>
+</html>

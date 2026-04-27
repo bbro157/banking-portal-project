@@ -1,0 +1,37 @@
+<html>
+<head>
+<title>coerce.d.ts</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+coerce.d.ts</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s2">* as </span><span class="s1">core from </span><span class="s3">&quot;../core/index.js&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s2">* as </span><span class="s1">schemas from </span><span class="s3">&quot;./schemas.js&quot;</span><span class="s2">;</span>
+<span class="s0">export interface </span><span class="s1">ZodCoercedString</span><span class="s2">&lt;</span><span class="s1">T </span><span class="s2">= </span><span class="s1">unknown</span><span class="s2">&gt; </span><span class="s0">extends </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">_ZodString</span><span class="s2">&lt;</span><span class="s1">core</span><span class="s2">.</span><span class="s1">$ZodStringInternals</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;&gt; {</span>
+<span class="s2">}</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">function </span><span class="s1">string</span><span class="s2">&lt;</span><span class="s1">T </span><span class="s2">= </span><span class="s1">unknown</span><span class="s2">&gt;(</span><span class="s1">params</span><span class="s2">?: </span><span class="s1">string </span><span class="s2">| </span><span class="s1">core</span><span class="s2">.</span><span class="s1">$ZodStringParams</span><span class="s2">): </span><span class="s1">ZodCoercedString</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;;</span>
+<span class="s0">export interface </span><span class="s1">ZodCoercedNumber</span><span class="s2">&lt;</span><span class="s1">T </span><span class="s2">= </span><span class="s1">unknown</span><span class="s2">&gt; </span><span class="s0">extends </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">_ZodNumber</span><span class="s2">&lt;</span><span class="s1">core</span><span class="s2">.</span><span class="s1">$ZodNumberInternals</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;&gt; {</span>
+<span class="s2">}</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">function </span><span class="s1">number</span><span class="s2">&lt;</span><span class="s1">T </span><span class="s2">= </span><span class="s1">unknown</span><span class="s2">&gt;(</span><span class="s1">params</span><span class="s2">?: </span><span class="s1">string </span><span class="s2">| </span><span class="s1">core</span><span class="s2">.</span><span class="s1">$ZodNumberParams</span><span class="s2">): </span><span class="s1">ZodCoercedNumber</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;;</span>
+<span class="s0">export interface </span><span class="s1">ZodCoercedBoolean</span><span class="s2">&lt;</span><span class="s1">T </span><span class="s2">= </span><span class="s1">unknown</span><span class="s2">&gt; </span><span class="s0">extends </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">_ZodBoolean</span><span class="s2">&lt;</span><span class="s1">core</span><span class="s2">.</span><span class="s1">$ZodBooleanInternals</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;&gt; {</span>
+<span class="s2">}</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">function </span><span class="s1">boolean</span><span class="s2">&lt;</span><span class="s1">T </span><span class="s2">= </span><span class="s1">unknown</span><span class="s2">&gt;(</span><span class="s1">params</span><span class="s2">?: </span><span class="s1">string </span><span class="s2">| </span><span class="s1">core</span><span class="s2">.</span><span class="s1">$ZodBooleanParams</span><span class="s2">): </span><span class="s1">ZodCoercedBoolean</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;;</span>
+<span class="s0">export interface </span><span class="s1">ZodCoercedBigInt</span><span class="s2">&lt;</span><span class="s1">T </span><span class="s2">= </span><span class="s1">unknown</span><span class="s2">&gt; </span><span class="s0">extends </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">_ZodBigInt</span><span class="s2">&lt;</span><span class="s1">core</span><span class="s2">.</span><span class="s1">$ZodBigIntInternals</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;&gt; {</span>
+<span class="s2">}</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">function </span><span class="s1">bigint</span><span class="s2">&lt;</span><span class="s1">T </span><span class="s2">= </span><span class="s1">unknown</span><span class="s2">&gt;(</span><span class="s1">params</span><span class="s2">?: </span><span class="s1">string </span><span class="s2">| </span><span class="s1">core</span><span class="s2">.</span><span class="s1">$ZodBigIntParams</span><span class="s2">): </span><span class="s1">ZodCoercedBigInt</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;;</span>
+<span class="s0">export interface </span><span class="s1">ZodCoercedDate</span><span class="s2">&lt;</span><span class="s1">T </span><span class="s2">= </span><span class="s1">unknown</span><span class="s2">&gt; </span><span class="s0">extends </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">_ZodDate</span><span class="s2">&lt;</span><span class="s1">core</span><span class="s2">.</span><span class="s1">$ZodDateInternals</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;&gt; {</span>
+<span class="s2">}</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">function </span><span class="s1">date</span><span class="s2">&lt;</span><span class="s1">T </span><span class="s2">= </span><span class="s1">unknown</span><span class="s2">&gt;(</span><span class="s1">params</span><span class="s2">?: </span><span class="s1">string </span><span class="s2">| </span><span class="s1">core</span><span class="s2">.</span><span class="s1">$ZodDateParams</span><span class="s2">): </span><span class="s1">ZodCoercedDate</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;;</span>
+</pre>
+</body>
+</html>

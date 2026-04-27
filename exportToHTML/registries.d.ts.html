@@ -1,0 +1,55 @@
+<html>
+<head>
+<title>registries.d.ts</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+registries.d.ts</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">type </span><span class="s2">* as </span><span class="s1">core from </span><span class="s3">&quot;./core.js&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">type </span><span class="s2">{ </span><span class="s1">$ZodType </span><span class="s2">} </span><span class="s1">from </span><span class="s3">&quot;./schemas.js&quot;</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">const </span><span class="s1">$output</span><span class="s2">: </span><span class="s1">unique symbol</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s1">type $output </span><span class="s2">= </span><span class="s0">typeof </span><span class="s1">$output</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">const </span><span class="s1">$input</span><span class="s2">: </span><span class="s1">unique symbol</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s1">type $input </span><span class="s2">= </span><span class="s0">typeof </span><span class="s1">$input</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s1">type $replace</span><span class="s2">&lt;</span><span class="s1">Meta</span><span class="s2">, </span><span class="s1">S </span><span class="s0">extends </span><span class="s1">$ZodType</span><span class="s2">&gt; = </span><span class="s1">Meta </span><span class="s0">extends </span><span class="s1">$output </span><span class="s2">? </span><span class="s1">core</span><span class="s2">.</span><span class="s1">output</span><span class="s2">&lt;</span><span class="s1">S</span><span class="s2">&gt; : </span><span class="s1">Meta </span><span class="s0">extends </span><span class="s1">$input </span><span class="s2">? </span><span class="s1">core</span><span class="s2">.</span><span class="s1">input</span><span class="s2">&lt;</span><span class="s1">S</span><span class="s2">&gt; : </span><span class="s1">Meta </span><span class="s0">extends </span><span class="s2">(</span><span class="s1">infer M</span><span class="s2">)[] ? </span><span class="s1">$replace</span><span class="s2">&lt;</span><span class="s1">M</span><span class="s2">, </span><span class="s1">S</span><span class="s2">&gt;[] : </span><span class="s1">Meta </span><span class="s0">extends </span><span class="s2">(</span><span class="s1">...args</span><span class="s2">: </span><span class="s1">infer P</span><span class="s2">) =&gt; </span><span class="s1">infer R </span><span class="s2">? (</span><span class="s1">...args</span><span class="s2">: {</span>
+    <span class="s2">[</span><span class="s1">K </span><span class="s0">in </span><span class="s1">keyof P</span><span class="s2">]: </span><span class="s1">$replace</span><span class="s2">&lt;</span><span class="s1">P</span><span class="s2">[</span><span class="s1">K</span><span class="s2">], </span><span class="s1">S</span><span class="s2">&gt;;</span>
+<span class="s2">}) =&gt; </span><span class="s1">$replace</span><span class="s2">&lt;</span><span class="s1">R</span><span class="s2">, </span><span class="s1">S</span><span class="s2">&gt; : </span><span class="s1">Meta </span><span class="s0">extends </span><span class="s1">object </span><span class="s2">? {</span>
+    <span class="s2">[</span><span class="s1">K </span><span class="s0">in </span><span class="s1">keyof Meta</span><span class="s2">]: </span><span class="s1">$replace</span><span class="s2">&lt;</span><span class="s1">Meta</span><span class="s2">[</span><span class="s1">K</span><span class="s2">], </span><span class="s1">S</span><span class="s2">&gt;;</span>
+<span class="s2">} : </span><span class="s1">Meta</span><span class="s2">;</span>
+<span class="s1">type MetadataType </span><span class="s2">= </span><span class="s1">object </span><span class="s2">| </span><span class="s1">undefined</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">class </span><span class="s1">$ZodRegistry</span><span class="s2">&lt;</span><span class="s1">Meta </span><span class="s0">extends </span><span class="s1">MetadataType </span><span class="s2">= </span><span class="s1">MetadataType</span><span class="s2">, </span><span class="s1">Schema </span><span class="s0">extends </span><span class="s1">$ZodType </span><span class="s2">= </span><span class="s1">$ZodType</span><span class="s2">&gt; {</span>
+    <span class="s1">_meta</span><span class="s2">: </span><span class="s1">Meta</span><span class="s2">;</span>
+    <span class="s1">_schema</span><span class="s2">: </span><span class="s1">Schema</span><span class="s2">;</span>
+    <span class="s1">_map</span><span class="s2">: </span><span class="s1">WeakMap</span><span class="s2">&lt;</span><span class="s1">Schema</span><span class="s2">, </span><span class="s1">$replace</span><span class="s2">&lt;</span><span class="s1">Meta</span><span class="s2">, </span><span class="s1">Schema</span><span class="s2">&gt;&gt;;</span>
+    <span class="s1">_idmap</span><span class="s2">: </span><span class="s1">Map</span><span class="s2">&lt;</span><span class="s1">string</span><span class="s2">, </span><span class="s1">Schema</span><span class="s2">&gt;;</span>
+    <span class="s1">add</span><span class="s2">&lt;</span><span class="s1">S </span><span class="s0">extends </span><span class="s1">Schema</span><span class="s2">&gt;(</span><span class="s1">schema</span><span class="s2">: </span><span class="s1">S</span><span class="s2">, </span><span class="s1">..._meta</span><span class="s2">: </span><span class="s1">undefined </span><span class="s0">extends </span><span class="s1">Meta </span><span class="s2">? [</span><span class="s1">$replace</span><span class="s2">&lt;</span><span class="s1">Meta</span><span class="s2">, </span><span class="s1">S</span><span class="s2">&gt;?] : [</span><span class="s1">$replace</span><span class="s2">&lt;</span><span class="s1">Meta</span><span class="s2">, </span><span class="s1">S</span><span class="s2">&gt;]): </span><span class="s0">this</span><span class="s2">;</span>
+    <span class="s1">clear</span><span class="s2">(): </span><span class="s0">this</span><span class="s2">;</span>
+    <span class="s1">remove</span><span class="s2">(</span><span class="s1">schema</span><span class="s2">: </span><span class="s1">Schema</span><span class="s2">): </span><span class="s0">this</span><span class="s2">;</span>
+    <span class="s1">get</span><span class="s2">&lt;</span><span class="s1">S </span><span class="s0">extends </span><span class="s1">Schema</span><span class="s2">&gt;(</span><span class="s1">schema</span><span class="s2">: </span><span class="s1">S</span><span class="s2">): </span><span class="s1">$replace</span><span class="s2">&lt;</span><span class="s1">Meta</span><span class="s2">, </span><span class="s1">S</span><span class="s2">&gt; | </span><span class="s1">undefined</span><span class="s2">;</span>
+    <span class="s1">has</span><span class="s2">(</span><span class="s1">schema</span><span class="s2">: </span><span class="s1">Schema</span><span class="s2">): </span><span class="s1">boolean</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s0">export interface </span><span class="s1">JSONSchemaMeta </span><span class="s2">{</span>
+    <span class="s1">id</span><span class="s2">?: </span><span class="s1">string </span><span class="s2">| </span><span class="s1">undefined</span><span class="s2">;</span>
+    <span class="s1">title</span><span class="s2">?: </span><span class="s1">string </span><span class="s2">| </span><span class="s1">undefined</span><span class="s2">;</span>
+    <span class="s1">description</span><span class="s2">?: </span><span class="s1">string </span><span class="s2">| </span><span class="s1">undefined</span><span class="s2">;</span>
+    <span class="s1">deprecated</span><span class="s2">?: </span><span class="s1">boolean </span><span class="s2">| </span><span class="s1">undefined</span><span class="s2">;</span>
+    <span class="s2">[</span><span class="s1">k</span><span class="s2">: </span><span class="s1">string</span><span class="s2">]: </span><span class="s1">unknown</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s0">export interface </span><span class="s1">GlobalMeta </span><span class="s0">extends </span><span class="s1">JSONSchemaMeta </span><span class="s2">{</span>
+<span class="s2">}</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">function </span><span class="s1">registry</span><span class="s2">&lt;</span><span class="s1">T </span><span class="s0">extends </span><span class="s1">MetadataType </span><span class="s2">= </span><span class="s1">MetadataType</span><span class="s2">, </span><span class="s1">S </span><span class="s0">extends </span><span class="s1">$ZodType </span><span class="s2">= </span><span class="s1">$ZodType</span><span class="s2">&gt;(): </span><span class="s1">$ZodRegistry</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">, </span><span class="s1">S</span><span class="s2">&gt;;</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">const </span><span class="s1">globalRegistry</span><span class="s2">: </span><span class="s1">$ZodRegistry</span><span class="s2">&lt;</span><span class="s1">GlobalMeta</span><span class="s2">&gt;;</span>
+<span class="s0">export </span><span class="s2">{};</span>
+</pre>
+</body>
+</html>

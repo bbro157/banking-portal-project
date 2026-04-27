@@ -1,0 +1,57 @@
+<html>
+<head>
+<title>doc.js</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #2aacb8;}
+.s4 { color: #6aab73;}
+.s5 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+doc.js</font>
+</center></td></tr></table>
+<pre><span class="s0">export class </span><span class="s1">Doc </span><span class="s2">{</span>
+    <span class="s1">constructor</span><span class="s2">(</span><span class="s1">args </span><span class="s2">= []) {</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">content </span><span class="s2">= [];</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">indent </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s0">this</span><span class="s2">)</span>
+            <span class="s0">this</span><span class="s2">.</span><span class="s1">args </span><span class="s2">= </span><span class="s1">args</span><span class="s2">;</span>
+    <span class="s2">}</span>
+    <span class="s1">indented</span><span class="s2">(</span><span class="s1">fn</span><span class="s2">) {</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">indent </span><span class="s2">+= </span><span class="s3">1</span><span class="s2">;</span>
+        <span class="s1">fn</span><span class="s2">(</span><span class="s0">this</span><span class="s2">);</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">indent </span><span class="s2">-= </span><span class="s3">1</span><span class="s2">;</span>
+    <span class="s2">}</span>
+    <span class="s1">write</span><span class="s2">(</span><span class="s1">arg</span><span class="s2">) {</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s0">typeof </span><span class="s1">arg </span><span class="s2">=== </span><span class="s4">&quot;function&quot;</span><span class="s2">) {</span>
+            <span class="s1">arg</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, { </span><span class="s1">execution</span><span class="s2">: </span><span class="s4">&quot;sync&quot; </span><span class="s2">});</span>
+            <span class="s1">arg</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, { </span><span class="s1">execution</span><span class="s2">: </span><span class="s4">&quot;async&quot; </span><span class="s2">});</span>
+            <span class="s0">return</span><span class="s2">;</span>
+        <span class="s2">}</span>
+        <span class="s0">const </span><span class="s1">content </span><span class="s2">= </span><span class="s1">arg</span><span class="s2">;</span>
+        <span class="s0">const </span><span class="s1">lines </span><span class="s2">= </span><span class="s1">content</span><span class="s2">.</span><span class="s1">split</span><span class="s2">(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">&quot;</span><span class="s2">).</span><span class="s1">filter</span><span class="s2">((</span><span class="s1">x</span><span class="s2">) =&gt; </span><span class="s1">x</span><span class="s2">);</span>
+        <span class="s0">const </span><span class="s1">minIndent </span><span class="s2">= </span><span class="s1">Math</span><span class="s2">.</span><span class="s1">min</span><span class="s2">(</span><span class="s1">...lines</span><span class="s2">.</span><span class="s1">map</span><span class="s2">((</span><span class="s1">x</span><span class="s2">) =&gt; </span><span class="s1">x</span><span class="s2">.</span><span class="s1">length </span><span class="s2">- </span><span class="s1">x</span><span class="s2">.</span><span class="s1">trimStart</span><span class="s2">().</span><span class="s1">length</span><span class="s2">));</span>
+        <span class="s0">const </span><span class="s1">dedented </span><span class="s2">= </span><span class="s1">lines</span><span class="s2">.</span><span class="s1">map</span><span class="s2">((</span><span class="s1">x</span><span class="s2">) =&gt; </span><span class="s1">x</span><span class="s2">.</span><span class="s1">slice</span><span class="s2">(</span><span class="s1">minIndent</span><span class="s2">)).</span><span class="s1">map</span><span class="s2">((</span><span class="s1">x</span><span class="s2">) =&gt; </span><span class="s4">&quot; &quot;</span><span class="s2">.</span><span class="s1">repeat</span><span class="s2">(</span><span class="s0">this</span><span class="s2">.</span><span class="s1">indent </span><span class="s2">* </span><span class="s3">2</span><span class="s2">) + </span><span class="s1">x</span><span class="s2">);</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">const </span><span class="s1">line of dedented</span><span class="s2">) {</span>
+            <span class="s0">this</span><span class="s2">.</span><span class="s1">content</span><span class="s2">.</span><span class="s1">push</span><span class="s2">(</span><span class="s1">line</span><span class="s2">);</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+    <span class="s1">compile</span><span class="s2">() {</span>
+        <span class="s0">const </span><span class="s1">F </span><span class="s2">= </span><span class="s1">Function</span><span class="s2">;</span>
+        <span class="s0">const </span><span class="s1">args </span><span class="s2">= </span><span class="s0">this</span><span class="s2">?.</span><span class="s1">args</span><span class="s2">;</span>
+        <span class="s0">const </span><span class="s1">content </span><span class="s2">= </span><span class="s0">this</span><span class="s2">?.</span><span class="s1">content </span><span class="s2">?? [</span><span class="s4">``</span><span class="s2">];</span>
+        <span class="s0">const </span><span class="s1">lines </span><span class="s2">= [</span><span class="s1">...content</span><span class="s2">.</span><span class="s1">map</span><span class="s2">((</span><span class="s1">x</span><span class="s2">) =&gt; </span><span class="s4">`  </span><span class="s1">$</span><span class="s2">{</span><span class="s1">x</span><span class="s2">}</span><span class="s4">`</span><span class="s2">)];</span>
+        <span class="s5">// console.log(lines.join(&quot;\n&quot;));</span>
+        <span class="s0">return new </span><span class="s1">F</span><span class="s2">(</span><span class="s1">...args</span><span class="s2">, </span><span class="s1">lines</span><span class="s2">.</span><span class="s1">join</span><span class="s2">(</span><span class="s4">&quot;</span><span class="s0">\n</span><span class="s4">&quot;</span><span class="s2">));</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

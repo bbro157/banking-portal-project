@@ -1,0 +1,633 @@
+<html>
+<head>
+<title>from-json-schema.cjs</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #6aab73;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #cf8e6d;}
+.s4 { color: #7a7e85;}
+.s5 { color: #2aacb8;}
+.s6 { color: #5f826b; font-style: italic;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+from-json-schema.cjs</font>
+</center></td></tr></table>
+<pre><span class="s0">&quot;use strict&quot;</span><span class="s1">;</span>
+<span class="s3">var </span><span class="s2">__createBinding </span><span class="s1">= (</span><span class="s3">this </span><span class="s1">&amp;&amp; </span><span class="s3">this</span><span class="s1">.</span><span class="s2">__createBinding</span><span class="s1">) || (</span><span class="s2">Object</span><span class="s1">.</span><span class="s2">create </span><span class="s1">? (</span><span class="s3">function</span><span class="s1">(</span><span class="s2">o</span><span class="s1">, </span><span class="s2">m</span><span class="s1">, </span><span class="s2">k</span><span class="s1">, </span><span class="s2">k2</span><span class="s1">) {</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">k2 </span><span class="s1">=== </span><span class="s2">undefined</span><span class="s1">) </span><span class="s2">k2 </span><span class="s1">= </span><span class="s2">k</span><span class="s1">;</span>
+    <span class="s3">var </span><span class="s2">desc </span><span class="s1">= </span><span class="s2">Object</span><span class="s1">.</span><span class="s2">getOwnPropertyDescriptor</span><span class="s1">(</span><span class="s2">m</span><span class="s1">, </span><span class="s2">k</span><span class="s1">);</span>
+    <span class="s3">if </span><span class="s1">(!</span><span class="s2">desc </span><span class="s1">|| (</span><span class="s0">&quot;get&quot; </span><span class="s3">in </span><span class="s2">desc </span><span class="s1">? !</span><span class="s2">m</span><span class="s1">.</span><span class="s2">__esModule </span><span class="s1">: </span><span class="s2">desc</span><span class="s1">.</span><span class="s2">writable </span><span class="s1">|| </span><span class="s2">desc</span><span class="s1">.</span><span class="s2">configurable</span><span class="s1">)) {</span>
+      <span class="s2">desc </span><span class="s1">= { </span><span class="s2">enumerable</span><span class="s1">: </span><span class="s3">true</span><span class="s1">, </span><span class="s2">get</span><span class="s1">: </span><span class="s3">function</span><span class="s1">() { </span><span class="s3">return </span><span class="s2">m</span><span class="s1">[</span><span class="s2">k</span><span class="s1">]; } };</span>
+    <span class="s1">}</span>
+    <span class="s2">Object</span><span class="s1">.</span><span class="s2">defineProperty</span><span class="s1">(</span><span class="s2">o</span><span class="s1">, </span><span class="s2">k2</span><span class="s1">, </span><span class="s2">desc</span><span class="s1">);</span>
+<span class="s1">}) : (</span><span class="s3">function</span><span class="s1">(</span><span class="s2">o</span><span class="s1">, </span><span class="s2">m</span><span class="s1">, </span><span class="s2">k</span><span class="s1">, </span><span class="s2">k2</span><span class="s1">) {</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">k2 </span><span class="s1">=== </span><span class="s2">undefined</span><span class="s1">) </span><span class="s2">k2 </span><span class="s1">= </span><span class="s2">k</span><span class="s1">;</span>
+    <span class="s2">o</span><span class="s1">[</span><span class="s2">k2</span><span class="s1">] = </span><span class="s2">m</span><span class="s1">[</span><span class="s2">k</span><span class="s1">];</span>
+<span class="s1">}));</span>
+<span class="s3">var </span><span class="s2">__setModuleDefault </span><span class="s1">= (</span><span class="s3">this </span><span class="s1">&amp;&amp; </span><span class="s3">this</span><span class="s1">.</span><span class="s2">__setModuleDefault</span><span class="s1">) || (</span><span class="s2">Object</span><span class="s1">.</span><span class="s2">create </span><span class="s1">? (</span><span class="s3">function</span><span class="s1">(</span><span class="s2">o</span><span class="s1">, </span><span class="s2">v</span><span class="s1">) {</span>
+    <span class="s2">Object</span><span class="s1">.</span><span class="s2">defineProperty</span><span class="s1">(</span><span class="s2">o</span><span class="s1">, </span><span class="s0">&quot;default&quot;</span><span class="s1">, { </span><span class="s2">enumerable</span><span class="s1">: </span><span class="s3">true</span><span class="s1">, </span><span class="s2">value</span><span class="s1">: </span><span class="s2">v </span><span class="s1">});</span>
+<span class="s1">}) : </span><span class="s3">function</span><span class="s1">(</span><span class="s2">o</span><span class="s1">, </span><span class="s2">v</span><span class="s1">) {</span>
+    <span class="s2">o</span><span class="s1">[</span><span class="s0">&quot;default&quot;</span><span class="s1">] = </span><span class="s2">v</span><span class="s1">;</span>
+<span class="s1">});</span>
+<span class="s3">var </span><span class="s2">__importStar </span><span class="s1">= (</span><span class="s3">this </span><span class="s1">&amp;&amp; </span><span class="s3">this</span><span class="s1">.</span><span class="s2">__importStar</span><span class="s1">) || </span><span class="s3">function </span><span class="s1">(</span><span class="s2">mod</span><span class="s1">) {</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">mod </span><span class="s1">&amp;&amp; </span><span class="s2">mod</span><span class="s1">.</span><span class="s2">__esModule</span><span class="s1">) </span><span class="s3">return </span><span class="s2">mod</span><span class="s1">;</span>
+    <span class="s3">var </span><span class="s2">result </span><span class="s1">= {};</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">mod </span><span class="s1">!= </span><span class="s3">null</span><span class="s1">) </span><span class="s3">for </span><span class="s1">(</span><span class="s3">var </span><span class="s2">k </span><span class="s3">in </span><span class="s2">mod</span><span class="s1">) </span><span class="s3">if </span><span class="s1">(</span><span class="s2">k </span><span class="s1">!== </span><span class="s0">&quot;default&quot; </span><span class="s1">&amp;&amp; </span><span class="s2">Object</span><span class="s1">.</span><span class="s2">prototype</span><span class="s1">.</span><span class="s2">hasOwnProperty</span><span class="s1">.</span><span class="s2">call</span><span class="s1">(</span><span class="s2">mod</span><span class="s1">, </span><span class="s2">k</span><span class="s1">)) </span><span class="s2">__createBinding</span><span class="s1">(</span><span class="s2">result</span><span class="s1">, </span><span class="s2">mod</span><span class="s1">, </span><span class="s2">k</span><span class="s1">);</span>
+    <span class="s2">__setModuleDefault</span><span class="s1">(</span><span class="s2">result</span><span class="s1">, </span><span class="s2">mod</span><span class="s1">);</span>
+    <span class="s3">return </span><span class="s2">result</span><span class="s1">;</span>
+<span class="s1">};</span>
+<span class="s2">Object</span><span class="s1">.</span><span class="s2">defineProperty</span><span class="s1">(</span><span class="s2">exports</span><span class="s1">, </span><span class="s0">&quot;__esModule&quot;</span><span class="s1">, { </span><span class="s2">value</span><span class="s1">: </span><span class="s3">true </span><span class="s1">});</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">fromJSONSchema </span><span class="s1">= </span><span class="s2">fromJSONSchema</span><span class="s1">;</span>
+<span class="s3">const </span><span class="s2">registries_js_1 </span><span class="s1">= </span><span class="s2">require</span><span class="s1">(</span><span class="s0">&quot;../core/registries.cjs&quot;</span><span class="s1">);</span>
+<span class="s3">const </span><span class="s2">_checks </span><span class="s1">= </span><span class="s2">__importStar</span><span class="s1">(</span><span class="s2">require</span><span class="s1">(</span><span class="s0">&quot;./checks.cjs&quot;</span><span class="s1">));</span>
+<span class="s3">const </span><span class="s2">_iso </span><span class="s1">= </span><span class="s2">__importStar</span><span class="s1">(</span><span class="s2">require</span><span class="s1">(</span><span class="s0">&quot;./iso.cjs&quot;</span><span class="s1">));</span>
+<span class="s3">const </span><span class="s2">_schemas </span><span class="s1">= </span><span class="s2">__importStar</span><span class="s1">(</span><span class="s2">require</span><span class="s1">(</span><span class="s0">&quot;./schemas.cjs&quot;</span><span class="s1">));</span>
+<span class="s4">// Local z object to avoid circular dependency with ../index.js</span>
+<span class="s3">const </span><span class="s2">z </span><span class="s1">= {</span>
+    <span class="s2">..._schemas</span><span class="s1">,</span>
+    <span class="s2">..._checks</span><span class="s1">,</span>
+    <span class="s2">iso</span><span class="s1">: </span><span class="s2">_iso</span><span class="s1">,</span>
+<span class="s1">};</span>
+<span class="s4">// Keys that are recognized and handled by the conversion logic</span>
+<span class="s3">const </span><span class="s2">RECOGNIZED_KEYS </span><span class="s1">= </span><span class="s3">new </span><span class="s2">Set</span><span class="s1">([</span>
+    <span class="s4">// Schema identification</span>
+    <span class="s0">&quot;$schema&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;$ref&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;$defs&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;definitions&quot;</span><span class="s1">,</span>
+    <span class="s4">// Core schema keywords</span>
+    <span class="s0">&quot;$id&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;id&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;$comment&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;$anchor&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;$vocabulary&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;$dynamicRef&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;$dynamicAnchor&quot;</span><span class="s1">,</span>
+    <span class="s4">// Type</span>
+    <span class="s0">&quot;type&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;enum&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;const&quot;</span><span class="s1">,</span>
+    <span class="s4">// Composition</span>
+    <span class="s0">&quot;anyOf&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;oneOf&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;allOf&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;not&quot;</span><span class="s1">,</span>
+    <span class="s4">// Object</span>
+    <span class="s0">&quot;properties&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;required&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;additionalProperties&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;patternProperties&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;propertyNames&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;minProperties&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;maxProperties&quot;</span><span class="s1">,</span>
+    <span class="s4">// Array</span>
+    <span class="s0">&quot;items&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;prefixItems&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;additionalItems&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;minItems&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;maxItems&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;uniqueItems&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;contains&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;minContains&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;maxContains&quot;</span><span class="s1">,</span>
+    <span class="s4">// String</span>
+    <span class="s0">&quot;minLength&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;maxLength&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;pattern&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;format&quot;</span><span class="s1">,</span>
+    <span class="s4">// Number</span>
+    <span class="s0">&quot;minimum&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;maximum&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;exclusiveMinimum&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;exclusiveMaximum&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;multipleOf&quot;</span><span class="s1">,</span>
+    <span class="s4">// Already handled metadata</span>
+    <span class="s0">&quot;description&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;default&quot;</span><span class="s1">,</span>
+    <span class="s4">// Content</span>
+    <span class="s0">&quot;contentEncoding&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;contentMediaType&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;contentSchema&quot;</span><span class="s1">,</span>
+    <span class="s4">// Unsupported (error-throwing)</span>
+    <span class="s0">&quot;unevaluatedItems&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;unevaluatedProperties&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;if&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;then&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;else&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;dependentSchemas&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;dependentRequired&quot;</span><span class="s1">,</span>
+    <span class="s4">// OpenAPI</span>
+    <span class="s0">&quot;nullable&quot;</span><span class="s1">,</span>
+    <span class="s0">&quot;readOnly&quot;</span><span class="s1">,</span>
+<span class="s1">]);</span>
+<span class="s3">function </span><span class="s2">detectVersion</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">, </span><span class="s2">defaultTarget</span><span class="s1">) {</span>
+    <span class="s3">const </span><span class="s2">$schema </span><span class="s1">= </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">$schema</span><span class="s1">;</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">$schema </span><span class="s1">=== </span><span class="s0">&quot;https://json-schema.org/draft/2020-12/schema&quot;</span><span class="s1">) {</span>
+        <span class="s3">return </span><span class="s0">&quot;draft-2020-12&quot;</span><span class="s1">;</span>
+    <span class="s1">}</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">$schema </span><span class="s1">=== </span><span class="s0">&quot;http://json-schema.org/draft-07/schema#&quot;</span><span class="s1">) {</span>
+        <span class="s3">return </span><span class="s0">&quot;draft-7&quot;</span><span class="s1">;</span>
+    <span class="s1">}</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">$schema </span><span class="s1">=== </span><span class="s0">&quot;http://json-schema.org/draft-04/schema#&quot;</span><span class="s1">) {</span>
+        <span class="s3">return </span><span class="s0">&quot;draft-4&quot;</span><span class="s1">;</span>
+    <span class="s1">}</span>
+    <span class="s4">// Use defaultTarget if provided, otherwise default to draft-2020-12</span>
+    <span class="s3">return </span><span class="s2">defaultTarget </span><span class="s1">?? </span><span class="s0">&quot;draft-2020-12&quot;</span><span class="s1">;</span>
+<span class="s1">}</span>
+<span class="s3">function </span><span class="s2">resolveRef</span><span class="s1">(</span><span class="s2">ref</span><span class="s1">, </span><span class="s2">ctx</span><span class="s1">) {</span>
+    <span class="s3">if </span><span class="s1">(!</span><span class="s2">ref</span><span class="s1">.</span><span class="s2">startsWith</span><span class="s1">(</span><span class="s0">&quot;#&quot;</span><span class="s1">)) {</span>
+        <span class="s3">throw new </span><span class="s2">Error</span><span class="s1">(</span><span class="s0">&quot;External $ref is not supported, only local refs (#/...) are allowed&quot;</span><span class="s1">);</span>
+    <span class="s1">}</span>
+    <span class="s3">const </span><span class="s2">path </span><span class="s1">= </span><span class="s2">ref</span><span class="s1">.</span><span class="s2">slice</span><span class="s1">(</span><span class="s5">1</span><span class="s1">).</span><span class="s2">split</span><span class="s1">(</span><span class="s0">&quot;/&quot;</span><span class="s1">).</span><span class="s2">filter</span><span class="s1">(</span><span class="s2">Boolean</span><span class="s1">);</span>
+    <span class="s4">// Handle root reference &quot;#&quot;</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">path</span><span class="s1">.</span><span class="s2">length </span><span class="s1">=== </span><span class="s5">0</span><span class="s1">) {</span>
+        <span class="s3">return </span><span class="s2">ctx</span><span class="s1">.</span><span class="s2">rootSchema</span><span class="s1">;</span>
+    <span class="s1">}</span>
+    <span class="s3">const </span><span class="s2">defsKey </span><span class="s1">= </span><span class="s2">ctx</span><span class="s1">.</span><span class="s2">version </span><span class="s1">=== </span><span class="s0">&quot;draft-2020-12&quot; </span><span class="s1">? </span><span class="s0">&quot;$defs&quot; </span><span class="s1">: </span><span class="s0">&quot;definitions&quot;</span><span class="s1">;</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">path</span><span class="s1">[</span><span class="s5">0</span><span class="s1">] === </span><span class="s2">defsKey</span><span class="s1">) {</span>
+        <span class="s3">const </span><span class="s2">key </span><span class="s1">= </span><span class="s2">path</span><span class="s1">[</span><span class="s5">1</span><span class="s1">];</span>
+        <span class="s3">if </span><span class="s1">(!</span><span class="s2">key </span><span class="s1">|| !</span><span class="s2">ctx</span><span class="s1">.</span><span class="s2">defs</span><span class="s1">[</span><span class="s2">key</span><span class="s1">]) {</span>
+            <span class="s3">throw new </span><span class="s2">Error</span><span class="s1">(</span><span class="s0">`Reference not found: </span><span class="s2">$</span><span class="s1">{</span><span class="s2">ref</span><span class="s1">}</span><span class="s0">`</span><span class="s1">);</span>
+        <span class="s1">}</span>
+        <span class="s3">return </span><span class="s2">ctx</span><span class="s1">.</span><span class="s2">defs</span><span class="s1">[</span><span class="s2">key</span><span class="s1">];</span>
+    <span class="s1">}</span>
+    <span class="s3">throw new </span><span class="s2">Error</span><span class="s1">(</span><span class="s0">`Reference not found: </span><span class="s2">$</span><span class="s1">{</span><span class="s2">ref</span><span class="s1">}</span><span class="s0">`</span><span class="s1">);</span>
+<span class="s1">}</span>
+<span class="s3">function </span><span class="s2">convertBaseSchema</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">, </span><span class="s2">ctx</span><span class="s1">) {</span>
+    <span class="s4">// Handle unsupported features</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">not </span><span class="s1">!== </span><span class="s2">undefined</span><span class="s1">) {</span>
+        <span class="s4">// Special case: { not: {} } represents never</span>
+        <span class="s3">if </span><span class="s1">(</span><span class="s3">typeof </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">not </span><span class="s1">=== </span><span class="s0">&quot;object&quot; </span><span class="s1">&amp;&amp; </span><span class="s2">Object</span><span class="s1">.</span><span class="s2">keys</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">not</span><span class="s1">).</span><span class="s2">length </span><span class="s1">=== </span><span class="s5">0</span><span class="s1">) {</span>
+            <span class="s3">return </span><span class="s2">z</span><span class="s1">.</span><span class="s2">never</span><span class="s1">();</span>
+        <span class="s1">}</span>
+        <span class="s3">throw new </span><span class="s2">Error</span><span class="s1">(</span><span class="s0">&quot;not is not supported in Zod (except { not: {} } for never)&quot;</span><span class="s1">);</span>
+    <span class="s1">}</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">unevaluatedItems </span><span class="s1">!== </span><span class="s2">undefined</span><span class="s1">) {</span>
+        <span class="s3">throw new </span><span class="s2">Error</span><span class="s1">(</span><span class="s0">&quot;unevaluatedItems is not supported&quot;</span><span class="s1">);</span>
+    <span class="s1">}</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">unevaluatedProperties </span><span class="s1">!== </span><span class="s2">undefined</span><span class="s1">) {</span>
+        <span class="s3">throw new </span><span class="s2">Error</span><span class="s1">(</span><span class="s0">&quot;unevaluatedProperties is not supported&quot;</span><span class="s1">);</span>
+    <span class="s1">}</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">if </span><span class="s1">!== </span><span class="s2">undefined </span><span class="s1">|| </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">then </span><span class="s1">!== </span><span class="s2">undefined </span><span class="s1">|| </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">else </span><span class="s1">!== </span><span class="s2">undefined</span><span class="s1">) {</span>
+        <span class="s3">throw new </span><span class="s2">Error</span><span class="s1">(</span><span class="s0">&quot;Conditional schemas (if/then/else) are not supported&quot;</span><span class="s1">);</span>
+    <span class="s1">}</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">dependentSchemas </span><span class="s1">!== </span><span class="s2">undefined </span><span class="s1">|| </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">dependentRequired </span><span class="s1">!== </span><span class="s2">undefined</span><span class="s1">) {</span>
+        <span class="s3">throw new </span><span class="s2">Error</span><span class="s1">(</span><span class="s0">&quot;dependentSchemas and dependentRequired are not supported&quot;</span><span class="s1">);</span>
+    <span class="s1">}</span>
+    <span class="s4">// Handle $ref</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">$ref</span><span class="s1">) {</span>
+        <span class="s3">const </span><span class="s2">refPath </span><span class="s1">= </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">$ref</span><span class="s1">;</span>
+        <span class="s3">if </span><span class="s1">(</span><span class="s2">ctx</span><span class="s1">.</span><span class="s2">refs</span><span class="s1">.</span><span class="s2">has</span><span class="s1">(</span><span class="s2">refPath</span><span class="s1">)) {</span>
+            <span class="s3">return </span><span class="s2">ctx</span><span class="s1">.</span><span class="s2">refs</span><span class="s1">.</span><span class="s2">get</span><span class="s1">(</span><span class="s2">refPath</span><span class="s1">);</span>
+        <span class="s1">}</span>
+        <span class="s3">if </span><span class="s1">(</span><span class="s2">ctx</span><span class="s1">.</span><span class="s2">processing</span><span class="s1">.</span><span class="s2">has</span><span class="s1">(</span><span class="s2">refPath</span><span class="s1">)) {</span>
+            <span class="s4">// Circular reference - use lazy</span>
+            <span class="s3">return </span><span class="s2">z</span><span class="s1">.</span><span class="s2">lazy</span><span class="s1">(() =&gt; {</span>
+                <span class="s3">if </span><span class="s1">(!</span><span class="s2">ctx</span><span class="s1">.</span><span class="s2">refs</span><span class="s1">.</span><span class="s2">has</span><span class="s1">(</span><span class="s2">refPath</span><span class="s1">)) {</span>
+                    <span class="s3">throw new </span><span class="s2">Error</span><span class="s1">(</span><span class="s0">`Circular reference not resolved: </span><span class="s2">$</span><span class="s1">{</span><span class="s2">refPath</span><span class="s1">}</span><span class="s0">`</span><span class="s1">);</span>
+                <span class="s1">}</span>
+                <span class="s3">return </span><span class="s2">ctx</span><span class="s1">.</span><span class="s2">refs</span><span class="s1">.</span><span class="s2">get</span><span class="s1">(</span><span class="s2">refPath</span><span class="s1">);</span>
+            <span class="s1">});</span>
+        <span class="s1">}</span>
+        <span class="s2">ctx</span><span class="s1">.</span><span class="s2">processing</span><span class="s1">.</span><span class="s2">add</span><span class="s1">(</span><span class="s2">refPath</span><span class="s1">);</span>
+        <span class="s3">const </span><span class="s2">resolved </span><span class="s1">= </span><span class="s2">resolveRef</span><span class="s1">(</span><span class="s2">refPath</span><span class="s1">, </span><span class="s2">ctx</span><span class="s1">);</span>
+        <span class="s3">const </span><span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">convertSchema</span><span class="s1">(</span><span class="s2">resolved</span><span class="s1">, </span><span class="s2">ctx</span><span class="s1">);</span>
+        <span class="s2">ctx</span><span class="s1">.</span><span class="s2">refs</span><span class="s1">.</span><span class="s2">set</span><span class="s1">(</span><span class="s2">refPath</span><span class="s1">, </span><span class="s2">zodSchema</span><span class="s1">);</span>
+        <span class="s2">ctx</span><span class="s1">.</span><span class="s2">processing</span><span class="s1">.</span><span class="s2">delete</span><span class="s1">(</span><span class="s2">refPath</span><span class="s1">);</span>
+        <span class="s3">return </span><span class="s2">zodSchema</span><span class="s1">;</span>
+    <span class="s1">}</span>
+    <span class="s4">// Handle enum</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">enum </span><span class="s1">!== </span><span class="s2">undefined</span><span class="s1">) {</span>
+        <span class="s3">const </span><span class="s2">enumValues </span><span class="s1">= </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">enum</span><span class="s1">;</span>
+        <span class="s4">// Special case: OpenAPI 3.0 null representation { type: &quot;string&quot;, nullable: true, enum: [null] }</span>
+        <span class="s3">if </span><span class="s1">(</span><span class="s2">ctx</span><span class="s1">.</span><span class="s2">version </span><span class="s1">=== </span><span class="s0">&quot;openapi-3.0&quot; </span><span class="s1">&amp;&amp;</span>
+            <span class="s2">schema</span><span class="s1">.</span><span class="s2">nullable </span><span class="s1">=== </span><span class="s3">true </span><span class="s1">&amp;&amp;</span>
+            <span class="s2">enumValues</span><span class="s1">.</span><span class="s2">length </span><span class="s1">=== </span><span class="s5">1 </span><span class="s1">&amp;&amp;</span>
+            <span class="s2">enumValues</span><span class="s1">[</span><span class="s5">0</span><span class="s1">] === </span><span class="s3">null</span><span class="s1">) {</span>
+            <span class="s3">return </span><span class="s2">z</span><span class="s1">.</span><span class="s2">null</span><span class="s1">();</span>
+        <span class="s1">}</span>
+        <span class="s3">if </span><span class="s1">(</span><span class="s2">enumValues</span><span class="s1">.</span><span class="s2">length </span><span class="s1">=== </span><span class="s5">0</span><span class="s1">) {</span>
+            <span class="s3">return </span><span class="s2">z</span><span class="s1">.</span><span class="s2">never</span><span class="s1">();</span>
+        <span class="s1">}</span>
+        <span class="s3">if </span><span class="s1">(</span><span class="s2">enumValues</span><span class="s1">.</span><span class="s2">length </span><span class="s1">=== </span><span class="s5">1</span><span class="s1">) {</span>
+            <span class="s3">return </span><span class="s2">z</span><span class="s1">.</span><span class="s2">literal</span><span class="s1">(</span><span class="s2">enumValues</span><span class="s1">[</span><span class="s5">0</span><span class="s1">]);</span>
+        <span class="s1">}</span>
+        <span class="s4">// Check if all values are strings</span>
+        <span class="s3">if </span><span class="s1">(</span><span class="s2">enumValues</span><span class="s1">.</span><span class="s2">every</span><span class="s1">((</span><span class="s2">v</span><span class="s1">) =&gt; </span><span class="s3">typeof </span><span class="s2">v </span><span class="s1">=== </span><span class="s0">&quot;string&quot;</span><span class="s1">)) {</span>
+            <span class="s3">return </span><span class="s2">z</span><span class="s1">.</span><span class="s2">enum</span><span class="s1">(</span><span class="s2">enumValues</span><span class="s1">);</span>
+        <span class="s1">}</span>
+        <span class="s4">// Mixed types - use union of literals</span>
+        <span class="s3">const </span><span class="s2">literalSchemas </span><span class="s1">= </span><span class="s2">enumValues</span><span class="s1">.</span><span class="s2">map</span><span class="s1">((</span><span class="s2">v</span><span class="s1">) =&gt; </span><span class="s2">z</span><span class="s1">.</span><span class="s2">literal</span><span class="s1">(</span><span class="s2">v</span><span class="s1">));</span>
+        <span class="s3">if </span><span class="s1">(</span><span class="s2">literalSchemas</span><span class="s1">.</span><span class="s2">length </span><span class="s1">&lt; </span><span class="s5">2</span><span class="s1">) {</span>
+            <span class="s3">return </span><span class="s2">literalSchemas</span><span class="s1">[</span><span class="s5">0</span><span class="s1">];</span>
+        <span class="s1">}</span>
+        <span class="s3">return </span><span class="s2">z</span><span class="s1">.</span><span class="s2">union</span><span class="s1">([</span><span class="s2">literalSchemas</span><span class="s1">[</span><span class="s5">0</span><span class="s1">], </span><span class="s2">literalSchemas</span><span class="s1">[</span><span class="s5">1</span><span class="s1">], </span><span class="s2">...literalSchemas</span><span class="s1">.</span><span class="s2">slice</span><span class="s1">(</span><span class="s5">2</span><span class="s1">)]);</span>
+    <span class="s1">}</span>
+    <span class="s4">// Handle const</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">const </span><span class="s1">!== </span><span class="s2">undefined</span><span class="s1">) {</span>
+        <span class="s3">return </span><span class="s2">z</span><span class="s1">.</span><span class="s2">literal</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">const</span><span class="s1">);</span>
+    <span class="s1">}</span>
+    <span class="s4">// Handle type</span>
+    <span class="s3">const </span><span class="s2">type </span><span class="s1">= </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">type</span><span class="s1">;</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">Array</span><span class="s1">.</span><span class="s2">isArray</span><span class="s1">(</span><span class="s2">type</span><span class="s1">)) {</span>
+        <span class="s4">// Expand type array into anyOf union</span>
+        <span class="s3">const </span><span class="s2">typeSchemas </span><span class="s1">= </span><span class="s2">type</span><span class="s1">.</span><span class="s2">map</span><span class="s1">((</span><span class="s2">t</span><span class="s1">) =&gt; {</span>
+            <span class="s3">const </span><span class="s2">typeSchema </span><span class="s1">= { </span><span class="s2">...schema</span><span class="s1">, </span><span class="s2">type</span><span class="s1">: </span><span class="s2">t </span><span class="s1">};</span>
+            <span class="s3">return </span><span class="s2">convertBaseSchema</span><span class="s1">(</span><span class="s2">typeSchema</span><span class="s1">, </span><span class="s2">ctx</span><span class="s1">);</span>
+        <span class="s1">});</span>
+        <span class="s3">if </span><span class="s1">(</span><span class="s2">typeSchemas</span><span class="s1">.</span><span class="s2">length </span><span class="s1">=== </span><span class="s5">0</span><span class="s1">) {</span>
+            <span class="s3">return </span><span class="s2">z</span><span class="s1">.</span><span class="s2">never</span><span class="s1">();</span>
+        <span class="s1">}</span>
+        <span class="s3">if </span><span class="s1">(</span><span class="s2">typeSchemas</span><span class="s1">.</span><span class="s2">length </span><span class="s1">=== </span><span class="s5">1</span><span class="s1">) {</span>
+            <span class="s3">return </span><span class="s2">typeSchemas</span><span class="s1">[</span><span class="s5">0</span><span class="s1">];</span>
+        <span class="s1">}</span>
+        <span class="s3">return </span><span class="s2">z</span><span class="s1">.</span><span class="s2">union</span><span class="s1">(</span><span class="s2">typeSchemas</span><span class="s1">);</span>
+    <span class="s1">}</span>
+    <span class="s3">if </span><span class="s1">(!</span><span class="s2">type</span><span class="s1">) {</span>
+        <span class="s4">// No type specified - empty schema (any)</span>
+        <span class="s3">return </span><span class="s2">z</span><span class="s1">.</span><span class="s2">any</span><span class="s1">();</span>
+    <span class="s1">}</span>
+    <span class="s3">let </span><span class="s2">zodSchema</span><span class="s1">;</span>
+    <span class="s3">switch </span><span class="s1">(</span><span class="s2">type</span><span class="s1">) {</span>
+        <span class="s3">case </span><span class="s0">&quot;string&quot;</span><span class="s1">: {</span>
+            <span class="s3">let </span><span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">z</span><span class="s1">.</span><span class="s2">string</span><span class="s1">();</span>
+            <span class="s4">// Apply format using .check() with Zod format functions</span>
+            <span class="s3">if </span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">format</span><span class="s1">) {</span>
+                <span class="s3">const </span><span class="s2">format </span><span class="s1">= </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">format</span><span class="s1">;</span>
+                <span class="s4">// Map common formats to Zod check functions</span>
+                <span class="s3">if </span><span class="s1">(</span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;email&quot;</span><span class="s1">) {</span>
+                    <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">email</span><span class="s1">());</span>
+                <span class="s1">}</span>
+                <span class="s3">else if </span><span class="s1">(</span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;uri&quot; </span><span class="s1">|| </span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;uri-reference&quot;</span><span class="s1">) {</span>
+                    <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">url</span><span class="s1">());</span>
+                <span class="s1">}</span>
+                <span class="s3">else if </span><span class="s1">(</span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;uuid&quot; </span><span class="s1">|| </span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;guid&quot;</span><span class="s1">) {</span>
+                    <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">uuid</span><span class="s1">());</span>
+                <span class="s1">}</span>
+                <span class="s3">else if </span><span class="s1">(</span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;date-time&quot;</span><span class="s1">) {</span>
+                    <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">iso</span><span class="s1">.</span><span class="s2">datetime</span><span class="s1">());</span>
+                <span class="s1">}</span>
+                <span class="s3">else if </span><span class="s1">(</span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;date&quot;</span><span class="s1">) {</span>
+                    <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">iso</span><span class="s1">.</span><span class="s2">date</span><span class="s1">());</span>
+                <span class="s1">}</span>
+                <span class="s3">else if </span><span class="s1">(</span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;time&quot;</span><span class="s1">) {</span>
+                    <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">iso</span><span class="s1">.</span><span class="s2">time</span><span class="s1">());</span>
+                <span class="s1">}</span>
+                <span class="s3">else if </span><span class="s1">(</span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;duration&quot;</span><span class="s1">) {</span>
+                    <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">iso</span><span class="s1">.</span><span class="s2">duration</span><span class="s1">());</span>
+                <span class="s1">}</span>
+                <span class="s3">else if </span><span class="s1">(</span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;ipv4&quot;</span><span class="s1">) {</span>
+                    <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">ipv4</span><span class="s1">());</span>
+                <span class="s1">}</span>
+                <span class="s3">else if </span><span class="s1">(</span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;ipv6&quot;</span><span class="s1">) {</span>
+                    <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">ipv6</span><span class="s1">());</span>
+                <span class="s1">}</span>
+                <span class="s3">else if </span><span class="s1">(</span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;mac&quot;</span><span class="s1">) {</span>
+                    <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">mac</span><span class="s1">());</span>
+                <span class="s1">}</span>
+                <span class="s3">else if </span><span class="s1">(</span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;cidr&quot;</span><span class="s1">) {</span>
+                    <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">cidrv4</span><span class="s1">());</span>
+                <span class="s1">}</span>
+                <span class="s3">else if </span><span class="s1">(</span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;cidr-v6&quot;</span><span class="s1">) {</span>
+                    <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">cidrv6</span><span class="s1">());</span>
+                <span class="s1">}</span>
+                <span class="s3">else if </span><span class="s1">(</span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;base64&quot;</span><span class="s1">) {</span>
+                    <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">base64</span><span class="s1">());</span>
+                <span class="s1">}</span>
+                <span class="s3">else if </span><span class="s1">(</span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;base64url&quot;</span><span class="s1">) {</span>
+                    <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">base64url</span><span class="s1">());</span>
+                <span class="s1">}</span>
+                <span class="s3">else if </span><span class="s1">(</span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;e164&quot;</span><span class="s1">) {</span>
+                    <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">e164</span><span class="s1">());</span>
+                <span class="s1">}</span>
+                <span class="s3">else if </span><span class="s1">(</span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;jwt&quot;</span><span class="s1">) {</span>
+                    <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">jwt</span><span class="s1">());</span>
+                <span class="s1">}</span>
+                <span class="s3">else if </span><span class="s1">(</span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;emoji&quot;</span><span class="s1">) {</span>
+                    <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">emoji</span><span class="s1">());</span>
+                <span class="s1">}</span>
+                <span class="s3">else if </span><span class="s1">(</span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;nanoid&quot;</span><span class="s1">) {</span>
+                    <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">nanoid</span><span class="s1">());</span>
+                <span class="s1">}</span>
+                <span class="s3">else if </span><span class="s1">(</span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;cuid&quot;</span><span class="s1">) {</span>
+                    <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">cuid</span><span class="s1">());</span>
+                <span class="s1">}</span>
+                <span class="s3">else if </span><span class="s1">(</span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;cuid2&quot;</span><span class="s1">) {</span>
+                    <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">cuid2</span><span class="s1">());</span>
+                <span class="s1">}</span>
+                <span class="s3">else if </span><span class="s1">(</span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;ulid&quot;</span><span class="s1">) {</span>
+                    <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">ulid</span><span class="s1">());</span>
+                <span class="s1">}</span>
+                <span class="s3">else if </span><span class="s1">(</span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;xid&quot;</span><span class="s1">) {</span>
+                    <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">xid</span><span class="s1">());</span>
+                <span class="s1">}</span>
+                <span class="s3">else if </span><span class="s1">(</span><span class="s2">format </span><span class="s1">=== </span><span class="s0">&quot;ksuid&quot;</span><span class="s1">) {</span>
+                    <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">ksuid</span><span class="s1">());</span>
+                <span class="s1">}</span>
+                <span class="s4">// Note: json-string format is not currently supported by Zod</span>
+                <span class="s4">// Custom formats are ignored - keep as plain string</span>
+            <span class="s1">}</span>
+            <span class="s4">// Apply constraints</span>
+            <span class="s3">if </span><span class="s1">(</span><span class="s3">typeof </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">minLength </span><span class="s1">=== </span><span class="s0">&quot;number&quot;</span><span class="s1">) {</span>
+                <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">min</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">minLength</span><span class="s1">);</span>
+            <span class="s1">}</span>
+            <span class="s3">if </span><span class="s1">(</span><span class="s3">typeof </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">maxLength </span><span class="s1">=== </span><span class="s0">&quot;number&quot;</span><span class="s1">) {</span>
+                <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">max</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">maxLength</span><span class="s1">);</span>
+            <span class="s1">}</span>
+            <span class="s3">if </span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">pattern</span><span class="s1">) {</span>
+                <span class="s4">// JSON Schema patterns are not implicitly anchored (match anywhere in string)</span>
+                <span class="s2">stringSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">.</span><span class="s2">regex</span><span class="s1">(</span><span class="s3">new </span><span class="s2">RegExp</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">pattern</span><span class="s1">));</span>
+            <span class="s1">}</span>
+            <span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">stringSchema</span><span class="s1">;</span>
+            <span class="s3">break</span><span class="s1">;</span>
+        <span class="s1">}</span>
+        <span class="s3">case </span><span class="s0">&quot;number&quot;</span><span class="s1">:</span>
+        <span class="s3">case </span><span class="s0">&quot;integer&quot;</span><span class="s1">: {</span>
+            <span class="s3">let </span><span class="s2">numberSchema </span><span class="s1">= </span><span class="s2">type </span><span class="s1">=== </span><span class="s0">&quot;integer&quot; </span><span class="s1">? </span><span class="s2">z</span><span class="s1">.</span><span class="s2">number</span><span class="s1">().</span><span class="s2">int</span><span class="s1">() : </span><span class="s2">z</span><span class="s1">.</span><span class="s2">number</span><span class="s1">();</span>
+            <span class="s4">// Apply constraints</span>
+            <span class="s3">if </span><span class="s1">(</span><span class="s3">typeof </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">minimum </span><span class="s1">=== </span><span class="s0">&quot;number&quot;</span><span class="s1">) {</span>
+                <span class="s2">numberSchema </span><span class="s1">= </span><span class="s2">numberSchema</span><span class="s1">.</span><span class="s2">min</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">minimum</span><span class="s1">);</span>
+            <span class="s1">}</span>
+            <span class="s3">if </span><span class="s1">(</span><span class="s3">typeof </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">maximum </span><span class="s1">=== </span><span class="s0">&quot;number&quot;</span><span class="s1">) {</span>
+                <span class="s2">numberSchema </span><span class="s1">= </span><span class="s2">numberSchema</span><span class="s1">.</span><span class="s2">max</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">maximum</span><span class="s1">);</span>
+            <span class="s1">}</span>
+            <span class="s3">if </span><span class="s1">(</span><span class="s3">typeof </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">exclusiveMinimum </span><span class="s1">=== </span><span class="s0">&quot;number&quot;</span><span class="s1">) {</span>
+                <span class="s2">numberSchema </span><span class="s1">= </span><span class="s2">numberSchema</span><span class="s1">.</span><span class="s2">gt</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">exclusiveMinimum</span><span class="s1">);</span>
+            <span class="s1">}</span>
+            <span class="s3">else if </span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">exclusiveMinimum </span><span class="s1">=== </span><span class="s3">true </span><span class="s1">&amp;&amp; </span><span class="s3">typeof </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">minimum </span><span class="s1">=== </span><span class="s0">&quot;number&quot;</span><span class="s1">) {</span>
+                <span class="s2">numberSchema </span><span class="s1">= </span><span class="s2">numberSchema</span><span class="s1">.</span><span class="s2">gt</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">minimum</span><span class="s1">);</span>
+            <span class="s1">}</span>
+            <span class="s3">if </span><span class="s1">(</span><span class="s3">typeof </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">exclusiveMaximum </span><span class="s1">=== </span><span class="s0">&quot;number&quot;</span><span class="s1">) {</span>
+                <span class="s2">numberSchema </span><span class="s1">= </span><span class="s2">numberSchema</span><span class="s1">.</span><span class="s2">lt</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">exclusiveMaximum</span><span class="s1">);</span>
+            <span class="s1">}</span>
+            <span class="s3">else if </span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">exclusiveMaximum </span><span class="s1">=== </span><span class="s3">true </span><span class="s1">&amp;&amp; </span><span class="s3">typeof </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">maximum </span><span class="s1">=== </span><span class="s0">&quot;number&quot;</span><span class="s1">) {</span>
+                <span class="s2">numberSchema </span><span class="s1">= </span><span class="s2">numberSchema</span><span class="s1">.</span><span class="s2">lt</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">maximum</span><span class="s1">);</span>
+            <span class="s1">}</span>
+            <span class="s3">if </span><span class="s1">(</span><span class="s3">typeof </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">multipleOf </span><span class="s1">=== </span><span class="s0">&quot;number&quot;</span><span class="s1">) {</span>
+                <span class="s2">numberSchema </span><span class="s1">= </span><span class="s2">numberSchema</span><span class="s1">.</span><span class="s2">multipleOf</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">multipleOf</span><span class="s1">);</span>
+            <span class="s1">}</span>
+            <span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">numberSchema</span><span class="s1">;</span>
+            <span class="s3">break</span><span class="s1">;</span>
+        <span class="s1">}</span>
+        <span class="s3">case </span><span class="s0">&quot;boolean&quot;</span><span class="s1">: {</span>
+            <span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">z</span><span class="s1">.</span><span class="s2">boolean</span><span class="s1">();</span>
+            <span class="s3">break</span><span class="s1">;</span>
+        <span class="s1">}</span>
+        <span class="s3">case </span><span class="s0">&quot;null&quot;</span><span class="s1">: {</span>
+            <span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">z</span><span class="s1">.</span><span class="s2">null</span><span class="s1">();</span>
+            <span class="s3">break</span><span class="s1">;</span>
+        <span class="s1">}</span>
+        <span class="s3">case </span><span class="s0">&quot;object&quot;</span><span class="s1">: {</span>
+            <span class="s3">const </span><span class="s2">shape </span><span class="s1">= {};</span>
+            <span class="s3">const </span><span class="s2">properties </span><span class="s1">= </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">properties </span><span class="s1">|| {};</span>
+            <span class="s3">const </span><span class="s2">requiredSet </span><span class="s1">= </span><span class="s3">new </span><span class="s2">Set</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">required </span><span class="s1">|| []);</span>
+            <span class="s4">// Convert properties - mark optional ones</span>
+            <span class="s3">for </span><span class="s1">(</span><span class="s3">const </span><span class="s1">[</span><span class="s2">key</span><span class="s1">, </span><span class="s2">propSchema</span><span class="s1">] </span><span class="s2">of Object</span><span class="s1">.</span><span class="s2">entries</span><span class="s1">(</span><span class="s2">properties</span><span class="s1">)) {</span>
+                <span class="s3">const </span><span class="s2">propZodSchema </span><span class="s1">= </span><span class="s2">convertSchema</span><span class="s1">(</span><span class="s2">propSchema</span><span class="s1">, </span><span class="s2">ctx</span><span class="s1">);</span>
+                <span class="s4">// If not in required array, make it optional</span>
+                <span class="s2">shape</span><span class="s1">[</span><span class="s2">key</span><span class="s1">] = </span><span class="s2">requiredSet</span><span class="s1">.</span><span class="s2">has</span><span class="s1">(</span><span class="s2">key</span><span class="s1">) ? </span><span class="s2">propZodSchema </span><span class="s1">: </span><span class="s2">propZodSchema</span><span class="s1">.</span><span class="s2">optional</span><span class="s1">();</span>
+            <span class="s1">}</span>
+            <span class="s4">// Handle propertyNames</span>
+            <span class="s3">if </span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">propertyNames</span><span class="s1">) {</span>
+                <span class="s3">const </span><span class="s2">keySchema </span><span class="s1">= </span><span class="s2">convertSchema</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">propertyNames</span><span class="s1">, </span><span class="s2">ctx</span><span class="s1">);</span>
+                <span class="s3">const </span><span class="s2">valueSchema </span><span class="s1">= </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">additionalProperties </span><span class="s1">&amp;&amp; </span><span class="s3">typeof </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">additionalProperties </span><span class="s1">=== </span><span class="s0">&quot;object&quot;</span>
+                    <span class="s1">? </span><span class="s2">convertSchema</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">additionalProperties</span><span class="s1">, </span><span class="s2">ctx</span><span class="s1">)</span>
+                    <span class="s1">: </span><span class="s2">z</span><span class="s1">.</span><span class="s2">any</span><span class="s1">();</span>
+                <span class="s4">// Case A: No properties (pure record)</span>
+                <span class="s3">if </span><span class="s1">(</span><span class="s2">Object</span><span class="s1">.</span><span class="s2">keys</span><span class="s1">(</span><span class="s2">shape</span><span class="s1">).</span><span class="s2">length </span><span class="s1">=== </span><span class="s5">0</span><span class="s1">) {</span>
+                    <span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">z</span><span class="s1">.</span><span class="s2">record</span><span class="s1">(</span><span class="s2">keySchema</span><span class="s1">, </span><span class="s2">valueSchema</span><span class="s1">);</span>
+                    <span class="s3">break</span><span class="s1">;</span>
+                <span class="s1">}</span>
+                <span class="s4">// Case B: With properties (intersection of object and looseRecord)</span>
+                <span class="s3">const </span><span class="s2">objectSchema </span><span class="s1">= </span><span class="s2">z</span><span class="s1">.</span><span class="s2">object</span><span class="s1">(</span><span class="s2">shape</span><span class="s1">).</span><span class="s2">passthrough</span><span class="s1">();</span>
+                <span class="s3">const </span><span class="s2">recordSchema </span><span class="s1">= </span><span class="s2">z</span><span class="s1">.</span><span class="s2">looseRecord</span><span class="s1">(</span><span class="s2">keySchema</span><span class="s1">, </span><span class="s2">valueSchema</span><span class="s1">);</span>
+                <span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">z</span><span class="s1">.</span><span class="s2">intersection</span><span class="s1">(</span><span class="s2">objectSchema</span><span class="s1">, </span><span class="s2">recordSchema</span><span class="s1">);</span>
+                <span class="s3">break</span><span class="s1">;</span>
+            <span class="s1">}</span>
+            <span class="s4">// Handle patternProperties</span>
+            <span class="s3">if </span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">patternProperties</span><span class="s1">) {</span>
+                <span class="s4">// patternProperties: keys matching pattern must satisfy corresponding schema</span>
+                <span class="s4">// Use loose records so non-matching keys pass through</span>
+                <span class="s3">const </span><span class="s2">patternProps </span><span class="s1">= </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">patternProperties</span><span class="s1">;</span>
+                <span class="s3">const </span><span class="s2">patternKeys </span><span class="s1">= </span><span class="s2">Object</span><span class="s1">.</span><span class="s2">keys</span><span class="s1">(</span><span class="s2">patternProps</span><span class="s1">);</span>
+                <span class="s3">const </span><span class="s2">looseRecords </span><span class="s1">= [];</span>
+                <span class="s3">for </span><span class="s1">(</span><span class="s3">const </span><span class="s2">pattern of patternKeys</span><span class="s1">) {</span>
+                    <span class="s3">const </span><span class="s2">patternValue </span><span class="s1">= </span><span class="s2">convertSchema</span><span class="s1">(</span><span class="s2">patternProps</span><span class="s1">[</span><span class="s2">pattern</span><span class="s1">], </span><span class="s2">ctx</span><span class="s1">);</span>
+                    <span class="s3">const </span><span class="s2">keySchema </span><span class="s1">= </span><span class="s2">z</span><span class="s1">.</span><span class="s2">string</span><span class="s1">().</span><span class="s2">regex</span><span class="s1">(</span><span class="s3">new </span><span class="s2">RegExp</span><span class="s1">(</span><span class="s2">pattern</span><span class="s1">));</span>
+                    <span class="s2">looseRecords</span><span class="s1">.</span><span class="s2">push</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">looseRecord</span><span class="s1">(</span><span class="s2">keySchema</span><span class="s1">, </span><span class="s2">patternValue</span><span class="s1">));</span>
+                <span class="s1">}</span>
+                <span class="s4">// Build intersection: object schema + all pattern property records</span>
+                <span class="s3">const </span><span class="s2">schemasToIntersect </span><span class="s1">= [];</span>
+                <span class="s3">if </span><span class="s1">(</span><span class="s2">Object</span><span class="s1">.</span><span class="s2">keys</span><span class="s1">(</span><span class="s2">shape</span><span class="s1">).</span><span class="s2">length </span><span class="s1">&gt; </span><span class="s5">0</span><span class="s1">) {</span>
+                    <span class="s4">// Use passthrough so patternProperties can validate additional keys</span>
+                    <span class="s2">schemasToIntersect</span><span class="s1">.</span><span class="s2">push</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">object</span><span class="s1">(</span><span class="s2">shape</span><span class="s1">).</span><span class="s2">passthrough</span><span class="s1">());</span>
+                <span class="s1">}</span>
+                <span class="s2">schemasToIntersect</span><span class="s1">.</span><span class="s2">push</span><span class="s1">(</span><span class="s2">...looseRecords</span><span class="s1">);</span>
+                <span class="s3">if </span><span class="s1">(</span><span class="s2">schemasToIntersect</span><span class="s1">.</span><span class="s2">length </span><span class="s1">=== </span><span class="s5">0</span><span class="s1">) {</span>
+                    <span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">z</span><span class="s1">.</span><span class="s2">object</span><span class="s1">({}).</span><span class="s2">passthrough</span><span class="s1">();</span>
+                <span class="s1">}</span>
+                <span class="s3">else if </span><span class="s1">(</span><span class="s2">schemasToIntersect</span><span class="s1">.</span><span class="s2">length </span><span class="s1">=== </span><span class="s5">1</span><span class="s1">) {</span>
+                    <span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">schemasToIntersect</span><span class="s1">[</span><span class="s5">0</span><span class="s1">];</span>
+                <span class="s1">}</span>
+                <span class="s3">else </span><span class="s1">{</span>
+                    <span class="s4">// Chain intersections: (A &amp; B) &amp; C &amp; D ...</span>
+                    <span class="s3">let </span><span class="s2">result </span><span class="s1">= </span><span class="s2">z</span><span class="s1">.</span><span class="s2">intersection</span><span class="s1">(</span><span class="s2">schemasToIntersect</span><span class="s1">[</span><span class="s5">0</span><span class="s1">], </span><span class="s2">schemasToIntersect</span><span class="s1">[</span><span class="s5">1</span><span class="s1">]);</span>
+                    <span class="s3">for </span><span class="s1">(</span><span class="s3">let </span><span class="s2">i </span><span class="s1">= </span><span class="s5">2</span><span class="s1">; </span><span class="s2">i </span><span class="s1">&lt; </span><span class="s2">schemasToIntersect</span><span class="s1">.</span><span class="s2">length</span><span class="s1">; </span><span class="s2">i</span><span class="s1">++) {</span>
+                        <span class="s2">result </span><span class="s1">= </span><span class="s2">z</span><span class="s1">.</span><span class="s2">intersection</span><span class="s1">(</span><span class="s2">result</span><span class="s1">, </span><span class="s2">schemasToIntersect</span><span class="s1">[</span><span class="s2">i</span><span class="s1">]);</span>
+                    <span class="s1">}</span>
+                    <span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">result</span><span class="s1">;</span>
+                <span class="s1">}</span>
+                <span class="s3">break</span><span class="s1">;</span>
+            <span class="s1">}</span>
+            <span class="s4">// Handle additionalProperties</span>
+            <span class="s4">// In JSON Schema, additionalProperties defaults to true (allow any extra properties)</span>
+            <span class="s4">// In Zod, objects strip unknown keys by default, so we need to handle this explicitly</span>
+            <span class="s3">const </span><span class="s2">objectSchema </span><span class="s1">= </span><span class="s2">z</span><span class="s1">.</span><span class="s2">object</span><span class="s1">(</span><span class="s2">shape</span><span class="s1">);</span>
+            <span class="s3">if </span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">additionalProperties </span><span class="s1">=== </span><span class="s3">false</span><span class="s1">) {</span>
+                <span class="s4">// Strict mode - no extra properties allowed</span>
+                <span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">objectSchema</span><span class="s1">.</span><span class="s2">strict</span><span class="s1">();</span>
+            <span class="s1">}</span>
+            <span class="s3">else if </span><span class="s1">(</span><span class="s3">typeof </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">additionalProperties </span><span class="s1">=== </span><span class="s0">&quot;object&quot;</span><span class="s1">) {</span>
+                <span class="s4">// Extra properties must match the specified schema</span>
+                <span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">objectSchema</span><span class="s1">.</span><span class="s2">catchall</span><span class="s1">(</span><span class="s2">convertSchema</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">additionalProperties</span><span class="s1">, </span><span class="s2">ctx</span><span class="s1">));</span>
+            <span class="s1">}</span>
+            <span class="s3">else </span><span class="s1">{</span>
+                <span class="s4">// additionalProperties is true or undefined - allow any extra properties (passthrough)</span>
+                <span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">objectSchema</span><span class="s1">.</span><span class="s2">passthrough</span><span class="s1">();</span>
+            <span class="s1">}</span>
+            <span class="s3">break</span><span class="s1">;</span>
+        <span class="s1">}</span>
+        <span class="s3">case </span><span class="s0">&quot;array&quot;</span><span class="s1">: {</span>
+            <span class="s4">// TODO: uniqueItems is not supported</span>
+            <span class="s4">// TODO: contains/minContains/maxContains are not supported</span>
+            <span class="s4">// Check if this is a tuple (prefixItems or items as array)</span>
+            <span class="s3">const </span><span class="s2">prefixItems </span><span class="s1">= </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">prefixItems</span><span class="s1">;</span>
+            <span class="s3">const </span><span class="s2">items </span><span class="s1">= </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">items</span><span class="s1">;</span>
+            <span class="s3">if </span><span class="s1">(</span><span class="s2">prefixItems </span><span class="s1">&amp;&amp; </span><span class="s2">Array</span><span class="s1">.</span><span class="s2">isArray</span><span class="s1">(</span><span class="s2">prefixItems</span><span class="s1">)) {</span>
+                <span class="s4">// Tuple with prefixItems (draft-2020-12)</span>
+                <span class="s3">const </span><span class="s2">tupleItems </span><span class="s1">= </span><span class="s2">prefixItems</span><span class="s1">.</span><span class="s2">map</span><span class="s1">((</span><span class="s2">item</span><span class="s1">) =&gt; </span><span class="s2">convertSchema</span><span class="s1">(</span><span class="s2">item</span><span class="s1">, </span><span class="s2">ctx</span><span class="s1">));</span>
+                <span class="s3">const </span><span class="s2">rest </span><span class="s1">= </span><span class="s2">items </span><span class="s1">&amp;&amp; </span><span class="s3">typeof </span><span class="s2">items </span><span class="s1">=== </span><span class="s0">&quot;object&quot; </span><span class="s1">&amp;&amp; !</span><span class="s2">Array</span><span class="s1">.</span><span class="s2">isArray</span><span class="s1">(</span><span class="s2">items</span><span class="s1">)</span>
+                    <span class="s1">? </span><span class="s2">convertSchema</span><span class="s1">(</span><span class="s2">items</span><span class="s1">, </span><span class="s2">ctx</span><span class="s1">)</span>
+                    <span class="s1">: </span><span class="s2">undefined</span><span class="s1">;</span>
+                <span class="s3">if </span><span class="s1">(</span><span class="s2">rest</span><span class="s1">) {</span>
+                    <span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">z</span><span class="s1">.</span><span class="s2">tuple</span><span class="s1">(</span><span class="s2">tupleItems</span><span class="s1">).</span><span class="s2">rest</span><span class="s1">(</span><span class="s2">rest</span><span class="s1">);</span>
+                <span class="s1">}</span>
+                <span class="s3">else </span><span class="s1">{</span>
+                    <span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">z</span><span class="s1">.</span><span class="s2">tuple</span><span class="s1">(</span><span class="s2">tupleItems</span><span class="s1">);</span>
+                <span class="s1">}</span>
+                <span class="s4">// Apply minItems/maxItems constraints to tuples</span>
+                <span class="s3">if </span><span class="s1">(</span><span class="s3">typeof </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">minItems </span><span class="s1">=== </span><span class="s0">&quot;number&quot;</span><span class="s1">) {</span>
+                    <span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">zodSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">minLength</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">minItems</span><span class="s1">));</span>
+                <span class="s1">}</span>
+                <span class="s3">if </span><span class="s1">(</span><span class="s3">typeof </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">maxItems </span><span class="s1">=== </span><span class="s0">&quot;number&quot;</span><span class="s1">) {</span>
+                    <span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">zodSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">maxLength</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">maxItems</span><span class="s1">));</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+            <span class="s3">else if </span><span class="s1">(</span><span class="s2">Array</span><span class="s1">.</span><span class="s2">isArray</span><span class="s1">(</span><span class="s2">items</span><span class="s1">)) {</span>
+                <span class="s4">// Tuple with items array (draft-7)</span>
+                <span class="s3">const </span><span class="s2">tupleItems </span><span class="s1">= </span><span class="s2">items</span><span class="s1">.</span><span class="s2">map</span><span class="s1">((</span><span class="s2">item</span><span class="s1">) =&gt; </span><span class="s2">convertSchema</span><span class="s1">(</span><span class="s2">item</span><span class="s1">, </span><span class="s2">ctx</span><span class="s1">));</span>
+                <span class="s3">const </span><span class="s2">rest </span><span class="s1">= </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">additionalItems </span><span class="s1">&amp;&amp; </span><span class="s3">typeof </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">additionalItems </span><span class="s1">=== </span><span class="s0">&quot;object&quot;</span>
+                    <span class="s1">? </span><span class="s2">convertSchema</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">additionalItems</span><span class="s1">, </span><span class="s2">ctx</span><span class="s1">)</span>
+                    <span class="s1">: </span><span class="s2">undefined</span><span class="s1">; </span><span class="s4">// additionalItems: false means no rest, handled by default tuple behavior</span>
+                <span class="s3">if </span><span class="s1">(</span><span class="s2">rest</span><span class="s1">) {</span>
+                    <span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">z</span><span class="s1">.</span><span class="s2">tuple</span><span class="s1">(</span><span class="s2">tupleItems</span><span class="s1">).</span><span class="s2">rest</span><span class="s1">(</span><span class="s2">rest</span><span class="s1">);</span>
+                <span class="s1">}</span>
+                <span class="s3">else </span><span class="s1">{</span>
+                    <span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">z</span><span class="s1">.</span><span class="s2">tuple</span><span class="s1">(</span><span class="s2">tupleItems</span><span class="s1">);</span>
+                <span class="s1">}</span>
+                <span class="s4">// Apply minItems/maxItems constraints to tuples</span>
+                <span class="s3">if </span><span class="s1">(</span><span class="s3">typeof </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">minItems </span><span class="s1">=== </span><span class="s0">&quot;number&quot;</span><span class="s1">) {</span>
+                    <span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">zodSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">minLength</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">minItems</span><span class="s1">));</span>
+                <span class="s1">}</span>
+                <span class="s3">if </span><span class="s1">(</span><span class="s3">typeof </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">maxItems </span><span class="s1">=== </span><span class="s0">&quot;number&quot;</span><span class="s1">) {</span>
+                    <span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">zodSchema</span><span class="s1">.</span><span class="s2">check</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">maxLength</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">maxItems</span><span class="s1">));</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+            <span class="s3">else if </span><span class="s1">(</span><span class="s2">items </span><span class="s1">!== </span><span class="s2">undefined</span><span class="s1">) {</span>
+                <span class="s4">// Regular array</span>
+                <span class="s3">const </span><span class="s2">element </span><span class="s1">= </span><span class="s2">convertSchema</span><span class="s1">(</span><span class="s2">items</span><span class="s1">, </span><span class="s2">ctx</span><span class="s1">);</span>
+                <span class="s3">let </span><span class="s2">arraySchema </span><span class="s1">= </span><span class="s2">z</span><span class="s1">.</span><span class="s2">array</span><span class="s1">(</span><span class="s2">element</span><span class="s1">);</span>
+                <span class="s4">// Apply constraints</span>
+                <span class="s3">if </span><span class="s1">(</span><span class="s3">typeof </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">minItems </span><span class="s1">=== </span><span class="s0">&quot;number&quot;</span><span class="s1">) {</span>
+                    <span class="s2">arraySchema </span><span class="s1">= </span><span class="s2">arraySchema</span><span class="s1">.</span><span class="s2">min</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">minItems</span><span class="s1">);</span>
+                <span class="s1">}</span>
+                <span class="s3">if </span><span class="s1">(</span><span class="s3">typeof </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">maxItems </span><span class="s1">=== </span><span class="s0">&quot;number&quot;</span><span class="s1">) {</span>
+                    <span class="s2">arraySchema </span><span class="s1">= </span><span class="s2">arraySchema</span><span class="s1">.</span><span class="s2">max</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">maxItems</span><span class="s1">);</span>
+                <span class="s1">}</span>
+                <span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">arraySchema</span><span class="s1">;</span>
+            <span class="s1">}</span>
+            <span class="s3">else </span><span class="s1">{</span>
+                <span class="s4">// No items specified - array of any</span>
+                <span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">z</span><span class="s1">.</span><span class="s2">array</span><span class="s1">(</span><span class="s2">z</span><span class="s1">.</span><span class="s2">any</span><span class="s1">());</span>
+            <span class="s1">}</span>
+            <span class="s3">break</span><span class="s1">;</span>
+        <span class="s1">}</span>
+        <span class="s3">default</span><span class="s1">:</span>
+            <span class="s3">throw new </span><span class="s2">Error</span><span class="s1">(</span><span class="s0">`Unsupported type: </span><span class="s2">$</span><span class="s1">{</span><span class="s2">type</span><span class="s1">}</span><span class="s0">`</span><span class="s1">);</span>
+    <span class="s1">}</span>
+    <span class="s4">// Apply metadata</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">description</span><span class="s1">) {</span>
+        <span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">zodSchema</span><span class="s1">.</span><span class="s2">describe</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">description</span><span class="s1">);</span>
+    <span class="s1">}</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">default </span><span class="s1">!== </span><span class="s2">undefined</span><span class="s1">) {</span>
+        <span class="s2">zodSchema </span><span class="s1">= </span><span class="s2">zodSchema</span><span class="s1">.</span><span class="s2">default</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">default</span><span class="s1">);</span>
+    <span class="s1">}</span>
+    <span class="s3">return </span><span class="s2">zodSchema</span><span class="s1">;</span>
+<span class="s1">}</span>
+<span class="s3">function </span><span class="s2">convertSchema</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">, </span><span class="s2">ctx</span><span class="s1">) {</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s3">typeof </span><span class="s2">schema </span><span class="s1">=== </span><span class="s0">&quot;boolean&quot;</span><span class="s1">) {</span>
+        <span class="s3">return </span><span class="s2">schema </span><span class="s1">? </span><span class="s2">z</span><span class="s1">.</span><span class="s2">any</span><span class="s1">() : </span><span class="s2">z</span><span class="s1">.</span><span class="s2">never</span><span class="s1">();</span>
+    <span class="s1">}</span>
+    <span class="s4">// Convert base schema first (ignoring composition keywords)</span>
+    <span class="s3">let </span><span class="s2">baseSchema </span><span class="s1">= </span><span class="s2">convertBaseSchema</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">, </span><span class="s2">ctx</span><span class="s1">);</span>
+    <span class="s3">const </span><span class="s2">hasExplicitType </span><span class="s1">= </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">type </span><span class="s1">|| </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">enum </span><span class="s1">!== </span><span class="s2">undefined </span><span class="s1">|| </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">const </span><span class="s1">!== </span><span class="s2">undefined</span><span class="s1">;</span>
+    <span class="s4">// Process composition keywords LAST (they can appear together)</span>
+    <span class="s4">// Handle anyOf - wrap base schema with union</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">anyOf </span><span class="s1">&amp;&amp; </span><span class="s2">Array</span><span class="s1">.</span><span class="s2">isArray</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">anyOf</span><span class="s1">)) {</span>
+        <span class="s3">const </span><span class="s2">options </span><span class="s1">= </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">anyOf</span><span class="s1">.</span><span class="s2">map</span><span class="s1">((</span><span class="s2">s</span><span class="s1">) =&gt; </span><span class="s2">convertSchema</span><span class="s1">(</span><span class="s2">s</span><span class="s1">, </span><span class="s2">ctx</span><span class="s1">));</span>
+        <span class="s3">const </span><span class="s2">anyOfUnion </span><span class="s1">= </span><span class="s2">z</span><span class="s1">.</span><span class="s2">union</span><span class="s1">(</span><span class="s2">options</span><span class="s1">);</span>
+        <span class="s2">baseSchema </span><span class="s1">= </span><span class="s2">hasExplicitType </span><span class="s1">? </span><span class="s2">z</span><span class="s1">.</span><span class="s2">intersection</span><span class="s1">(</span><span class="s2">baseSchema</span><span class="s1">, </span><span class="s2">anyOfUnion</span><span class="s1">) : </span><span class="s2">anyOfUnion</span><span class="s1">;</span>
+    <span class="s1">}</span>
+    <span class="s4">// Handle oneOf - exclusive union (exactly one must match)</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">oneOf </span><span class="s1">&amp;&amp; </span><span class="s2">Array</span><span class="s1">.</span><span class="s2">isArray</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">oneOf</span><span class="s1">)) {</span>
+        <span class="s3">const </span><span class="s2">options </span><span class="s1">= </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">oneOf</span><span class="s1">.</span><span class="s2">map</span><span class="s1">((</span><span class="s2">s</span><span class="s1">) =&gt; </span><span class="s2">convertSchema</span><span class="s1">(</span><span class="s2">s</span><span class="s1">, </span><span class="s2">ctx</span><span class="s1">));</span>
+        <span class="s3">const </span><span class="s2">oneOfUnion </span><span class="s1">= </span><span class="s2">z</span><span class="s1">.</span><span class="s2">xor</span><span class="s1">(</span><span class="s2">options</span><span class="s1">);</span>
+        <span class="s2">baseSchema </span><span class="s1">= </span><span class="s2">hasExplicitType </span><span class="s1">? </span><span class="s2">z</span><span class="s1">.</span><span class="s2">intersection</span><span class="s1">(</span><span class="s2">baseSchema</span><span class="s1">, </span><span class="s2">oneOfUnion</span><span class="s1">) : </span><span class="s2">oneOfUnion</span><span class="s1">;</span>
+    <span class="s1">}</span>
+    <span class="s4">// Handle allOf - wrap base schema with intersection</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">allOf </span><span class="s1">&amp;&amp; </span><span class="s2">Array</span><span class="s1">.</span><span class="s2">isArray</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">allOf</span><span class="s1">)) {</span>
+        <span class="s3">if </span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">allOf</span><span class="s1">.</span><span class="s2">length </span><span class="s1">=== </span><span class="s5">0</span><span class="s1">) {</span>
+            <span class="s2">baseSchema </span><span class="s1">= </span><span class="s2">hasExplicitType </span><span class="s1">? </span><span class="s2">baseSchema </span><span class="s1">: </span><span class="s2">z</span><span class="s1">.</span><span class="s2">any</span><span class="s1">();</span>
+        <span class="s1">}</span>
+        <span class="s3">else </span><span class="s1">{</span>
+            <span class="s3">let </span><span class="s2">result </span><span class="s1">= </span><span class="s2">hasExplicitType </span><span class="s1">? </span><span class="s2">baseSchema </span><span class="s1">: </span><span class="s2">convertSchema</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">allOf</span><span class="s1">[</span><span class="s5">0</span><span class="s1">], </span><span class="s2">ctx</span><span class="s1">);</span>
+            <span class="s3">const </span><span class="s2">startIdx </span><span class="s1">= </span><span class="s2">hasExplicitType </span><span class="s1">? </span><span class="s5">0 </span><span class="s1">: </span><span class="s5">1</span><span class="s1">;</span>
+            <span class="s3">for </span><span class="s1">(</span><span class="s3">let </span><span class="s2">i </span><span class="s1">= </span><span class="s2">startIdx</span><span class="s1">; </span><span class="s2">i </span><span class="s1">&lt; </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">allOf</span><span class="s1">.</span><span class="s2">length</span><span class="s1">; </span><span class="s2">i</span><span class="s1">++) {</span>
+                <span class="s2">result </span><span class="s1">= </span><span class="s2">z</span><span class="s1">.</span><span class="s2">intersection</span><span class="s1">(</span><span class="s2">result</span><span class="s1">, </span><span class="s2">convertSchema</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">allOf</span><span class="s1">[</span><span class="s2">i</span><span class="s1">], </span><span class="s2">ctx</span><span class="s1">));</span>
+            <span class="s1">}</span>
+            <span class="s2">baseSchema </span><span class="s1">= </span><span class="s2">result</span><span class="s1">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+    <span class="s4">// Handle nullable (OpenAPI 3.0)</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">nullable </span><span class="s1">=== </span><span class="s3">true </span><span class="s1">&amp;&amp; </span><span class="s2">ctx</span><span class="s1">.</span><span class="s2">version </span><span class="s1">=== </span><span class="s0">&quot;openapi-3.0&quot;</span><span class="s1">) {</span>
+        <span class="s2">baseSchema </span><span class="s1">= </span><span class="s2">z</span><span class="s1">.</span><span class="s2">nullable</span><span class="s1">(</span><span class="s2">baseSchema</span><span class="s1">);</span>
+    <span class="s1">}</span>
+    <span class="s4">// Handle readOnly</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">readOnly </span><span class="s1">=== </span><span class="s3">true</span><span class="s1">) {</span>
+        <span class="s2">baseSchema </span><span class="s1">= </span><span class="s2">z</span><span class="s1">.</span><span class="s2">readonly</span><span class="s1">(</span><span class="s2">baseSchema</span><span class="s1">);</span>
+    <span class="s1">}</span>
+    <span class="s4">// Collect metadata: core schema keywords and unrecognized keys</span>
+    <span class="s3">const </span><span class="s2">extraMeta </span><span class="s1">= {};</span>
+    <span class="s4">// Core schema keywords that should be captured as metadata</span>
+    <span class="s3">const </span><span class="s2">coreMetadataKeys </span><span class="s1">= [</span><span class="s0">&quot;$id&quot;</span><span class="s1">, </span><span class="s0">&quot;id&quot;</span><span class="s1">, </span><span class="s0">&quot;$comment&quot;</span><span class="s1">, </span><span class="s0">&quot;$anchor&quot;</span><span class="s1">, </span><span class="s0">&quot;$vocabulary&quot;</span><span class="s1">, </span><span class="s0">&quot;$dynamicRef&quot;</span><span class="s1">, </span><span class="s0">&quot;$dynamicAnchor&quot;</span><span class="s1">];</span>
+    <span class="s3">for </span><span class="s1">(</span><span class="s3">const </span><span class="s2">key of coreMetadataKeys</span><span class="s1">) {</span>
+        <span class="s3">if </span><span class="s1">(</span><span class="s2">key </span><span class="s3">in </span><span class="s2">schema</span><span class="s1">) {</span>
+            <span class="s2">extraMeta</span><span class="s1">[</span><span class="s2">key</span><span class="s1">] = </span><span class="s2">schema</span><span class="s1">[</span><span class="s2">key</span><span class="s1">];</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+    <span class="s4">// Content keywords - store as metadata</span>
+    <span class="s3">const </span><span class="s2">contentMetadataKeys </span><span class="s1">= [</span><span class="s0">&quot;contentEncoding&quot;</span><span class="s1">, </span><span class="s0">&quot;contentMediaType&quot;</span><span class="s1">, </span><span class="s0">&quot;contentSchema&quot;</span><span class="s1">];</span>
+    <span class="s3">for </span><span class="s1">(</span><span class="s3">const </span><span class="s2">key of contentMetadataKeys</span><span class="s1">) {</span>
+        <span class="s3">if </span><span class="s1">(</span><span class="s2">key </span><span class="s3">in </span><span class="s2">schema</span><span class="s1">) {</span>
+            <span class="s2">extraMeta</span><span class="s1">[</span><span class="s2">key</span><span class="s1">] = </span><span class="s2">schema</span><span class="s1">[</span><span class="s2">key</span><span class="s1">];</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+    <span class="s4">// Unrecognized keys (custom metadata)</span>
+    <span class="s3">for </span><span class="s1">(</span><span class="s3">const </span><span class="s2">key of Object</span><span class="s1">.</span><span class="s2">keys</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">)) {</span>
+        <span class="s3">if </span><span class="s1">(!</span><span class="s2">RECOGNIZED_KEYS</span><span class="s1">.</span><span class="s2">has</span><span class="s1">(</span><span class="s2">key</span><span class="s1">)) {</span>
+            <span class="s2">extraMeta</span><span class="s1">[</span><span class="s2">key</span><span class="s1">] = </span><span class="s2">schema</span><span class="s1">[</span><span class="s2">key</span><span class="s1">];</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">Object</span><span class="s1">.</span><span class="s2">keys</span><span class="s1">(</span><span class="s2">extraMeta</span><span class="s1">).</span><span class="s2">length </span><span class="s1">&gt; </span><span class="s5">0</span><span class="s1">) {</span>
+        <span class="s2">ctx</span><span class="s1">.</span><span class="s2">registry</span><span class="s1">.</span><span class="s2">add</span><span class="s1">(</span><span class="s2">baseSchema</span><span class="s1">, </span><span class="s2">extraMeta</span><span class="s1">);</span>
+    <span class="s1">}</span>
+    <span class="s3">return </span><span class="s2">baseSchema</span><span class="s1">;</span>
+<span class="s1">}</span>
+<span class="s6">/**</span>
+ <span class="s6">* Converts a JSON Schema to a Zod schema. This function should be considered semi-experimental. It's behavior is liable to change. */</span>
+<span class="s3">function </span><span class="s2">fromJSONSchema</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s4">// Handle boolean schemas</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s3">typeof </span><span class="s2">schema </span><span class="s1">=== </span><span class="s0">&quot;boolean&quot;</span><span class="s1">) {</span>
+        <span class="s3">return </span><span class="s2">schema </span><span class="s1">? </span><span class="s2">z</span><span class="s1">.</span><span class="s2">any</span><span class="s1">() : </span><span class="s2">z</span><span class="s1">.</span><span class="s2">never</span><span class="s1">();</span>
+    <span class="s1">}</span>
+    <span class="s3">const </span><span class="s2">version </span><span class="s1">= </span><span class="s2">detectVersion</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">, </span><span class="s2">params</span><span class="s1">?.</span><span class="s2">defaultTarget</span><span class="s1">);</span>
+    <span class="s3">const </span><span class="s2">defs </span><span class="s1">= (</span><span class="s2">schema</span><span class="s1">.</span><span class="s2">$defs </span><span class="s1">|| </span><span class="s2">schema</span><span class="s1">.</span><span class="s2">definitions </span><span class="s1">|| {});</span>
+    <span class="s3">const </span><span class="s2">ctx </span><span class="s1">= {</span>
+        <span class="s2">version</span><span class="s1">,</span>
+        <span class="s2">defs</span><span class="s1">,</span>
+        <span class="s2">refs</span><span class="s1">: </span><span class="s3">new </span><span class="s2">Map</span><span class="s1">(),</span>
+        <span class="s2">processing</span><span class="s1">: </span><span class="s3">new </span><span class="s2">Set</span><span class="s1">(),</span>
+        <span class="s2">rootSchema</span><span class="s1">: </span><span class="s2">schema</span><span class="s1">,</span>
+        <span class="s2">registry</span><span class="s1">: </span><span class="s2">params</span><span class="s1">?.</span><span class="s2">registry </span><span class="s1">?? </span><span class="s2">registries_js_1</span><span class="s1">.</span><span class="s2">globalRegistry</span><span class="s1">,</span>
+    <span class="s1">};</span>
+    <span class="s3">return </span><span class="s2">convertSchema</span><span class="s1">(</span><span class="s2">schema</span><span class="s1">, </span><span class="s2">ctx</span><span class="s1">);</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

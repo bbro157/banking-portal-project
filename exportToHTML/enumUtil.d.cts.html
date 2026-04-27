@@ -1,0 +1,27 @@
+<html>
+<head>
+<title>enumUtil.d.cts</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+enumUtil.d.cts</font>
+</center></td></tr></table>
+<pre><span class="s0">export </span><span class="s1">declare namespace enumUtil </span><span class="s2">{</span>
+    <span class="s1">type UnionToIntersectionFn</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt; = (</span><span class="s1">T </span><span class="s0">extends </span><span class="s1">unknown </span><span class="s2">? (</span><span class="s1">k</span><span class="s2">: () =&gt; </span><span class="s1">T</span><span class="s2">) =&gt; </span><span class="s0">void </span><span class="s2">: </span><span class="s1">never</span><span class="s2">) </span><span class="s0">extends </span><span class="s2">(</span><span class="s1">k</span><span class="s2">: </span><span class="s1">infer Intersection</span><span class="s2">) =&gt; </span><span class="s0">void </span><span class="s2">? </span><span class="s1">Intersection </span><span class="s2">: </span><span class="s1">never</span><span class="s2">;</span>
+    <span class="s1">type GetUnionLast</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt; = </span><span class="s1">UnionToIntersectionFn</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt; </span><span class="s0">extends </span><span class="s2">() =&gt; </span><span class="s1">infer Last </span><span class="s2">? </span><span class="s1">Last </span><span class="s2">: </span><span class="s1">never</span><span class="s2">;</span>
+    <span class="s1">type UnionToTuple</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">, </span><span class="s1">Tuple </span><span class="s0">extends </span><span class="s1">unknown</span><span class="s2">[] = []&gt; = [</span><span class="s1">T</span><span class="s2">] </span><span class="s0">extends </span><span class="s2">[</span><span class="s1">never</span><span class="s2">] ? </span><span class="s1">Tuple </span><span class="s2">: </span><span class="s1">UnionToTuple</span><span class="s2">&lt;</span><span class="s1">Exclude</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">, </span><span class="s1">GetUnionLast</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;&gt;, [</span><span class="s1">GetUnionLast</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;, </span><span class="s1">...Tuple</span><span class="s2">]&gt;;</span>
+    <span class="s1">type CastToStringTuple</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt; = </span><span class="s1">T </span><span class="s0">extends </span><span class="s2">[</span><span class="s1">string</span><span class="s2">, </span><span class="s1">...string</span><span class="s2">[]] ? </span><span class="s1">T </span><span class="s2">: </span><span class="s1">never</span><span class="s2">;</span>
+    <span class="s0">export </span><span class="s1">type UnionToTupleString</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt; = </span><span class="s1">CastToStringTuple</span><span class="s2">&lt;</span><span class="s1">UnionToTuple</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;&gt;;</span>
+    <span class="s0">export </span><span class="s2">{};</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

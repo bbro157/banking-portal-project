@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>doc.d.ts</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #bcbec4;}
+.s1 { color: #bcbec4;}
+.s2 { color: #6aab73;}
+.s3 { color: #cf8e6d;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+doc.d.ts</font>
+</center></td></tr></table>
+<pre><span class="s0">type ModeWriter </span><span class="s1">= (</span><span class="s0">doc</span><span class="s1">: </span><span class="s0">Doc</span><span class="s1">, </span><span class="s0">modes</span><span class="s1">: {</span>
+    <span class="s0">execution</span><span class="s1">: </span><span class="s2">&quot;sync&quot; </span><span class="s1">| </span><span class="s2">&quot;async&quot;</span><span class="s1">;</span>
+<span class="s1">}) =&gt; </span><span class="s3">void</span><span class="s1">;</span>
+<span class="s3">export </span><span class="s0">declare </span><span class="s3">class </span><span class="s0">Doc </span><span class="s1">{</span>
+    <span class="s0">args</span><span class="s1">: </span><span class="s0">string</span><span class="s1">[];</span>
+    <span class="s0">content</span><span class="s1">: </span><span class="s0">string</span><span class="s1">[];</span>
+    <span class="s0">indent</span><span class="s1">: </span><span class="s0">number</span><span class="s1">;</span>
+    <span class="s0">constructor</span><span class="s1">(</span><span class="s0">args</span><span class="s1">?: </span><span class="s0">string</span><span class="s1">[]);</span>
+    <span class="s0">indented</span><span class="s1">(</span><span class="s0">fn</span><span class="s1">: (</span><span class="s0">doc</span><span class="s1">: </span><span class="s0">Doc</span><span class="s1">) =&gt; </span><span class="s3">void</span><span class="s1">): </span><span class="s3">void</span><span class="s1">;</span>
+    <span class="s0">write</span><span class="s1">(</span><span class="s0">fn</span><span class="s1">: </span><span class="s0">ModeWriter</span><span class="s1">): </span><span class="s3">void</span><span class="s1">;</span>
+    <span class="s0">write</span><span class="s1">(</span><span class="s0">line</span><span class="s1">: </span><span class="s0">string</span><span class="s1">): </span><span class="s3">void</span><span class="s1">;</span>
+    <span class="s0">compile</span><span class="s1">(): </span><span class="s0">any</span><span class="s1">;</span>
+<span class="s1">}</span>
+<span class="s3">export </span><span class="s1">{};</span>
+</pre>
+</body>
+</html>

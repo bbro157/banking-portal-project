@@ -1,0 +1,88 @@
+<html>
+<head>
+<title>LoginPage.jsx</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #7a7e85;}
+.s5 { color: #d5b778;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+LoginPage.jsx</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s2">{ </span><span class="s1">useState </span><span class="s2">} </span><span class="s1">from </span><span class="s3">&quot;react&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s2">{ </span><span class="s1">useNavigate </span><span class="s2">} </span><span class="s1">from </span><span class="s3">&quot;react-router-dom&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">API from </span><span class="s3">&quot;../api&quot;</span><span class="s2">;</span>
+
+<span class="s0">function </span><span class="s1">LoginPage</span><span class="s2">() {</span>
+  <span class="s0">const </span><span class="s2">[</span><span class="s1">username</span><span class="s2">, </span><span class="s1">setUsername</span><span class="s2">] = </span><span class="s1">useState</span><span class="s2">(</span><span class="s3">&quot;&quot;</span><span class="s2">);</span>
+  <span class="s0">const </span><span class="s2">[</span><span class="s1">password</span><span class="s2">, </span><span class="s1">setPassword</span><span class="s2">] = </span><span class="s1">useState</span><span class="s2">(</span><span class="s3">&quot;&quot;</span><span class="s2">);</span>
+  <span class="s0">const </span><span class="s1">navigate </span><span class="s2">= </span><span class="s1">useNavigate</span><span class="s2">();</span>
+
+  <span class="s0">const </span><span class="s1">handleLogin </span><span class="s2">= </span><span class="s1">async </span><span class="s2">() =&gt; {</span>
+    <span class="s0">try </span><span class="s2">{</span>
+      <span class="s0">const </span><span class="s1">response </span><span class="s2">= </span><span class="s0">await </span><span class="s1">API</span><span class="s2">.</span><span class="s1">post</span><span class="s2">(</span><span class="s3">&quot;/login&quot;</span><span class="s2">, {</span>
+        <span class="s1">username</span><span class="s2">,</span>
+        <span class="s1">password</span><span class="s2">,</span>
+      <span class="s2">});</span>
+      <span class="s0">const </span><span class="s1">token </span><span class="s2">= </span><span class="s1">response</span><span class="s2">.</span><span class="s1">data</span><span class="s2">.</span><span class="s1">access_token</span><span class="s2">;</span>
+      <span class="s0">const </span><span class="s1">user </span><span class="s2">= </span><span class="s1">response</span><span class="s2">.</span><span class="s1">data</span><span class="s2">.</span><span class="s1">user</span><span class="s2">;</span>
+
+      <span class="s1">localStorage</span><span class="s2">.</span><span class="s1">setItem</span><span class="s2">(</span><span class="s3">&quot;token&quot;</span><span class="s2">, </span><span class="s1">token</span><span class="s2">);</span>
+
+    <span class="s4">// store user if needed</span>
+    <span class="s1">localStorage</span><span class="s2">.</span><span class="s1">setItem</span><span class="s2">(</span><span class="s3">&quot;user&quot;</span><span class="s2">, </span><span class="s1">JSON</span><span class="s2">.</span><span class="s1">stringify</span><span class="s2">(</span><span class="s1">user</span><span class="s2">));</span>
+
+    <span class="s1">console</span><span class="s2">.</span><span class="s1">log</span><span class="s2">(</span><span class="s1">user</span><span class="s2">.</span><span class="s1">username</span><span class="s2">);</span>
+
+      <span class="s0">if </span><span class="s2">(</span><span class="s1">user</span><span class="s2">.</span><span class="s1">is_admin</span><span class="s2">) {</span>
+        <span class="s1">navigate</span><span class="s2">(</span><span class="s3">&quot;/admin&quot;</span><span class="s2">);</span>
+      <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+        <span class="s1">navigate</span><span class="s2">(</span><span class="s3">`/dashboard/</span><span class="s1">$</span><span class="s2">{</span><span class="s1">user</span><span class="s2">.</span><span class="s1">id</span><span class="s2">}</span><span class="s3">`</span><span class="s2">);</span>
+      <span class="s2">}</span>
+
+    <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">error</span><span class="s2">) {</span>
+      <span class="s1">console</span><span class="s2">.</span><span class="s1">error</span><span class="s2">(</span><span class="s3">&quot;Login error:&quot;</span><span class="s2">, </span><span class="s1">error</span><span class="s2">);</span>
+      <span class="s1">alert</span><span class="s2">(</span><span class="s1">error</span><span class="s2">.</span><span class="s1">response</span><span class="s2">?.</span><span class="s1">data</span><span class="s2">?.</span><span class="s1">detail </span><span class="s2">|| </span><span class="s3">&quot;Invalid username or password&quot;</span><span class="s2">);</span>
+    <span class="s2">}</span>
+  <span class="s2">};</span>
+
+  <span class="s0">return </span><span class="s2">(</span>
+    <span class="s5">&lt;div </span><span class="s2">style</span><span class="s3">=</span><span class="s2">{{ </span><span class="s1">padding</span><span class="s2">: </span><span class="s3">&quot;2rem&quot; </span><span class="s2">}}</span><span class="s5">&gt;</span>
+      <span class="s5">&lt;h1&gt;</span><span class="s1">Banking Portal Login</span><span class="s5">&lt;/h1&gt;</span>
+
+      <span class="s5">&lt;input</span>
+        <span class="s2">type</span><span class="s3">=&quot;text&quot;</span>
+        <span class="s2">placeholder</span><span class="s3">=&quot;Enter username&quot;</span>
+        <span class="s2">value</span><span class="s3">=</span><span class="s2">{</span><span class="s1">username</span><span class="s2">}</span>
+        <span class="s2">onChange</span><span class="s3">=</span><span class="s2">{(</span><span class="s1">e</span><span class="s2">) =&gt; </span><span class="s1">setUsername</span><span class="s2">(</span><span class="s1">e</span><span class="s2">.</span><span class="s1">target</span><span class="s2">.</span><span class="s1">value</span><span class="s2">)}</span>
+        <span class="s2">style</span><span class="s3">=</span><span class="s2">{{ </span><span class="s1">display</span><span class="s2">: </span><span class="s3">&quot;block&quot;</span><span class="s2">, </span><span class="s1">marginBottom</span><span class="s2">: </span><span class="s3">&quot;1rem&quot; </span><span class="s2">}}</span>
+      <span class="s5">/&gt;</span>
+
+      <span class="s5">&lt;input</span>
+        <span class="s2">type</span><span class="s3">=&quot;password&quot;</span>
+        <span class="s2">placeholder</span><span class="s3">=&quot;Enter password&quot;</span>
+        <span class="s2">value</span><span class="s3">=</span><span class="s2">{</span><span class="s1">password</span><span class="s2">}</span>
+        <span class="s2">onChange</span><span class="s3">=</span><span class="s2">{(</span><span class="s1">e</span><span class="s2">) =&gt; </span><span class="s1">setPassword</span><span class="s2">(</span><span class="s1">e</span><span class="s2">.</span><span class="s1">target</span><span class="s2">.</span><span class="s1">value</span><span class="s2">)}</span>
+        <span class="s2">style</span><span class="s3">=</span><span class="s2">{{ </span><span class="s1">display</span><span class="s2">: </span><span class="s3">&quot;block&quot;</span><span class="s2">, </span><span class="s1">marginBottom</span><span class="s2">: </span><span class="s3">&quot;1rem&quot; </span><span class="s2">}}</span>
+      <span class="s5">/&gt;</span>
+
+      <span class="s5">&lt;button </span><span class="s2">onClick</span><span class="s3">=</span><span class="s2">{</span><span class="s1">handleLogin</span><span class="s2">}</span><span class="s5">&gt;</span><span class="s1">Login</span><span class="s5">&lt;/button&gt;</span>
+
+      <span class="s5">&lt;button </span><span class="s2">onClick</span><span class="s3">=</span><span class="s2">{() =&gt; </span><span class="s1">navigate</span><span class="s2">(</span><span class="s3">&quot;/register&quot;</span><span class="s2">)} style</span><span class="s3">=</span><span class="s2">{{ </span><span class="s1">marginLeft</span><span class="s2">: </span><span class="s3">&quot;1rem&quot; </span><span class="s2">}}</span><span class="s5">&gt;</span>
+        <span class="s1">Create New Account</span>
+      <span class="s5">&lt;/button&gt;</span>
+    <span class="s5">&lt;/div&gt;</span>
+  <span class="s2">);</span>
+<span class="s2">}</span>
+
+<span class="s0">export default </span><span class="s1">LoginPage</span><span class="s2">;</span></pre>
+</body>
+</html>

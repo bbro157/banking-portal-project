@@ -1,0 +1,129 @@
+<html>
+<head>
+<title>Dashboard.jsx</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #7a7e85;}
+.s5 { color: #2aacb8;}
+.s6 { color: #d5b778;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Dashboard.jsx</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s2">{ </span><span class="s1">useEffect</span><span class="s2">, </span><span class="s1">useState </span><span class="s2">} </span><span class="s1">from </span><span class="s3">&quot;react&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s2">{ </span><span class="s1">useNavigate</span><span class="s2">, </span><span class="s1">useParams </span><span class="s2">} </span><span class="s1">from </span><span class="s3">&quot;react-router-dom&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">API from </span><span class="s3">&quot;../api&quot;</span><span class="s2">;</span>
+
+<span class="s0">function </span><span class="s1">Dashboard</span><span class="s2">() {</span>
+  <span class="s0">const </span><span class="s2">{ </span><span class="s1">userId </span><span class="s2">} = </span><span class="s1">useParams</span><span class="s2">();</span>
+  <span class="s0">const </span><span class="s1">navigate </span><span class="s2">= </span><span class="s1">useNavigate</span><span class="s2">();</span>
+  <span class="s0">const </span><span class="s2">[</span><span class="s1">accounts</span><span class="s2">, </span><span class="s1">setAccounts</span><span class="s2">] = </span><span class="s1">useState</span><span class="s2">([]);</span>
+  <span class="s0">const </span><span class="s2">[</span><span class="s1">searchAccountId</span><span class="s2">, </span><span class="s1">setSearchAccountId</span><span class="s2">] = </span><span class="s1">useState</span><span class="s2">(</span><span class="s3">&quot;&quot;</span><span class="s2">);</span>
+  <span class="s0">const </span><span class="s2">[</span><span class="s1">transactions</span><span class="s2">, </span><span class="s1">setTransactions</span><span class="s2">] = </span><span class="s1">useState</span><span class="s2">([]);</span>
+  <span class="s0">const </span><span class="s2">[</span><span class="s1">message</span><span class="s2">, </span><span class="s1">setMessage</span><span class="s2">] = </span><span class="s1">useState</span><span class="s2">(</span><span class="s3">&quot;&quot;</span><span class="s2">);</span>
+
+  <span class="s1">useEffect</span><span class="s2">(() =&gt; {</span>
+    <span class="s0">const </span><span class="s1">fetchAccounts </span><span class="s2">= </span><span class="s1">async </span><span class="s2">() =&gt; {</span>
+      <span class="s0">try </span><span class="s2">{</span>
+        <span class="s0">const </span><span class="s1">response </span><span class="s2">= </span><span class="s0">await </span><span class="s1">API</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s3">`/accounts/</span><span class="s1">$</span><span class="s2">{</span><span class="s1">userId</span><span class="s2">}</span><span class="s3">`</span><span class="s2">);</span>
+        <span class="s1">setAccounts</span><span class="s2">(</span><span class="s1">response</span><span class="s2">.</span><span class="s1">data</span><span class="s2">);</span>
+      <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">error</span><span class="s2">) {</span>
+        <span class="s1">console</span><span class="s2">.</span><span class="s1">error</span><span class="s2">(</span><span class="s3">&quot;Error fetching accounts:&quot;</span><span class="s2">, </span><span class="s1">error</span><span class="s2">);</span>
+      <span class="s2">}</span>
+    <span class="s2">};</span>
+
+    <span class="s1">fetchAccounts</span><span class="s2">();</span>
+  <span class="s2">}, [</span><span class="s1">userId</span><span class="s2">]);</span>
+
+ <span class="s0">const </span><span class="s1">handleLogout </span><span class="s2">= () =&gt; {</span>
+  <span class="s1">localStorage</span><span class="s2">.</span><span class="s1">removeItem</span><span class="s2">(</span><span class="s3">&quot;token&quot;</span><span class="s2">); </span><span class="s4">// remove JWT</span>
+  <span class="s1">navigate</span><span class="s2">(</span><span class="s3">&quot;/&quot;</span><span class="s2">);</span>
+<span class="s2">};</span>
+
+  <span class="s0">const </span><span class="s1">handleSearchTransactions </span><span class="s2">= </span><span class="s1">async </span><span class="s2">() =&gt; {</span>
+    <span class="s1">setMessage</span><span class="s2">(</span><span class="s3">&quot;&quot;</span><span class="s2">);</span>
+    <span class="s1">setTransactions</span><span class="s2">([]);</span>
+
+    <span class="s0">if </span><span class="s2">(!</span><span class="s1">searchAccountId</span><span class="s2">) {</span>
+      <span class="s1">setMessage</span><span class="s2">(</span><span class="s3">&quot;Please enter an account ID.&quot;</span><span class="s2">);</span>
+      <span class="s0">return</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">try </span><span class="s2">{</span>
+      <span class="s0">const </span><span class="s1">response </span><span class="s2">= </span><span class="s0">await </span><span class="s1">API</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s3">`/transactions/</span><span class="s1">$</span><span class="s2">{</span><span class="s1">searchAccountId</span><span class="s2">}</span><span class="s3">`</span><span class="s2">);</span>
+      <span class="s1">setTransactions</span><span class="s2">(</span><span class="s1">response</span><span class="s2">.</span><span class="s1">data</span><span class="s2">);</span>
+
+      <span class="s0">if </span><span class="s2">(</span><span class="s1">response</span><span class="s2">.</span><span class="s1">data</span><span class="s2">.</span><span class="s1">length </span><span class="s2">=== </span><span class="s5">0</span><span class="s2">) {</span>
+        <span class="s1">setMessage</span><span class="s2">(</span><span class="s3">&quot;No transactions found for that account.&quot;</span><span class="s2">);</span>
+      <span class="s2">}</span>
+    <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">error</span><span class="s2">) {</span>
+      <span class="s1">console</span><span class="s2">.</span><span class="s1">error</span><span class="s2">(</span><span class="s3">&quot;Error fetching transactions:&quot;</span><span class="s2">, </span><span class="s1">error</span><span class="s2">);</span>
+      <span class="s1">setMessage</span><span class="s2">(</span><span class="s3">&quot;Could not fetch transactions.&quot;</span><span class="s2">);</span>
+    <span class="s2">}</span>
+  <span class="s2">};</span>
+
+  <span class="s0">return </span><span class="s2">(</span>
+    <span class="s6">&lt;div </span><span class="s2">style</span><span class="s3">=</span><span class="s2">{{ </span><span class="s1">padding</span><span class="s2">: </span><span class="s3">&quot;2rem&quot; </span><span class="s2">}}</span><span class="s6">&gt;</span>
+      <span class="s6">&lt;h1&gt;</span><span class="s1">Dashboard</span><span class="s6">&lt;/h1&gt;</span>
+      <span class="s6">&lt;h2&gt;</span><span class="s1">User ID: </span><span class="s2">{</span><span class="s1">userId</span><span class="s2">}</span><span class="s6">&lt;/h2&gt;</span>
+
+      <span class="s6">&lt;button </span><span class="s2">onClick</span><span class="s3">=</span><span class="s2">{() =&gt; </span><span class="s1">navigate</span><span class="s2">(</span><span class="s3">`/transfer/</span><span class="s1">$</span><span class="s2">{</span><span class="s1">userId</span><span class="s2">}</span><span class="s3">`</span><span class="s2">)}</span><span class="s6">&gt;</span>
+        <span class="s1">Go to Transfer Page</span>
+      <span class="s6">&lt;/button&gt;</span>
+
+      <span class="s6">&lt;button </span><span class="s2">onClick</span><span class="s3">=</span><span class="s2">{</span><span class="s1">handleLogout</span><span class="s2">} style</span><span class="s3">=</span><span class="s2">{{ </span><span class="s1">marginLeft</span><span class="s2">: </span><span class="s3">&quot;1rem&quot; </span><span class="s2">}}</span><span class="s6">&gt;</span>
+        <span class="s1">Logout</span>
+      <span class="s6">&lt;/button&gt;</span>
+
+      <span class="s6">&lt;h3 </span><span class="s2">style</span><span class="s3">=</span><span class="s2">{{ </span><span class="s1">marginTop</span><span class="s2">: </span><span class="s3">&quot;2rem&quot; </span><span class="s2">}}</span><span class="s6">&gt;</span><span class="s1">Accounts</span><span class="s6">&lt;/h3&gt;</span>
+      <span class="s2">{</span><span class="s1">accounts</span><span class="s2">.</span><span class="s1">length </span><span class="s2">=== </span><span class="s5">0 </span><span class="s2">? (</span>
+        <span class="s6">&lt;p&gt;</span><span class="s1">No accounts found.</span><span class="s6">&lt;/p&gt;</span>
+      <span class="s2">) : (</span>
+        <span class="s6">&lt;ul&gt;</span>
+          <span class="s2">{</span><span class="s1">accounts</span><span class="s2">.</span><span class="s1">map</span><span class="s2">((</span><span class="s1">account</span><span class="s2">) =&gt; (</span>
+            <span class="s6">&lt;li </span><span class="s2">key</span><span class="s3">=</span><span class="s2">{</span><span class="s1">account</span><span class="s2">[</span><span class="s5">0</span><span class="s2">]}</span><span class="s6">&gt;</span>
+              <span class="s6">&lt;strong&gt;</span><span class="s2">{</span><span class="s1">account</span><span class="s2">[</span><span class="s5">1</span><span class="s2">]}</span><span class="s6">&lt;/strong&gt; </span><span class="s1">| Account ID: </span><span class="s2">{</span><span class="s1">account</span><span class="s2">[</span><span class="s5">0</span><span class="s2">]} </span><span class="s1">| Balance: $</span><span class="s2">{</span><span class="s1">account</span><span class="s2">[</span><span class="s5">2</span><span class="s2">]} </span><span class="s1">| Account #: </span><span class="s2">{</span><span class="s1">account</span><span class="s2">[</span><span class="s5">3</span><span class="s2">]}</span>
+            <span class="s6">&lt;/li&gt;</span>
+          <span class="s2">))}</span>
+        <span class="s6">&lt;/ul&gt;</span>
+      <span class="s2">)}</span>
+
+      <span class="s6">&lt;h3 </span><span class="s2">style</span><span class="s3">=</span><span class="s2">{{ </span><span class="s1">marginTop</span><span class="s2">: </span><span class="s3">&quot;2rem&quot; </span><span class="s2">}}</span><span class="s6">&gt;</span><span class="s1">Search Transactions by Account ID</span><span class="s6">&lt;/h3&gt;</span>
+      <span class="s6">&lt;input</span>
+        <span class="s2">type</span><span class="s3">=&quot;text&quot;</span>
+        <span class="s2">placeholder</span><span class="s3">=&quot;Enter any account ID&quot;</span>
+        <span class="s2">value</span><span class="s3">=</span><span class="s2">{</span><span class="s1">searchAccountId</span><span class="s2">}</span>
+        <span class="s2">onChange</span><span class="s3">=</span><span class="s2">{(</span><span class="s1">e</span><span class="s2">) =&gt; </span><span class="s1">setSearchAccountId</span><span class="s2">(</span><span class="s1">e</span><span class="s2">.</span><span class="s1">target</span><span class="s2">.</span><span class="s1">value</span><span class="s2">)}</span>
+        <span class="s2">style</span><span class="s3">=</span><span class="s2">{{ </span><span class="s1">marginRight</span><span class="s2">: </span><span class="s3">&quot;1rem&quot;</span><span class="s2">, </span><span class="s1">padding</span><span class="s2">: </span><span class="s3">&quot;0.5rem&quot; </span><span class="s2">}}</span>
+      <span class="s6">/&gt;</span>
+      <span class="s6">&lt;button </span><span class="s2">onClick</span><span class="s3">=</span><span class="s2">{</span><span class="s1">handleSearchTransactions</span><span class="s2">}</span><span class="s6">&gt;</span><span class="s1">Search</span><span class="s6">&lt;/button&gt;</span>
+
+      <span class="s2">{</span><span class="s1">message </span><span class="s2">&amp;&amp; </span><span class="s6">&lt;p </span><span class="s2">style</span><span class="s3">=</span><span class="s2">{{ </span><span class="s1">marginTop</span><span class="s2">: </span><span class="s3">&quot;1rem&quot; </span><span class="s2">}}</span><span class="s6">&gt;</span><span class="s2">{</span><span class="s1">message</span><span class="s2">}</span><span class="s6">&lt;/p&gt;</span><span class="s2">}</span>
+
+      <span class="s2">{</span><span class="s1">transactions</span><span class="s2">.</span><span class="s1">length </span><span class="s2">&gt; </span><span class="s5">0 </span><span class="s2">&amp;&amp; (</span>
+        <span class="s6">&lt;div </span><span class="s2">style</span><span class="s3">=</span><span class="s2">{{ </span><span class="s1">marginTop</span><span class="s2">: </span><span class="s3">&quot;2rem&quot; </span><span class="s2">}}</span><span class="s6">&gt;</span>
+          <span class="s6">&lt;h3&gt;</span><span class="s1">Transactions</span><span class="s6">&lt;/h3&gt;</span>
+          <span class="s6">&lt;ul&gt;</span>
+            <span class="s2">{</span><span class="s1">transactions</span><span class="s2">.</span><span class="s1">map</span><span class="s2">((</span><span class="s1">transaction</span><span class="s2">) =&gt; (</span>
+              <span class="s6">&lt;li </span><span class="s2">key</span><span class="s3">=</span><span class="s2">{</span><span class="s1">transaction</span><span class="s2">[</span><span class="s5">0</span><span class="s2">]}</span><span class="s6">&gt;</span>
+                <span class="s1">Transaction ID: </span><span class="s2">{</span><span class="s1">transaction</span><span class="s2">[</span><span class="s5">0</span><span class="s2">]} </span><span class="s1">| From: </span><span class="s2">{</span><span class="s1">String</span><span class="s2">(</span><span class="s1">transaction</span><span class="s2">[</span><span class="s5">1</span><span class="s2">])} </span><span class="s1">| To: </span><span class="s2">{</span><span class="s1">String</span><span class="s2">(</span><span class="s1">transaction</span><span class="s2">[</span><span class="s5">2</span><span class="s2">])} </span><span class="s1">| Amount: $</span><span class="s2">{</span><span class="s1">transaction</span><span class="s2">[</span><span class="s5">3</span><span class="s2">]} </span><span class="s1">| Type: </span><span class="s2">{</span><span class="s1">transaction</span><span class="s2">[</span><span class="s5">4</span><span class="s2">]} </span><span class="s1">| Date: </span><span class="s2">{</span><span class="s1">String</span><span class="s2">(</span><span class="s1">transaction</span><span class="s2">[</span><span class="s5">5</span><span class="s2">])}</span>
+              <span class="s6">&lt;/li&gt;</span>
+            <span class="s2">))}</span>
+          <span class="s6">&lt;/ul&gt;</span>
+        <span class="s6">&lt;/div&gt;</span>
+      <span class="s2">)}</span>
+    <span class="s6">&lt;/div&gt;</span>
+  <span class="s2">);</span>
+<span class="s2">}</span>
+
+<span class="s0">export default </span><span class="s1">Dashboard</span><span class="s2">;</span></pre>
+</body>
+</html>

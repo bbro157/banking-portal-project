@@ -1,0 +1,118 @@
+<html>
+<head>
+<title>json-schema-generator.js</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #5f826b; font-style: italic;}
+.s5 { color: #67a37c; font-style: italic;}
+.s6 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+json-schema-generator.js</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s2">{ </span><span class="s1">allProcessors </span><span class="s2">} </span><span class="s1">from </span><span class="s3">&quot;./json-schema-processors.js&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s2">{ </span><span class="s1">extractDefs</span><span class="s2">, </span><span class="s1">finalize</span><span class="s2">, </span><span class="s1">initializeContext</span><span class="s2">, </span><span class="s1">process</span><span class="s2">, } </span><span class="s1">from </span><span class="s3">&quot;./to-json-schema.js&quot;</span><span class="s2">;</span>
+<span class="s4">/**</span>
+ <span class="s4">* Legacy class-based interface for JSON Schema generation.</span>
+ <span class="s4">* This class wraps the new functional implementation to provide backward compatibility.</span>
+ <span class="s4">*</span>
+ <span class="s4">* </span><span class="s5">@deprecated </span><span class="s4">Use the `toJSONSchema` function instead for new code.</span>
+ <span class="s4">*</span>
+ <span class="s4">* </span><span class="s5">@example</span>
+ <span class="s4">* ```typescript</span>
+ <span class="s4">* // Legacy usage (still supported)</span>
+ <span class="s4">* const gen = new JSONSchemaGenerator({ target: &quot;draft-07&quot; });</span>
+ <span class="s4">* gen.process(schema);</span>
+ <span class="s4">* const result = gen.emit(schema);</span>
+ <span class="s4">*</span>
+ <span class="s4">* // Preferred modern usage</span>
+ <span class="s4">* const result = toJSONSchema(schema, { target: &quot;draft-07&quot; });</span>
+ <span class="s4">* ```</span>
+ <span class="s4">*/</span>
+<span class="s0">export class </span><span class="s1">JSONSchemaGenerator </span><span class="s2">{</span>
+    <span class="s4">/** </span><span class="s5">@deprecated </span><span class="s4">Access via ctx instead */</span>
+    <span class="s1">get metadataRegistry</span><span class="s2">() {</span>
+        <span class="s0">return this</span><span class="s2">.</span><span class="s1">ctx</span><span class="s2">.</span><span class="s1">metadataRegistry</span><span class="s2">;</span>
+    <span class="s2">}</span>
+    <span class="s4">/** </span><span class="s5">@deprecated </span><span class="s4">Access via ctx instead */</span>
+    <span class="s1">get target</span><span class="s2">() {</span>
+        <span class="s0">return this</span><span class="s2">.</span><span class="s1">ctx</span><span class="s2">.</span><span class="s1">target</span><span class="s2">;</span>
+    <span class="s2">}</span>
+    <span class="s4">/** </span><span class="s5">@deprecated </span><span class="s4">Access via ctx instead */</span>
+    <span class="s1">get unrepresentable</span><span class="s2">() {</span>
+        <span class="s0">return this</span><span class="s2">.</span><span class="s1">ctx</span><span class="s2">.</span><span class="s1">unrepresentable</span><span class="s2">;</span>
+    <span class="s2">}</span>
+    <span class="s4">/** </span><span class="s5">@deprecated </span><span class="s4">Access via ctx instead */</span>
+    <span class="s1">get override</span><span class="s2">() {</span>
+        <span class="s0">return this</span><span class="s2">.</span><span class="s1">ctx</span><span class="s2">.</span><span class="s1">override</span><span class="s2">;</span>
+    <span class="s2">}</span>
+    <span class="s4">/** </span><span class="s5">@deprecated </span><span class="s4">Access via ctx instead */</span>
+    <span class="s1">get io</span><span class="s2">() {</span>
+        <span class="s0">return this</span><span class="s2">.</span><span class="s1">ctx</span><span class="s2">.</span><span class="s1">io</span><span class="s2">;</span>
+    <span class="s2">}</span>
+    <span class="s4">/** </span><span class="s5">@deprecated </span><span class="s4">Access via ctx instead */</span>
+    <span class="s1">get counter</span><span class="s2">() {</span>
+        <span class="s0">return this</span><span class="s2">.</span><span class="s1">ctx</span><span class="s2">.</span><span class="s1">counter</span><span class="s2">;</span>
+    <span class="s2">}</span>
+    <span class="s1">set counter</span><span class="s2">(</span><span class="s1">value</span><span class="s2">) {</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">ctx</span><span class="s2">.</span><span class="s1">counter </span><span class="s2">= </span><span class="s1">value</span><span class="s2">;</span>
+    <span class="s2">}</span>
+    <span class="s4">/** </span><span class="s5">@deprecated </span><span class="s4">Access via ctx instead */</span>
+    <span class="s1">get seen</span><span class="s2">() {</span>
+        <span class="s0">return this</span><span class="s2">.</span><span class="s1">ctx</span><span class="s2">.</span><span class="s1">seen</span><span class="s2">;</span>
+    <span class="s2">}</span>
+    <span class="s1">constructor</span><span class="s2">(</span><span class="s1">params</span><span class="s2">) {</span>
+        <span class="s6">// Normalize target for internal context</span>
+        <span class="s0">let </span><span class="s1">normalizedTarget </span><span class="s2">= </span><span class="s1">params</span><span class="s2">?.</span><span class="s1">target </span><span class="s2">?? </span><span class="s3">&quot;draft-2020-12&quot;</span><span class="s2">;</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">normalizedTarget </span><span class="s2">=== </span><span class="s3">&quot;draft-4&quot;</span><span class="s2">)</span>
+            <span class="s1">normalizedTarget </span><span class="s2">= </span><span class="s3">&quot;draft-04&quot;</span><span class="s2">;</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">normalizedTarget </span><span class="s2">=== </span><span class="s3">&quot;draft-7&quot;</span><span class="s2">)</span>
+            <span class="s1">normalizedTarget </span><span class="s2">= </span><span class="s3">&quot;draft-07&quot;</span><span class="s2">;</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">ctx </span><span class="s2">= </span><span class="s1">initializeContext</span><span class="s2">({</span>
+            <span class="s1">processors</span><span class="s2">: </span><span class="s1">allProcessors</span><span class="s2">,</span>
+            <span class="s1">target</span><span class="s2">: </span><span class="s1">normalizedTarget</span><span class="s2">,</span>
+            <span class="s1">...</span><span class="s2">(</span><span class="s1">params</span><span class="s2">?.</span><span class="s1">metadata </span><span class="s2">&amp;&amp; { </span><span class="s1">metadata</span><span class="s2">: </span><span class="s1">params</span><span class="s2">.</span><span class="s1">metadata </span><span class="s2">}),</span>
+            <span class="s1">...</span><span class="s2">(</span><span class="s1">params</span><span class="s2">?.</span><span class="s1">unrepresentable </span><span class="s2">&amp;&amp; { </span><span class="s1">unrepresentable</span><span class="s2">: </span><span class="s1">params</span><span class="s2">.</span><span class="s1">unrepresentable </span><span class="s2">}),</span>
+            <span class="s1">...</span><span class="s2">(</span><span class="s1">params</span><span class="s2">?.</span><span class="s1">override </span><span class="s2">&amp;&amp; { </span><span class="s1">override</span><span class="s2">: </span><span class="s1">params</span><span class="s2">.</span><span class="s1">override </span><span class="s2">}),</span>
+            <span class="s1">...</span><span class="s2">(</span><span class="s1">params</span><span class="s2">?.</span><span class="s1">io </span><span class="s2">&amp;&amp; { </span><span class="s1">io</span><span class="s2">: </span><span class="s1">params</span><span class="s2">.</span><span class="s1">io </span><span class="s2">}),</span>
+        <span class="s2">});</span>
+    <span class="s2">}</span>
+    <span class="s4">/**</span>
+     <span class="s4">* Process a schema to prepare it for JSON Schema generation.</span>
+     <span class="s4">* This must be called before emit().</span>
+     <span class="s4">*/</span>
+    <span class="s1">process</span><span class="s2">(</span><span class="s1">schema</span><span class="s2">, </span><span class="s1">_params </span><span class="s2">= { </span><span class="s1">path</span><span class="s2">: [], </span><span class="s1">schemaPath</span><span class="s2">: [] }) {</span>
+        <span class="s0">return </span><span class="s1">process</span><span class="s2">(</span><span class="s1">schema</span><span class="s2">, </span><span class="s0">this</span><span class="s2">.</span><span class="s1">ctx</span><span class="s2">, </span><span class="s1">_params</span><span class="s2">);</span>
+    <span class="s2">}</span>
+    <span class="s4">/**</span>
+     <span class="s4">* Emit the final JSON Schema after processing.</span>
+     <span class="s4">* Must call process() first.</span>
+     <span class="s4">*/</span>
+    <span class="s1">emit</span><span class="s2">(</span><span class="s1">schema</span><span class="s2">, </span><span class="s1">_params</span><span class="s2">) {</span>
+        <span class="s6">// Apply emit params to the context</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">_params</span><span class="s2">) {</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">_params</span><span class="s2">.</span><span class="s1">cycles</span><span class="s2">)</span>
+                <span class="s0">this</span><span class="s2">.</span><span class="s1">ctx</span><span class="s2">.</span><span class="s1">cycles </span><span class="s2">= </span><span class="s1">_params</span><span class="s2">.</span><span class="s1">cycles</span><span class="s2">;</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">_params</span><span class="s2">.</span><span class="s1">reused</span><span class="s2">)</span>
+                <span class="s0">this</span><span class="s2">.</span><span class="s1">ctx</span><span class="s2">.</span><span class="s1">reused </span><span class="s2">= </span><span class="s1">_params</span><span class="s2">.</span><span class="s1">reused</span><span class="s2">;</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">_params</span><span class="s2">.</span><span class="s1">external</span><span class="s2">)</span>
+                <span class="s0">this</span><span class="s2">.</span><span class="s1">ctx</span><span class="s2">.</span><span class="s1">external </span><span class="s2">= </span><span class="s1">_params</span><span class="s2">.</span><span class="s1">external</span><span class="s2">;</span>
+        <span class="s2">}</span>
+        <span class="s1">extractDefs</span><span class="s2">(</span><span class="s0">this</span><span class="s2">.</span><span class="s1">ctx</span><span class="s2">, </span><span class="s1">schema</span><span class="s2">);</span>
+        <span class="s0">const </span><span class="s1">result </span><span class="s2">= </span><span class="s1">finalize</span><span class="s2">(</span><span class="s0">this</span><span class="s2">.</span><span class="s1">ctx</span><span class="s2">, </span><span class="s1">schema</span><span class="s2">);</span>
+        <span class="s6">// Strip ~standard property to match old implementation's return type</span>
+        <span class="s0">const </span><span class="s2">{ </span><span class="s3">&quot;~standard&quot;</span><span class="s2">: </span><span class="s1">_</span><span class="s2">, </span><span class="s1">...plainResult </span><span class="s2">} = </span><span class="s1">result</span><span class="s2">;</span>
+        <span class="s0">return </span><span class="s1">plainResult</span><span class="s2">;</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

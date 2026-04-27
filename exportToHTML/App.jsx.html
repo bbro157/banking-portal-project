@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>App.jsx</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #d5b778;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+App.jsx</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s2">{ </span><span class="s1">BrowserRouter</span><span class="s2">, </span><span class="s1">Routes</span><span class="s2">, </span><span class="s1">Route </span><span class="s2">} </span><span class="s1">from </span><span class="s3">&quot;react-router-dom&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">LoginPage from </span><span class="s3">&quot;./pages/LoginPage.jsx&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">Dashboard from </span><span class="s3">&quot;./pages/Dashboard.jsx&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">TransferPage from </span><span class="s3">&quot;./pages/TransferPage.jsx&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">RegisterPage from </span><span class="s3">&quot;./pages/RegisterPage&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">AdminPage from </span><span class="s3">&quot;./pages/AdminPage&quot;</span><span class="s2">;</span>
+
+<span class="s0">function </span><span class="s1">App</span><span class="s2">() {</span>
+  <span class="s0">return </span><span class="s2">(</span>
+    <span class="s4">&lt;BrowserRouter&gt;</span>
+      <span class="s4">&lt;Routes&gt;</span>
+        <span class="s4">&lt;Route </span><span class="s2">path</span><span class="s3">=&quot;/&quot; </span><span class="s2">element</span><span class="s3">=</span><span class="s2">{</span><span class="s4">&lt;LoginPage /&gt;</span><span class="s2">} </span><span class="s4">/&gt;</span>
+        <span class="s4">&lt;Route </span><span class="s2">path</span><span class="s3">=&quot;/dashboard/:userId&quot; </span><span class="s2">element</span><span class="s3">=</span><span class="s2">{</span><span class="s4">&lt;Dashboard /&gt;</span><span class="s2">} </span><span class="s4">/&gt;</span>
+        <span class="s4">&lt;Route </span><span class="s2">path</span><span class="s3">=&quot;/transfer/:userId&quot; </span><span class="s2">element</span><span class="s3">=</span><span class="s2">{</span><span class="s4">&lt;TransferPage /&gt;</span><span class="s2">} </span><span class="s4">/&gt;</span>
+          <span class="s4">&lt;Route </span><span class="s2">path</span><span class="s3">=&quot;/register&quot; </span><span class="s2">element</span><span class="s3">=</span><span class="s2">{</span><span class="s4">&lt;RegisterPage /&gt;</span><span class="s2">} </span><span class="s4">/&gt;</span>
+          <span class="s4">&lt;Route </span><span class="s2">path</span><span class="s3">=&quot;/admin&quot; </span><span class="s2">element</span><span class="s3">=</span><span class="s2">{</span><span class="s4">&lt;AdminPage /&gt;</span><span class="s2">} </span><span class="s4">/&gt;</span>
+      <span class="s4">&lt;/Routes&gt;</span>
+    <span class="s4">&lt;/BrowserRouter&gt;</span>
+  <span class="s2">);</span>
+<span class="s2">}</span>
+
+<span class="s0">export default </span><span class="s1">App</span><span class="s2">;</span></pre>
+</body>
+</html>

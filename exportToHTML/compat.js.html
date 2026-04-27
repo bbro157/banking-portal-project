@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>compat.js</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #7a7e85;}
+.s1 { color: #bcbec4;}
+.s2 { color: #cf8e6d;}
+.s3 { color: #bcbec4;}
+.s4 { color: #6aab73;}
+.s5 { color: #5f826b; font-style: italic;}
+.s6 { color: #67a37c; font-style: italic;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+compat.js</font>
+</center></td></tr></table>
+<pre><span class="s0">// Zod 3 compat layer</span>
+<span class="s2">import </span><span class="s3">* as </span><span class="s1">core from </span><span class="s4">&quot;../core/index.js&quot;</span><span class="s3">;</span>
+<span class="s5">/** </span><span class="s6">@deprecated </span><span class="s5">Use the raw string literal codes instead, e.g. &quot;invalid_type&quot;. */</span>
+<span class="s2">export const </span><span class="s1">ZodIssueCode </span><span class="s3">= {</span>
+    <span class="s1">invalid_type</span><span class="s3">: </span><span class="s4">&quot;invalid_type&quot;</span><span class="s3">,</span>
+    <span class="s1">too_big</span><span class="s3">: </span><span class="s4">&quot;too_big&quot;</span><span class="s3">,</span>
+    <span class="s1">too_small</span><span class="s3">: </span><span class="s4">&quot;too_small&quot;</span><span class="s3">,</span>
+    <span class="s1">invalid_format</span><span class="s3">: </span><span class="s4">&quot;invalid_format&quot;</span><span class="s3">,</span>
+    <span class="s1">not_multiple_of</span><span class="s3">: </span><span class="s4">&quot;not_multiple_of&quot;</span><span class="s3">,</span>
+    <span class="s1">unrecognized_keys</span><span class="s3">: </span><span class="s4">&quot;unrecognized_keys&quot;</span><span class="s3">,</span>
+    <span class="s1">invalid_union</span><span class="s3">: </span><span class="s4">&quot;invalid_union&quot;</span><span class="s3">,</span>
+    <span class="s1">invalid_key</span><span class="s3">: </span><span class="s4">&quot;invalid_key&quot;</span><span class="s3">,</span>
+    <span class="s1">invalid_element</span><span class="s3">: </span><span class="s4">&quot;invalid_element&quot;</span><span class="s3">,</span>
+    <span class="s1">invalid_value</span><span class="s3">: </span><span class="s4">&quot;invalid_value&quot;</span><span class="s3">,</span>
+    <span class="s1">custom</span><span class="s3">: </span><span class="s4">&quot;custom&quot;</span><span class="s3">,</span>
+<span class="s3">};</span>
+<span class="s2">export </span><span class="s3">{ </span><span class="s1">$brand</span><span class="s3">, </span><span class="s1">config </span><span class="s3">} </span><span class="s1">from </span><span class="s4">&quot;../core/index.js&quot;</span><span class="s3">;</span>
+<span class="s5">/** </span><span class="s6">@deprecated </span><span class="s5">Use `z.config(params)` instead. */</span>
+<span class="s2">export function </span><span class="s1">setErrorMap</span><span class="s3">(</span><span class="s1">map</span><span class="s3">) {</span>
+    <span class="s1">core</span><span class="s3">.</span><span class="s1">config</span><span class="s3">({</span>
+        <span class="s1">customError</span><span class="s3">: </span><span class="s1">map</span><span class="s3">,</span>
+    <span class="s3">});</span>
+<span class="s3">}</span>
+<span class="s5">/** </span><span class="s6">@deprecated </span><span class="s5">Use `z.config()` instead. */</span>
+<span class="s2">export function </span><span class="s1">getErrorMap</span><span class="s3">() {</span>
+    <span class="s2">return </span><span class="s1">core</span><span class="s3">.</span><span class="s1">config</span><span class="s3">().</span><span class="s1">customError</span><span class="s3">;</span>
+<span class="s3">}</span>
+<span class="s5">/** </span><span class="s6">@deprecated </span><span class="s5">Do not use. Stub definition, only included for zod-to-json-schema compatibility. */</span>
+<span class="s2">export var </span><span class="s1">ZodFirstPartyTypeKind</span><span class="s3">;</span>
+<span class="s3">(</span><span class="s2">function </span><span class="s3">(</span><span class="s1">ZodFirstPartyTypeKind</span><span class="s3">) {</span>
+<span class="s3">})(</span><span class="s1">ZodFirstPartyTypeKind </span><span class="s3">|| (</span><span class="s1">ZodFirstPartyTypeKind </span><span class="s3">= {}));</span>
+</pre>
+</body>
+</html>

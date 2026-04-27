@@ -1,0 +1,137 @@
+<html>
+<head>
+<title>to-json-schema.d.ts</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #5f826b; font-style: italic;}
+.s5 { color: #67a37c; font-style: italic;}
+.s6 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+to-json-schema.d.ts</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">type </span><span class="s2">* as </span><span class="s1">core from </span><span class="s3">&quot;../core/index.js&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">type </span><span class="s2">* as </span><span class="s1">JSONSchema from </span><span class="s3">&quot;./json-schema.js&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s2">{ </span><span class="s1">type $ZodRegistry </span><span class="s2">} </span><span class="s1">from </span><span class="s3">&quot;./registries.js&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">type </span><span class="s2">* as </span><span class="s1">schemas from </span><span class="s3">&quot;./schemas.js&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">type </span><span class="s2">{ </span><span class="s1">StandardJSONSchemaV1</span><span class="s2">, </span><span class="s1">StandardSchemaWithJSONProps </span><span class="s2">} </span><span class="s1">from </span><span class="s3">&quot;./standard-schema.js&quot;</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s1">type Processor</span><span class="s2">&lt;</span><span class="s1">T </span><span class="s0">extends </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">$ZodType </span><span class="s2">= </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">$ZodType</span><span class="s2">&gt; = (</span><span class="s1">schema</span><span class="s2">: </span><span class="s1">T</span><span class="s2">, </span><span class="s1">ctx</span><span class="s2">: </span><span class="s1">ToJSONSchemaContext</span><span class="s2">, </span><span class="s1">json</span><span class="s2">: </span><span class="s1">JSONSchema</span><span class="s2">.</span><span class="s1">BaseSchema</span><span class="s2">, </span><span class="s1">params</span><span class="s2">: </span><span class="s1">ProcessParams</span><span class="s2">) =&gt; </span><span class="s0">void</span><span class="s2">;</span>
+<span class="s0">export interface </span><span class="s1">JSONSchemaGeneratorParams </span><span class="s2">{</span>
+    <span class="s1">processors</span><span class="s2">: </span><span class="s1">Record</span><span class="s2">&lt;</span><span class="s1">string</span><span class="s2">, </span><span class="s1">Processor</span><span class="s2">&gt;;</span>
+    <span class="s4">/** A registry used to look up metadata for each schema. Any schema with an `id` property will be extracted as a $def.</span>
+     <span class="s4">*  </span><span class="s5">@default </span><span class="s4">globalRegistry */</span>
+    <span class="s1">metadata</span><span class="s2">?: </span><span class="s1">$ZodRegistry</span><span class="s2">&lt;</span><span class="s1">Record</span><span class="s2">&lt;</span><span class="s1">string</span><span class="s2">, </span><span class="s1">any</span><span class="s2">&gt;&gt;;</span>
+    <span class="s4">/** The JSON Schema version to target.</span>
+     <span class="s4">* - `&quot;draft-2020-12&quot;` — Default. JSON Schema Draft 2020-12</span>
+     <span class="s4">* - `&quot;draft-07&quot;` — JSON Schema Draft 7</span>
+     <span class="s4">* - `&quot;draft-04&quot;` — JSON Schema Draft 4</span>
+     <span class="s4">* - `&quot;openapi-3.0&quot;` — OpenAPI 3.0 Schema Object */</span>
+    <span class="s1">target</span><span class="s2">?: </span><span class="s3">&quot;draft-04&quot; </span><span class="s2">| </span><span class="s3">&quot;draft-07&quot; </span><span class="s2">| </span><span class="s3">&quot;draft-2020-12&quot; </span><span class="s2">| </span><span class="s3">&quot;openapi-3.0&quot; </span><span class="s2">| ({} &amp; </span><span class="s1">string</span><span class="s2">) | </span><span class="s1">undefined</span><span class="s2">;</span>
+    <span class="s4">/** How to handle unrepresentable types.</span>
+     <span class="s4">* - `&quot;throw&quot;` — Default. Unrepresentable types throw an error</span>
+     <span class="s4">* - `&quot;any&quot;` — Unrepresentable types become `{}` */</span>
+    <span class="s1">unrepresentable</span><span class="s2">?: </span><span class="s3">&quot;throw&quot; </span><span class="s2">| </span><span class="s3">&quot;any&quot;</span><span class="s2">;</span>
+    <span class="s4">/** Arbitrary custom logic that can be used to modify the generated JSON Schema. */</span>
+    <span class="s1">override</span><span class="s2">?: (</span><span class="s1">ctx</span><span class="s2">: {</span>
+        <span class="s1">zodSchema</span><span class="s2">: </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">$ZodTypes</span><span class="s2">;</span>
+        <span class="s1">jsonSchema</span><span class="s2">: </span><span class="s1">JSONSchema</span><span class="s2">.</span><span class="s1">BaseSchema</span><span class="s2">;</span>
+        <span class="s1">path</span><span class="s2">: (</span><span class="s1">string </span><span class="s2">| </span><span class="s1">number</span><span class="s2">)[];</span>
+    <span class="s2">}) =&gt; </span><span class="s0">void</span><span class="s2">;</span>
+    <span class="s4">/** Whether to extract the `&quot;input&quot;` or `&quot;output&quot;` type. Relevant to transforms, defaults, coerced primitives, etc.</span>
+     <span class="s4">* - `&quot;output&quot;` — Default. Convert the output schema.</span>
+     <span class="s4">* - `&quot;input&quot;` — Convert the input schema. */</span>
+    <span class="s1">io</span><span class="s2">?: </span><span class="s3">&quot;input&quot; </span><span class="s2">| </span><span class="s3">&quot;output&quot;</span><span class="s2">;</span>
+    <span class="s1">cycles</span><span class="s2">?: </span><span class="s3">&quot;ref&quot; </span><span class="s2">| </span><span class="s3">&quot;throw&quot;</span><span class="s2">;</span>
+    <span class="s1">reused</span><span class="s2">?: </span><span class="s3">&quot;ref&quot; </span><span class="s2">| </span><span class="s3">&quot;inline&quot;</span><span class="s2">;</span>
+    <span class="s1">external</span><span class="s2">?: {</span>
+        <span class="s1">registry</span><span class="s2">: </span><span class="s1">$ZodRegistry</span><span class="s2">&lt;{</span>
+            <span class="s1">id</span><span class="s2">?: </span><span class="s1">string </span><span class="s2">| </span><span class="s1">undefined</span><span class="s2">;</span>
+        <span class="s2">}&gt;;</span>
+        <span class="s1">uri</span><span class="s2">?: ((</span><span class="s1">id</span><span class="s2">: </span><span class="s1">string</span><span class="s2">) =&gt; </span><span class="s1">string</span><span class="s2">) | </span><span class="s1">undefined</span><span class="s2">;</span>
+        <span class="s1">defs</span><span class="s2">: </span><span class="s1">Record</span><span class="s2">&lt;</span><span class="s1">string</span><span class="s2">, </span><span class="s1">JSONSchema</span><span class="s2">.</span><span class="s1">BaseSchema</span><span class="s2">&gt;;</span>
+    <span class="s2">} | </span><span class="s1">undefined</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s4">/**</span>
+ <span class="s4">* Parameters for the toJSONSchema function.</span>
+ <span class="s4">*/</span>
+<span class="s0">export </span><span class="s1">type ToJSONSchemaParams </span><span class="s2">= </span><span class="s1">Omit</span><span class="s2">&lt;</span><span class="s1">JSONSchemaGeneratorParams</span><span class="s2">, </span><span class="s3">&quot;processors&quot; </span><span class="s2">| </span><span class="s3">&quot;external&quot;</span><span class="s2">&gt;;</span>
+<span class="s4">/**</span>
+ <span class="s4">* Parameters for the toJSONSchema function when passing a registry.</span>
+ <span class="s4">*/</span>
+<span class="s0">export interface </span><span class="s1">RegistryToJSONSchemaParams </span><span class="s0">extends </span><span class="s1">ToJSONSchemaParams </span><span class="s2">{</span>
+    <span class="s1">uri</span><span class="s2">?: (</span><span class="s1">id</span><span class="s2">: </span><span class="s1">string</span><span class="s2">) =&gt; </span><span class="s1">string</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s0">export interface </span><span class="s1">ProcessParams </span><span class="s2">{</span>
+    <span class="s1">schemaPath</span><span class="s2">: </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">$ZodType</span><span class="s2">[];</span>
+    <span class="s1">path</span><span class="s2">: (</span><span class="s1">string </span><span class="s2">| </span><span class="s1">number</span><span class="s2">)[];</span>
+<span class="s2">}</span>
+<span class="s0">export interface </span><span class="s1">Seen </span><span class="s2">{</span>
+    <span class="s4">/** JSON Schema result for this Zod schema */</span>
+    <span class="s1">schema</span><span class="s2">: </span><span class="s1">JSONSchema</span><span class="s2">.</span><span class="s1">BaseSchema</span><span class="s2">;</span>
+    <span class="s4">/** A cached version of the schema that doesn't get overwritten during ref resolution */</span>
+    <span class="s1">def</span><span class="s2">?: </span><span class="s1">JSONSchema</span><span class="s2">.</span><span class="s1">BaseSchema</span><span class="s2">;</span>
+    <span class="s1">defId</span><span class="s2">?: </span><span class="s1">string </span><span class="s2">| </span><span class="s1">undefined</span><span class="s2">;</span>
+    <span class="s4">/** Number of times this schema was encountered during traversal */</span>
+    <span class="s1">count</span><span class="s2">: </span><span class="s1">number</span><span class="s2">;</span>
+    <span class="s4">/** Cycle path */</span>
+    <span class="s1">cycle</span><span class="s2">?: (</span><span class="s1">string </span><span class="s2">| </span><span class="s1">number</span><span class="s2">)[] | </span><span class="s1">undefined</span><span class="s2">;</span>
+    <span class="s1">isParent</span><span class="s2">?: </span><span class="s1">boolean </span><span class="s2">| </span><span class="s1">undefined</span><span class="s2">;</span>
+    <span class="s4">/** Schema to inherit JSON Schema properties from (set by processor for wrappers) */</span>
+    <span class="s1">ref</span><span class="s2">?: </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">$ZodType </span><span class="s2">| </span><span class="s0">null</span><span class="s2">;</span>
+    <span class="s4">/** JSON Schema property path for this schema */</span>
+    <span class="s1">path</span><span class="s2">?: (</span><span class="s1">string </span><span class="s2">| </span><span class="s1">number</span><span class="s2">)[] | </span><span class="s1">undefined</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s0">export interface </span><span class="s1">ToJSONSchemaContext </span><span class="s2">{</span>
+    <span class="s1">processors</span><span class="s2">: </span><span class="s1">Record</span><span class="s2">&lt;</span><span class="s1">string</span><span class="s2">, </span><span class="s1">Processor</span><span class="s2">&gt;;</span>
+    <span class="s1">metadataRegistry</span><span class="s2">: </span><span class="s1">$ZodRegistry</span><span class="s2">&lt;</span><span class="s1">Record</span><span class="s2">&lt;</span><span class="s1">string</span><span class="s2">, </span><span class="s1">any</span><span class="s2">&gt;&gt;;</span>
+    <span class="s1">target</span><span class="s2">: </span><span class="s3">&quot;draft-04&quot; </span><span class="s2">| </span><span class="s3">&quot;draft-07&quot; </span><span class="s2">| </span><span class="s3">&quot;draft-2020-12&quot; </span><span class="s2">| </span><span class="s3">&quot;openapi-3.0&quot; </span><span class="s2">| ({} &amp; </span><span class="s1">string</span><span class="s2">);</span>
+    <span class="s1">unrepresentable</span><span class="s2">: </span><span class="s3">&quot;throw&quot; </span><span class="s2">| </span><span class="s3">&quot;any&quot;</span><span class="s2">;</span>
+    <span class="s1">override</span><span class="s2">: (</span><span class="s1">ctx</span><span class="s2">: {</span>
+        <span class="s1">zodSchema</span><span class="s2">: </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">$ZodType</span><span class="s2">;</span>
+        <span class="s1">jsonSchema</span><span class="s2">: </span><span class="s1">JSONSchema</span><span class="s2">.</span><span class="s1">BaseSchema</span><span class="s2">;</span>
+        <span class="s1">path</span><span class="s2">: (</span><span class="s1">string </span><span class="s2">| </span><span class="s1">number</span><span class="s2">)[];</span>
+    <span class="s2">}) =&gt; </span><span class="s0">void</span><span class="s2">;</span>
+    <span class="s1">io</span><span class="s2">: </span><span class="s3">&quot;input&quot; </span><span class="s2">| </span><span class="s3">&quot;output&quot;</span><span class="s2">;</span>
+    <span class="s1">counter</span><span class="s2">: </span><span class="s1">number</span><span class="s2">;</span>
+    <span class="s1">seen</span><span class="s2">: </span><span class="s1">Map</span><span class="s2">&lt;</span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">$ZodType</span><span class="s2">, </span><span class="s1">Seen</span><span class="s2">&gt;;</span>
+    <span class="s1">cycles</span><span class="s2">: </span><span class="s3">&quot;ref&quot; </span><span class="s2">| </span><span class="s3">&quot;throw&quot;</span><span class="s2">;</span>
+    <span class="s1">reused</span><span class="s2">: </span><span class="s3">&quot;ref&quot; </span><span class="s2">| </span><span class="s3">&quot;inline&quot;</span><span class="s2">;</span>
+    <span class="s1">external</span><span class="s2">?: {</span>
+        <span class="s1">registry</span><span class="s2">: </span><span class="s1">$ZodRegistry</span><span class="s2">&lt;{</span>
+            <span class="s1">id</span><span class="s2">?: </span><span class="s1">string </span><span class="s2">| </span><span class="s1">undefined</span><span class="s2">;</span>
+        <span class="s2">}&gt;;</span>
+        <span class="s1">uri</span><span class="s2">?: ((</span><span class="s1">id</span><span class="s2">: </span><span class="s1">string</span><span class="s2">) =&gt; </span><span class="s1">string</span><span class="s2">) | </span><span class="s1">undefined</span><span class="s2">;</span>
+        <span class="s1">defs</span><span class="s2">: </span><span class="s1">Record</span><span class="s2">&lt;</span><span class="s1">string</span><span class="s2">, </span><span class="s1">JSONSchema</span><span class="s2">.</span><span class="s1">BaseSchema</span><span class="s2">&gt;;</span>
+    <span class="s2">} | </span><span class="s1">undefined</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">function </span><span class="s1">initializeContext</span><span class="s2">(</span><span class="s1">params</span><span class="s2">: </span><span class="s1">JSONSchemaGeneratorParams</span><span class="s2">): </span><span class="s1">ToJSONSchemaContext</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">function </span><span class="s1">process</span><span class="s2">&lt;</span><span class="s1">T </span><span class="s0">extends </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">$ZodType</span><span class="s2">&gt;(</span><span class="s1">schema</span><span class="s2">: </span><span class="s1">T</span><span class="s2">, </span><span class="s1">ctx</span><span class="s2">: </span><span class="s1">ToJSONSchemaContext</span><span class="s2">, </span><span class="s1">_params</span><span class="s2">?: </span><span class="s1">ProcessParams</span><span class="s2">): </span><span class="s1">JSONSchema</span><span class="s2">.</span><span class="s1">BaseSchema</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">function </span><span class="s1">extractDefs</span><span class="s2">&lt;</span><span class="s1">T </span><span class="s0">extends </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">$ZodType</span><span class="s2">&gt;(</span><span class="s1">ctx</span><span class="s2">: </span><span class="s1">ToJSONSchemaContext</span><span class="s2">, </span><span class="s1">schema</span><span class="s2">: </span><span class="s1">T</span><span class="s2">): </span><span class="s0">void</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">function </span><span class="s1">finalize</span><span class="s2">&lt;</span><span class="s1">T </span><span class="s0">extends </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">$ZodType</span><span class="s2">&gt;(</span><span class="s1">ctx</span><span class="s2">: </span><span class="s1">ToJSONSchemaContext</span><span class="s2">, </span><span class="s1">schema</span><span class="s2">: </span><span class="s1">T</span><span class="s2">): </span><span class="s1">ZodStandardJSONSchemaPayload</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;;</span>
+<span class="s0">export </span><span class="s1">type ZodStandardSchemaWithJSON</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt; = </span><span class="s1">StandardSchemaWithJSONProps</span><span class="s2">&lt;</span><span class="s1">core</span><span class="s2">.</span><span class="s1">input</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;, </span><span class="s1">core</span><span class="s2">.</span><span class="s1">output</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;&gt;;</span>
+<span class="s0">export interface </span><span class="s1">ZodStandardJSONSchemaPayload</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt; </span><span class="s0">extends </span><span class="s1">JSONSchema</span><span class="s2">.</span><span class="s1">BaseSchema </span><span class="s2">{</span>
+    <span class="s3">&quot;~standard&quot;</span><span class="s2">: </span><span class="s1">ZodStandardSchemaWithJSON</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;;</span>
+<span class="s2">}</span>
+<span class="s4">/**</span>
+ <span class="s4">* Creates a toJSONSchema method for a schema instance.</span>
+ <span class="s4">* This encapsulates the logic of initializing context, processing, extracting defs, and finalizing.</span>
+ <span class="s4">*/</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">const </span><span class="s1">createToJSONSchemaMethod</span><span class="s2">: &lt;</span><span class="s1">T </span><span class="s0">extends </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">$ZodType</span><span class="s2">&gt;(</span><span class="s1">schema</span><span class="s2">: </span><span class="s1">T</span><span class="s2">, </span><span class="s1">processors</span><span class="s2">?: </span><span class="s1">Record</span><span class="s2">&lt;</span><span class="s1">string</span><span class="s2">, </span><span class="s1">Processor</span><span class="s2">&gt;) =&gt; (</span><span class="s1">params</span><span class="s2">?: </span><span class="s1">ToJSONSchemaParams</span><span class="s2">) =&gt; </span><span class="s1">ZodStandardJSONSchemaPayload</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;;</span>
+<span class="s4">/**</span>
+ <span class="s4">* Creates a toJSONSchema method for a schema instance.</span>
+ <span class="s4">* This encapsulates the logic of initializing context, processing, extracting defs, and finalizing.</span>
+ <span class="s4">*/</span>
+<span class="s1">type StandardJSONSchemaMethodParams </span><span class="s2">= </span><span class="s1">Parameters</span><span class="s2">&lt;</span><span class="s1">StandardJSONSchemaV1</span><span class="s2">[</span><span class="s3">&quot;~standard&quot;</span><span class="s2">][</span><span class="s3">&quot;jsonSchema&quot;</span><span class="s2">][</span><span class="s3">&quot;input&quot;</span><span class="s2">]&gt;[</span><span class="s6">0</span><span class="s2">];</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">const </span><span class="s1">createStandardJSONSchemaMethod</span><span class="s2">: &lt;</span><span class="s1">T </span><span class="s0">extends </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">$ZodType</span><span class="s2">&gt;(</span><span class="s1">schema</span><span class="s2">: </span><span class="s1">T</span><span class="s2">, </span><span class="s1">io</span><span class="s2">: </span><span class="s3">&quot;input&quot; </span><span class="s2">| </span><span class="s3">&quot;output&quot;</span><span class="s2">, </span><span class="s1">processors</span><span class="s2">?: </span><span class="s1">Record</span><span class="s2">&lt;</span><span class="s1">string</span><span class="s2">, </span><span class="s1">Processor</span><span class="s2">&gt;) =&gt; (</span><span class="s1">params</span><span class="s2">?: </span><span class="s1">StandardJSONSchemaMethodParams</span><span class="s2">) =&gt; </span><span class="s1">JSONSchema</span><span class="s2">.</span><span class="s1">BaseSchema</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s2">{};</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<html>
+<head>
+<title>regexes.js</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #42c3d4;}
+.s5 { color: #5f826b; font-style: italic;}
+.s6 { color: #67a37c; font-style: italic;}
+.s7 { color: #7a7e85;}
+.s8 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+regexes.js</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s2">* as </span><span class="s1">util from </span><span class="s3">&quot;./util.js&quot;</span><span class="s2">;</span>
+<span class="s0">export const </span><span class="s1">cuid </span><span class="s2">= </span><span class="s4">/^[cC][^\s-]{8,}$/</span><span class="s2">;</span>
+<span class="s0">export const </span><span class="s1">cuid2 </span><span class="s2">= </span><span class="s4">/^[0-9a-z]+$/</span><span class="s2">;</span>
+<span class="s0">export const </span><span class="s1">ulid </span><span class="s2">= </span><span class="s4">/^[0-9A-HJKMNP-TV-Za-hjkmnp-tv-z]{26}$/</span><span class="s2">;</span>
+<span class="s0">export const </span><span class="s1">xid </span><span class="s2">= </span><span class="s4">/^[0-9a-vA-V]{20}$/</span><span class="s2">;</span>
+<span class="s0">export const </span><span class="s1">ksuid </span><span class="s2">= </span><span class="s4">/^[A-Za-z0-9]{27}$/</span><span class="s2">;</span>
+<span class="s0">export const </span><span class="s1">nanoid </span><span class="s2">= </span><span class="s4">/^[a-zA-Z0-9_-]{21}$/</span><span class="s2">;</span>
+<span class="s5">/** ISO 8601-1 duration regex. Does not support the 8601-2 extensions like negative durations or fractional/negative components. */</span>
+<span class="s0">export const </span><span class="s1">duration </span><span class="s2">= </span><span class="s4">/^P(?:(\d+W)|(?!.*W)(?=\d|T\d)(\d+Y)?(\d+M)?(\d+D)?(T(?=\d)(\d+H)?(\d+M)?(\d+([.,]\d+)?S)?)?)$/</span><span class="s2">;</span>
+<span class="s5">/** Implements ISO 8601-2 extensions like explicit +- prefixes, mixing weeks with other units, and fractional/negative components. */</span>
+<span class="s0">export const </span><span class="s1">extendedDuration </span><span class="s2">= </span><span class="s4">/^[-+]?P(?!$)(?:(?:[-+]?\d+Y)|(?:[-+]?\d+[.,]\d+Y$))?(?:(?:[-+]?\d+M)|(?:[-+]?\d+[.,]\d+M$))?(?:(?:[-+]?\d+W)|(?:[-+]?\d+[.,]\d+W$))?(?:(?:[-+]?\d+D)|(?:[-+]?\d+[.,]\d+D$))?(?:T(?=[\d+-])(?:(?:[-+]?\d+H)|(?:[-+]?\d+[.,]\d+H$))?(?:(?:[-+]?\d+M)|(?:[-+]?\d+[.,]\d+M$))?(?:[-+]?\d+(?:[.,]\d+)?S)?)??$/</span><span class="s2">;</span>
+<span class="s5">/** A regex for any UUID-like identifier: 8-4-4-4-12 hex pattern */</span>
+<span class="s0">export const </span><span class="s1">guid </span><span class="s2">= </span><span class="s4">/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$/</span><span class="s2">;</span>
+<span class="s5">/** Returns a regex for validating an RFC 9562/4122 UUID.</span>
+ <span class="s5">*</span>
+ <span class="s5">* </span><span class="s6">@param </span><span class="s5">version Optionally specify a version 1-8. If no version is specified, all versions are supported. */</span>
+<span class="s0">export const </span><span class="s1">uuid </span><span class="s2">= (</span><span class="s1">version</span><span class="s2">) =&gt; {</span>
+    <span class="s0">if </span><span class="s2">(!</span><span class="s1">version</span><span class="s2">)</span>
+        <span class="s0">return </span><span class="s4">/^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$/</span><span class="s2">;</span>
+    <span class="s0">return new </span><span class="s1">RegExp</span><span class="s2">(</span><span class="s3">`^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-</span><span class="s1">$</span><span class="s2">{</span><span class="s1">version</span><span class="s2">}</span><span class="s3">[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$`</span><span class="s2">);</span>
+<span class="s2">};</span>
+<span class="s0">export const </span><span class="s1">uuid4 </span><span class="s2">= </span><span class="s7">/*@__PURE__*/ </span><span class="s1">uuid</span><span class="s2">(</span><span class="s8">4</span><span class="s2">);</span>
+<span class="s0">export const </span><span class="s1">uuid6 </span><span class="s2">= </span><span class="s7">/*@__PURE__*/ </span><span class="s1">uuid</span><span class="s2">(</span><span class="s8">6</span><span class="s2">);</span>
+<span class="s0">export const </span><span class="s1">uuid7 </span><span class="s2">= </span><span class="s7">/*@__PURE__*/ </span><span class="s1">uuid</span><span class="s2">(</span><span class="s8">7</span><span class="s2">);</span>
+<span class="s5">/** Practical email validation */</span>
+<span class="s0">export const </span><span class="s1">email </span><span class="s2">= </span><span class="s4">/^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$/</span><span class="s2">;</span>
+<span class="s5">/** Equivalent to the HTML5 input[type=email] validation implemented by browsers. Source: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email */</span>
+<span class="s0">export const </span><span class="s1">html5Email </span><span class="s2">= </span><span class="s4">/^[a-zA-Z0-9.!#$%&amp;'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/</span><span class="s2">;</span>
+<span class="s5">/** The classic emailregex.com regex for RFC 5322-compliant emails */</span>
+<span class="s0">export const </span><span class="s1">rfc5322Email </span><span class="s2">= </span><span class="s4">/^(([^&lt;&gt;()\[\]\\.,;:\s@&quot;]+(\.[^&lt;&gt;()\[\]\\.,;:\s@&quot;]+)*)|(&quot;.+&quot;))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/</span><span class="s2">;</span>
+<span class="s5">/** A loose regex that allows Unicode characters, enforces length limits, and that's about it. */</span>
+<span class="s0">export const </span><span class="s1">unicodeEmail </span><span class="s2">= </span><span class="s4">/^[^\s@&quot;]{1,64}@[^\s@]{1,255}$/u</span><span class="s2">;</span>
+<span class="s0">export const </span><span class="s1">idnEmail </span><span class="s2">= </span><span class="s1">unicodeEmail</span><span class="s2">;</span>
+<span class="s0">export const </span><span class="s1">browserEmail </span><span class="s2">= </span><span class="s4">/^[a-zA-Z0-9.!#$%&amp;'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/</span><span class="s2">;</span>
+<span class="s7">// from https://thekevinscott.com/emojis-in-javascript/#writing-a-regular-expression</span>
+<span class="s0">const </span><span class="s1">_emoji </span><span class="s2">= </span><span class="s3">`^(</span><span class="s0">\\</span><span class="s3">p{Extended_Pictographic}|</span><span class="s0">\\</span><span class="s3">p{Emoji_Component})+$`</span><span class="s2">;</span>
+<span class="s0">export function </span><span class="s1">emoji</span><span class="s2">() {</span>
+    <span class="s0">return new </span><span class="s1">RegExp</span><span class="s2">(</span><span class="s1">_emoji</span><span class="s2">, </span><span class="s3">&quot;u&quot;</span><span class="s2">);</span>
+<span class="s2">}</span>
+<span class="s0">export const </span><span class="s1">ipv4 </span><span class="s2">= </span><span class="s4">/^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])$/</span><span class="s2">;</span>
+<span class="s0">export const </span><span class="s1">ipv6 </span><span class="s2">= </span><span class="s4">/^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:))$/</span><span class="s2">;</span>
+<span class="s0">export const </span><span class="s1">mac </span><span class="s2">= (</span><span class="s1">delimiter</span><span class="s2">) =&gt; {</span>
+    <span class="s0">const </span><span class="s1">escapedDelim </span><span class="s2">= </span><span class="s1">util</span><span class="s2">.</span><span class="s1">escapeRegex</span><span class="s2">(</span><span class="s1">delimiter </span><span class="s2">?? </span><span class="s3">&quot;:&quot;</span><span class="s2">);</span>
+    <span class="s0">return new </span><span class="s1">RegExp</span><span class="s2">(</span><span class="s3">`^(?:[0-9A-F]{2}</span><span class="s1">$</span><span class="s2">{</span><span class="s1">escapedDelim</span><span class="s2">}</span><span class="s3">){5}[0-9A-F]{2}$|^(?:[0-9a-f]{2}</span><span class="s1">$</span><span class="s2">{</span><span class="s1">escapedDelim</span><span class="s2">}</span><span class="s3">){5}[0-9a-f]{2}$`</span><span class="s2">);</span>
+<span class="s2">};</span>
+<span class="s0">export const </span><span class="s1">cidrv4 </span><span class="s2">= </span><span class="s4">/^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\/([0-9]|[1-2][0-9]|3[0-2])$/</span><span class="s2">;</span>
+<span class="s0">export const </span><span class="s1">cidrv6 </span><span class="s2">= </span><span class="s4">/^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|::|([0-9a-fA-F]{1,4})?::([0-9a-fA-F]{1,4}:?){0,6})\/(12[0-8]|1[01][0-9]|[1-9]?[0-9])$/</span><span class="s2">;</span>
+<span class="s7">// https://stackoverflow.com/questions/7860392/determine-if-string-is-in-base64-using-javascript</span>
+<span class="s0">export const </span><span class="s1">base64 </span><span class="s2">= </span><span class="s4">/^$|^(?:[0-9a-zA-Z+/]{4})*(?:(?:[0-9a-zA-Z+/]{2}==)|(?:[0-9a-zA-Z+/]{3}=))?$/</span><span class="s2">;</span>
+<span class="s0">export const </span><span class="s1">base64url </span><span class="s2">= </span><span class="s4">/^[A-Za-z0-9_-]*$/</span><span class="s2">;</span>
+<span class="s7">// based on https://stackoverflow.com/questions/106179/regular-expression-to-match-dns-hostname-or-ip-address</span>
+<span class="s7">// export const hostname: RegExp = /^([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+$/;</span>
+<span class="s0">export const </span><span class="s1">hostname </span><span class="s2">= </span><span class="s4">/^(?=.{1,253}\.?$)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[-0-9a-zA-Z]{0,61}[0-9a-zA-Z])?)*\.?$/</span><span class="s2">;</span>
+<span class="s0">export const </span><span class="s1">domain </span><span class="s2">= </span><span class="s4">/^([a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/</span><span class="s2">;</span>
+<span class="s7">// https://blog.stevenlevithan.com/archives/validate-phone-number#r4-3 (regex sans spaces)</span>
+<span class="s7">// E.164: leading digit must be 1-9; total digits (excluding '+') between 7-15</span>
+<span class="s0">export const </span><span class="s1">e164 </span><span class="s2">= </span><span class="s4">/^\+[1-9]\d{6,14}$/</span><span class="s2">;</span>
+<span class="s7">// const dateSource = `((\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-((0[13578]|1[02])-(0[1-9]|[12]\\d|3[01])|(0[469]|11)-(0[1-9]|[12]\\d|30)|(02)-(0[1-9]|1\\d|2[0-8])))`;</span>
+<span class="s0">const </span><span class="s1">dateSource </span><span class="s2">= </span><span class="s3">`(?:(?:</span><span class="s0">\\</span><span class="s3">d</span><span class="s0">\\</span><span class="s3">d[2468][048]|</span><span class="s0">\\</span><span class="s3">d</span><span class="s0">\\</span><span class="s3">d[13579][26]|</span><span class="s0">\\</span><span class="s3">d</span><span class="s0">\\</span><span class="s3">d0[48]|[02468][048]00|[13579][26]00)-02-29|</span><span class="s0">\\</span><span class="s3">d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]</span><span class="s0">\\</span><span class="s3">d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]</span><span class="s0">\\</span><span class="s3">d|30)|(?:02)-(?:0[1-9]|1</span><span class="s0">\\</span><span class="s3">d|2[0-8])))`</span><span class="s2">;</span>
+<span class="s0">export const </span><span class="s1">date </span><span class="s2">= </span><span class="s7">/*@__PURE__*/ </span><span class="s0">new </span><span class="s1">RegExp</span><span class="s2">(</span><span class="s3">`^</span><span class="s1">$</span><span class="s2">{</span><span class="s1">dateSource</span><span class="s2">}</span><span class="s3">$`</span><span class="s2">);</span>
+<span class="s0">function </span><span class="s1">timeSource</span><span class="s2">(</span><span class="s1">args</span><span class="s2">) {</span>
+    <span class="s0">const </span><span class="s1">hhmm </span><span class="s2">= </span><span class="s3">`(?:[01]</span><span class="s0">\\</span><span class="s3">d|2[0-3]):[0-5]</span><span class="s0">\\</span><span class="s3">d`</span><span class="s2">;</span>
+    <span class="s0">const </span><span class="s1">regex </span><span class="s2">= </span><span class="s0">typeof </span><span class="s1">args</span><span class="s2">.</span><span class="s1">precision </span><span class="s2">=== </span><span class="s3">&quot;number&quot;</span>
+        <span class="s2">? </span><span class="s1">args</span><span class="s2">.</span><span class="s1">precision </span><span class="s2">=== -</span><span class="s8">1</span>
+            <span class="s2">? </span><span class="s3">`</span><span class="s1">$</span><span class="s2">{</span><span class="s1">hhmm</span><span class="s2">}</span><span class="s3">`</span>
+            <span class="s2">: </span><span class="s1">args</span><span class="s2">.</span><span class="s1">precision </span><span class="s2">=== </span><span class="s8">0</span>
+                <span class="s2">? </span><span class="s3">`</span><span class="s1">$</span><span class="s2">{</span><span class="s1">hhmm</span><span class="s2">}</span><span class="s3">:[0-5]</span><span class="s0">\\</span><span class="s3">d`</span>
+                <span class="s2">: </span><span class="s3">`</span><span class="s1">$</span><span class="s2">{</span><span class="s1">hhmm</span><span class="s2">}</span><span class="s3">:[0-5]</span><span class="s0">\\</span><span class="s3">d</span><span class="s0">\\</span><span class="s3">.</span><span class="s0">\\</span><span class="s3">d{</span><span class="s1">$</span><span class="s2">{</span><span class="s1">args</span><span class="s2">.</span><span class="s1">precision</span><span class="s2">}</span><span class="s3">}`</span>
+        <span class="s2">: </span><span class="s3">`</span><span class="s1">$</span><span class="s2">{</span><span class="s1">hhmm</span><span class="s2">}</span><span class="s3">(?::[0-5]</span><span class="s0">\\</span><span class="s3">d(?:</span><span class="s0">\\</span><span class="s3">.</span><span class="s0">\\</span><span class="s3">d+)?)?`</span><span class="s2">;</span>
+    <span class="s0">return </span><span class="s1">regex</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s0">export function </span><span class="s1">time</span><span class="s2">(</span><span class="s1">args</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">RegExp</span><span class="s2">(</span><span class="s3">`^</span><span class="s1">$</span><span class="s2">{</span><span class="s1">timeSource</span><span class="s2">(</span><span class="s1">args</span><span class="s2">)}</span><span class="s3">$`</span><span class="s2">);</span>
+<span class="s2">}</span>
+<span class="s7">// Adapted from https://stackoverflow.com/a/3143231</span>
+<span class="s0">export function </span><span class="s1">datetime</span><span class="s2">(</span><span class="s1">args</span><span class="s2">) {</span>
+    <span class="s0">const </span><span class="s1">time </span><span class="s2">= </span><span class="s1">timeSource</span><span class="s2">({ </span><span class="s1">precision</span><span class="s2">: </span><span class="s1">args</span><span class="s2">.</span><span class="s1">precision </span><span class="s2">});</span>
+    <span class="s0">const </span><span class="s1">opts </span><span class="s2">= [</span><span class="s3">&quot;Z&quot;</span><span class="s2">];</span>
+    <span class="s0">if </span><span class="s2">(</span><span class="s1">args</span><span class="s2">.</span><span class="s1">local</span><span class="s2">)</span>
+        <span class="s1">opts</span><span class="s2">.</span><span class="s1">push</span><span class="s2">(</span><span class="s3">&quot;&quot;</span><span class="s2">);</span>
+    <span class="s7">// if (args.offset) opts.push(`([+-]\\d{2}:\\d{2})`);</span>
+    <span class="s0">if </span><span class="s2">(</span><span class="s1">args</span><span class="s2">.</span><span class="s1">offset</span><span class="s2">)</span>
+        <span class="s1">opts</span><span class="s2">.</span><span class="s1">push</span><span class="s2">(</span><span class="s3">`([+-](?:[01]</span><span class="s0">\\</span><span class="s3">d|2[0-3]):[0-5]</span><span class="s0">\\</span><span class="s3">d)`</span><span class="s2">);</span>
+    <span class="s0">const </span><span class="s1">timeRegex </span><span class="s2">= </span><span class="s3">`</span><span class="s1">$</span><span class="s2">{</span><span class="s1">time</span><span class="s2">}</span><span class="s3">(?:</span><span class="s1">$</span><span class="s2">{</span><span class="s1">opts</span><span class="s2">.</span><span class="s1">join</span><span class="s2">(</span><span class="s3">&quot;|&quot;</span><span class="s2">)}</span><span class="s3">)`</span><span class="s2">;</span>
+    <span class="s0">return new </span><span class="s1">RegExp</span><span class="s2">(</span><span class="s3">`^</span><span class="s1">$</span><span class="s2">{</span><span class="s1">dateSource</span><span class="s2">}</span><span class="s3">T(?:</span><span class="s1">$</span><span class="s2">{</span><span class="s1">timeRegex</span><span class="s2">}</span><span class="s3">)$`</span><span class="s2">);</span>
+<span class="s2">}</span>
+<span class="s0">export const </span><span class="s1">string </span><span class="s2">= (</span><span class="s1">params</span><span class="s2">) =&gt; {</span>
+    <span class="s0">const </span><span class="s1">regex </span><span class="s2">= </span><span class="s1">params </span><span class="s2">? </span><span class="s3">`[</span><span class="s0">\\</span><span class="s3">s</span><span class="s0">\\</span><span class="s3">S]{</span><span class="s1">$</span><span class="s2">{</span><span class="s1">params</span><span class="s2">?.</span><span class="s1">minimum </span><span class="s2">?? </span><span class="s8">0</span><span class="s2">}</span><span class="s3">,</span><span class="s1">$</span><span class="s2">{</span><span class="s1">params</span><span class="s2">?.</span><span class="s1">maximum </span><span class="s2">?? </span><span class="s3">&quot;&quot;</span><span class="s2">}</span><span class="s3">}` </span><span class="s2">: </span><span class="s3">`[</span><span class="s0">\\</span><span class="s3">s</span><span class="s0">\\</span><span class="s3">S]*`</span><span class="s2">;</span>
+    <span class="s0">return new </span><span class="s1">RegExp</span><span class="s2">(</span><span class="s3">`^</span><span class="s1">$</span><span class="s2">{</span><span class="s1">regex</span><span class="s2">}</span><span class="s3">$`</span><span class="s2">);</span>
+<span class="s2">};</span>
+<span class="s0">export const </span><span class="s1">bigint </span><span class="s2">= </span><span class="s4">/^-?\d+n?$/</span><span class="s2">;</span>
+<span class="s0">export const </span><span class="s1">integer </span><span class="s2">= </span><span class="s4">/^-?\d+$/</span><span class="s2">;</span>
+<span class="s0">export const </span><span class="s1">number </span><span class="s2">= </span><span class="s4">/^-?\d+(?:\.\d+)?$/</span><span class="s2">;</span>
+<span class="s0">export const </span><span class="s1">boolean </span><span class="s2">= </span><span class="s4">/^(?:true|false)$/i</span><span class="s2">;</span>
+<span class="s0">const </span><span class="s1">_null </span><span class="s2">= </span><span class="s4">/^null$/i</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s2">{ </span><span class="s1">_null </span><span class="s2">as </span><span class="s0">null </span><span class="s2">};</span>
+<span class="s0">const </span><span class="s1">_undefined </span><span class="s2">= </span><span class="s4">/^undefined$/i</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s2">{ </span><span class="s1">_undefined </span><span class="s2">as </span><span class="s1">undefined </span><span class="s2">};</span>
+<span class="s7">// regex for string with no uppercase letters</span>
+<span class="s0">export const </span><span class="s1">lowercase </span><span class="s2">= </span><span class="s4">/^[^A-Z]*$/</span><span class="s2">;</span>
+<span class="s7">// regex for string with no lowercase letters</span>
+<span class="s0">export const </span><span class="s1">uppercase </span><span class="s2">= </span><span class="s4">/^[^a-z]*$/</span><span class="s2">;</span>
+<span class="s7">// regex for hexadecimal strings (any length)</span>
+<span class="s0">export const </span><span class="s1">hex </span><span class="s2">= </span><span class="s4">/^[0-9a-fA-F]*$/</span><span class="s2">;</span>
+<span class="s7">// Hash regexes for different algorithms and encodings</span>
+<span class="s7">// Helper function to create base64 regex with exact length and padding</span>
+<span class="s0">function </span><span class="s1">fixedBase64</span><span class="s2">(</span><span class="s1">bodyLength</span><span class="s2">, </span><span class="s1">padding</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">RegExp</span><span class="s2">(</span><span class="s3">`^[A-Za-z0-9+/]{</span><span class="s1">$</span><span class="s2">{</span><span class="s1">bodyLength</span><span class="s2">}</span><span class="s3">}</span><span class="s1">$</span><span class="s2">{</span><span class="s1">padding</span><span class="s2">}</span><span class="s3">$`</span><span class="s2">);</span>
+<span class="s2">}</span>
+<span class="s7">// Helper function to create base64url regex with exact length (no padding)</span>
+<span class="s0">function </span><span class="s1">fixedBase64url</span><span class="s2">(</span><span class="s1">length</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">RegExp</span><span class="s2">(</span><span class="s3">`^[A-Za-z0-9_-]{</span><span class="s1">$</span><span class="s2">{</span><span class="s1">length</span><span class="s2">}</span><span class="s3">}$`</span><span class="s2">);</span>
+<span class="s2">}</span>
+<span class="s7">// MD5 (16 bytes): base64 = 24 chars total (22 + &quot;==&quot;)</span>
+<span class="s0">export const </span><span class="s1">md5_hex </span><span class="s2">= </span><span class="s4">/^[0-9a-fA-F]{32}$/</span><span class="s2">;</span>
+<span class="s0">export const </span><span class="s1">md5_base64 </span><span class="s2">= </span><span class="s7">/*@__PURE__*/ </span><span class="s1">fixedBase64</span><span class="s2">(</span><span class="s8">22</span><span class="s2">, </span><span class="s3">&quot;==&quot;</span><span class="s2">);</span>
+<span class="s0">export const </span><span class="s1">md5_base64url </span><span class="s2">= </span><span class="s7">/*@__PURE__*/ </span><span class="s1">fixedBase64url</span><span class="s2">(</span><span class="s8">22</span><span class="s2">);</span>
+<span class="s7">// SHA1 (20 bytes): base64 = 28 chars total (27 + &quot;=&quot;)</span>
+<span class="s0">export const </span><span class="s1">sha1_hex </span><span class="s2">= </span><span class="s4">/^[0-9a-fA-F]{40}$/</span><span class="s2">;</span>
+<span class="s0">export const </span><span class="s1">sha1_base64 </span><span class="s2">= </span><span class="s7">/*@__PURE__*/ </span><span class="s1">fixedBase64</span><span class="s2">(</span><span class="s8">27</span><span class="s2">, </span><span class="s3">&quot;=&quot;</span><span class="s2">);</span>
+<span class="s0">export const </span><span class="s1">sha1_base64url </span><span class="s2">= </span><span class="s7">/*@__PURE__*/ </span><span class="s1">fixedBase64url</span><span class="s2">(</span><span class="s8">27</span><span class="s2">);</span>
+<span class="s7">// SHA256 (32 bytes): base64 = 44 chars total (43 + &quot;=&quot;)</span>
+<span class="s0">export const </span><span class="s1">sha256_hex </span><span class="s2">= </span><span class="s4">/^[0-9a-fA-F]{64}$/</span><span class="s2">;</span>
+<span class="s0">export const </span><span class="s1">sha256_base64 </span><span class="s2">= </span><span class="s7">/*@__PURE__*/ </span><span class="s1">fixedBase64</span><span class="s2">(</span><span class="s8">43</span><span class="s2">, </span><span class="s3">&quot;=&quot;</span><span class="s2">);</span>
+<span class="s0">export const </span><span class="s1">sha256_base64url </span><span class="s2">= </span><span class="s7">/*@__PURE__*/ </span><span class="s1">fixedBase64url</span><span class="s2">(</span><span class="s8">43</span><span class="s2">);</span>
+<span class="s7">// SHA384 (48 bytes): base64 = 64 chars total (no padding)</span>
+<span class="s0">export const </span><span class="s1">sha384_hex </span><span class="s2">= </span><span class="s4">/^[0-9a-fA-F]{96}$/</span><span class="s2">;</span>
+<span class="s0">export const </span><span class="s1">sha384_base64 </span><span class="s2">= </span><span class="s7">/*@__PURE__*/ </span><span class="s1">fixedBase64</span><span class="s2">(</span><span class="s8">64</span><span class="s2">, </span><span class="s3">&quot;&quot;</span><span class="s2">);</span>
+<span class="s0">export const </span><span class="s1">sha384_base64url </span><span class="s2">= </span><span class="s7">/*@__PURE__*/ </span><span class="s1">fixedBase64url</span><span class="s2">(</span><span class="s8">64</span><span class="s2">);</span>
+<span class="s7">// SHA512 (64 bytes): base64 = 88 chars total (86 + &quot;==&quot;)</span>
+<span class="s0">export const </span><span class="s1">sha512_hex </span><span class="s2">= </span><span class="s4">/^[0-9a-fA-F]{128}$/</span><span class="s2">;</span>
+<span class="s0">export const </span><span class="s1">sha512_base64 </span><span class="s2">= </span><span class="s7">/*@__PURE__*/ </span><span class="s1">fixedBase64</span><span class="s2">(</span><span class="s8">86</span><span class="s2">, </span><span class="s3">&quot;==&quot;</span><span class="s2">);</span>
+<span class="s0">export const </span><span class="s1">sha512_base64url </span><span class="s2">= </span><span class="s7">/*@__PURE__*/ </span><span class="s1">fixedBase64url</span><span class="s2">(</span><span class="s8">86</span><span class="s2">);</span>
+</pre>
+</body>
+</html>

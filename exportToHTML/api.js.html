@@ -1,0 +1,1106 @@
+<html>
+<head>
+<title>api.js</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #7a7e85;}
+.s5 { color: #2aacb8;}
+.s6 { color: #5f826b; font-style: italic;}
+.s7 { color: #67a37c; font-style: italic;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+api.js</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s2">* as </span><span class="s1">checks from </span><span class="s3">&quot;./checks.js&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s2">* as </span><span class="s1">registries from </span><span class="s3">&quot;./registries.js&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s2">* as </span><span class="s1">schemas from </span><span class="s3">&quot;./schemas.js&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s2">* as </span><span class="s1">util from </span><span class="s3">&quot;./util.js&quot;</span><span class="s2">;</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_string</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_coercedString</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">coerce</span><span class="s2">: </span><span class="s0">true</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_email</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;email&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_guid</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;guid&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_uuid</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;uuid&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_uuidv4</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;uuid&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">version</span><span class="s2">: </span><span class="s3">&quot;v4&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_uuidv6</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;uuid&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">version</span><span class="s2">: </span><span class="s3">&quot;v6&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_uuidv7</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;uuid&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">version</span><span class="s2">: </span><span class="s3">&quot;v7&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_url</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;url&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_emoji</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;emoji&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_nanoid</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;nanoid&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_cuid</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;cuid&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_cuid2</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;cuid2&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_ulid</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;ulid&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_xid</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;xid&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_ksuid</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;ksuid&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_ipv4</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;ipv4&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_ipv6</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;ipv6&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_mac</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;mac&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_cidrv4</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;cidrv4&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_cidrv6</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;cidrv6&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_base64</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;base64&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_base64url</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;base64url&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_e164</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;e164&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_jwt</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;jwt&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s0">export const </span><span class="s1">TimePrecision </span><span class="s2">= {</span>
+    <span class="s1">Any</span><span class="s2">: </span><span class="s0">null</span><span class="s2">,</span>
+    <span class="s1">Minute</span><span class="s2">: -</span><span class="s5">1</span><span class="s2">,</span>
+    <span class="s1">Second</span><span class="s2">: </span><span class="s5">0</span><span class="s2">,</span>
+    <span class="s1">Millisecond</span><span class="s2">: </span><span class="s5">3</span><span class="s2">,</span>
+    <span class="s1">Microsecond</span><span class="s2">: </span><span class="s5">6</span><span class="s2">,</span>
+<span class="s2">};</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_isoDateTime</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;datetime&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">offset</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">local</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">precision</span><span class="s2">: </span><span class="s0">null</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_isoDate</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;date&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_isoTime</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;time&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">precision</span><span class="s2">: </span><span class="s0">null</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_isoDuration</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;duration&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_number</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;number&quot;</span><span class="s2">,</span>
+        <span class="s1">checks</span><span class="s2">: [],</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_coercedNumber</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;number&quot;</span><span class="s2">,</span>
+        <span class="s1">coerce</span><span class="s2">: </span><span class="s0">true</span><span class="s2">,</span>
+        <span class="s1">checks</span><span class="s2">: [],</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_int</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;number&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;number_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;safeint&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_float32</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;number&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;number_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;float32&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_float64</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;number&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;number_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;float64&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_int32</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;number&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;number_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;int32&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_uint32</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;number&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;number_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;uint32&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_boolean</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;boolean&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_coercedBoolean</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;boolean&quot;</span><span class="s2">,</span>
+        <span class="s1">coerce</span><span class="s2">: </span><span class="s0">true</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_bigint</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;bigint&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_coercedBigint</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;bigint&quot;</span><span class="s2">,</span>
+        <span class="s1">coerce</span><span class="s2">: </span><span class="s0">true</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_int64</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;bigint&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;bigint_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;int64&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_uint64</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;bigint&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;bigint_format&quot;</span><span class="s2">,</span>
+        <span class="s1">abort</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;uint64&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_symbol</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;symbol&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_undefined</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;undefined&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_null</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;null&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_any</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;any&quot;</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_unknown</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;unknown&quot;</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_never</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;never&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_void</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;void&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_date</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;date&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_coercedDate</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;date&quot;</span><span class="s2">,</span>
+        <span class="s1">coerce</span><span class="s2">: </span><span class="s0">true</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_nan</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;nan&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_lt</span><span class="s2">(</span><span class="s1">value</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">checks</span><span class="s2">.</span><span class="s1">$ZodCheckLessThan</span><span class="s2">({</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;less_than&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+        <span class="s1">value</span><span class="s2">,</span>
+        <span class="s1">inclusive</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_lte</span><span class="s2">(</span><span class="s1">value</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">checks</span><span class="s2">.</span><span class="s1">$ZodCheckLessThan</span><span class="s2">({</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;less_than&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+        <span class="s1">value</span><span class="s2">,</span>
+        <span class="s1">inclusive</span><span class="s2">: </span><span class="s0">true</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s0">export </span><span class="s2">{ </span>
+<span class="s6">/** </span><span class="s7">@deprecated </span><span class="s6">Use `z.lte()` instead. */</span>
+<span class="s1">_lte </span><span class="s2">as </span><span class="s1">_max</span><span class="s2">, };</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_gt</span><span class="s2">(</span><span class="s1">value</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">checks</span><span class="s2">.</span><span class="s1">$ZodCheckGreaterThan</span><span class="s2">({</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;greater_than&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+        <span class="s1">value</span><span class="s2">,</span>
+        <span class="s1">inclusive</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_gte</span><span class="s2">(</span><span class="s1">value</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">checks</span><span class="s2">.</span><span class="s1">$ZodCheckGreaterThan</span><span class="s2">({</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;greater_than&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+        <span class="s1">value</span><span class="s2">,</span>
+        <span class="s1">inclusive</span><span class="s2">: </span><span class="s0">true</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s0">export </span><span class="s2">{ </span>
+<span class="s6">/** </span><span class="s7">@deprecated </span><span class="s6">Use `z.gte()` instead. */</span>
+<span class="s1">_gte </span><span class="s2">as </span><span class="s1">_min</span><span class="s2">, };</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_positive</span><span class="s2">(</span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return </span><span class="s1">_gt</span><span class="s2">(</span><span class="s5">0</span><span class="s2">, </span><span class="s1">params</span><span class="s2">);</span>
+<span class="s2">}</span>
+<span class="s4">// negative</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_negative</span><span class="s2">(</span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return </span><span class="s1">_lt</span><span class="s2">(</span><span class="s5">0</span><span class="s2">, </span><span class="s1">params</span><span class="s2">);</span>
+<span class="s2">}</span>
+<span class="s4">// nonpositive</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_nonpositive</span><span class="s2">(</span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return </span><span class="s1">_lte</span><span class="s2">(</span><span class="s5">0</span><span class="s2">, </span><span class="s1">params</span><span class="s2">);</span>
+<span class="s2">}</span>
+<span class="s4">// nonnegative</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_nonnegative</span><span class="s2">(</span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return </span><span class="s1">_gte</span><span class="s2">(</span><span class="s5">0</span><span class="s2">, </span><span class="s1">params</span><span class="s2">);</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_multipleOf</span><span class="s2">(</span><span class="s1">value</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">checks</span><span class="s2">.</span><span class="s1">$ZodCheckMultipleOf</span><span class="s2">({</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;multiple_of&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+        <span class="s1">value</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_maxSize</span><span class="s2">(</span><span class="s1">maximum</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">checks</span><span class="s2">.</span><span class="s1">$ZodCheckMaxSize</span><span class="s2">({</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;max_size&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+        <span class="s1">maximum</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_minSize</span><span class="s2">(</span><span class="s1">minimum</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">checks</span><span class="s2">.</span><span class="s1">$ZodCheckMinSize</span><span class="s2">({</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;min_size&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+        <span class="s1">minimum</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_size</span><span class="s2">(</span><span class="s1">size</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">checks</span><span class="s2">.</span><span class="s1">$ZodCheckSizeEquals</span><span class="s2">({</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;size_equals&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+        <span class="s1">size</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_maxLength</span><span class="s2">(</span><span class="s1">maximum</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">const </span><span class="s1">ch </span><span class="s2">= </span><span class="s0">new </span><span class="s1">checks</span><span class="s2">.</span><span class="s1">$ZodCheckMaxLength</span><span class="s2">({</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;max_length&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+        <span class="s1">maximum</span><span class="s2">,</span>
+    <span class="s2">});</span>
+    <span class="s0">return </span><span class="s1">ch</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_minLength</span><span class="s2">(</span><span class="s1">minimum</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">checks</span><span class="s2">.</span><span class="s1">$ZodCheckMinLength</span><span class="s2">({</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;min_length&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+        <span class="s1">minimum</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_length</span><span class="s2">(</span><span class="s1">length</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">checks</span><span class="s2">.</span><span class="s1">$ZodCheckLengthEquals</span><span class="s2">({</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;length_equals&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+        <span class="s1">length</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_regex</span><span class="s2">(</span><span class="s1">pattern</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">checks</span><span class="s2">.</span><span class="s1">$ZodCheckRegex</span><span class="s2">({</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;regex&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+        <span class="s1">pattern</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_lowercase</span><span class="s2">(</span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">checks</span><span class="s2">.</span><span class="s1">$ZodCheckLowerCase</span><span class="s2">({</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;lowercase&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_uppercase</span><span class="s2">(</span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">checks</span><span class="s2">.</span><span class="s1">$ZodCheckUpperCase</span><span class="s2">({</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;uppercase&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_includes</span><span class="s2">(</span><span class="s1">includes</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">checks</span><span class="s2">.</span><span class="s1">$ZodCheckIncludes</span><span class="s2">({</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;includes&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+        <span class="s1">includes</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_startsWith</span><span class="s2">(</span><span class="s1">prefix</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">checks</span><span class="s2">.</span><span class="s1">$ZodCheckStartsWith</span><span class="s2">({</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;starts_with&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+        <span class="s1">prefix</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_endsWith</span><span class="s2">(</span><span class="s1">suffix</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">checks</span><span class="s2">.</span><span class="s1">$ZodCheckEndsWith</span><span class="s2">({</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">: </span><span class="s3">&quot;ends_with&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+        <span class="s1">suffix</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_property</span><span class="s2">(</span><span class="s1">property</span><span class="s2">, </span><span class="s1">schema</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">checks</span><span class="s2">.</span><span class="s1">$ZodCheckProperty</span><span class="s2">({</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;property&quot;</span><span class="s2">,</span>
+        <span class="s1">property</span><span class="s2">,</span>
+        <span class="s1">schema</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_mime</span><span class="s2">(</span><span class="s1">types</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">checks</span><span class="s2">.</span><span class="s1">$ZodCheckMimeType</span><span class="s2">({</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;mime_type&quot;</span><span class="s2">,</span>
+        <span class="s1">mime</span><span class="s2">: </span><span class="s1">types</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_overwrite</span><span class="s2">(</span><span class="s1">tx</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">checks</span><span class="s2">.</span><span class="s1">$ZodCheckOverwrite</span><span class="s2">({</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;overwrite&quot;</span><span class="s2">,</span>
+        <span class="s1">tx</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// normalize</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_normalize</span><span class="s2">(</span><span class="s1">form</span><span class="s2">) {</span>
+    <span class="s0">return </span><span class="s1">_overwrite</span><span class="s2">((</span><span class="s1">input</span><span class="s2">) =&gt; </span><span class="s1">input</span><span class="s2">.</span><span class="s1">normalize</span><span class="s2">(</span><span class="s1">form</span><span class="s2">));</span>
+<span class="s2">}</span>
+<span class="s4">// trim</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_trim</span><span class="s2">() {</span>
+    <span class="s0">return </span><span class="s1">_overwrite</span><span class="s2">((</span><span class="s1">input</span><span class="s2">) =&gt; </span><span class="s1">input</span><span class="s2">.</span><span class="s1">trim</span><span class="s2">());</span>
+<span class="s2">}</span>
+<span class="s4">// toLowerCase</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_toLowerCase</span><span class="s2">() {</span>
+    <span class="s0">return </span><span class="s1">_overwrite</span><span class="s2">((</span><span class="s1">input</span><span class="s2">) =&gt; </span><span class="s1">input</span><span class="s2">.</span><span class="s1">toLowerCase</span><span class="s2">());</span>
+<span class="s2">}</span>
+<span class="s4">// toUpperCase</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_toUpperCase</span><span class="s2">() {</span>
+    <span class="s0">return </span><span class="s1">_overwrite</span><span class="s2">((</span><span class="s1">input</span><span class="s2">) =&gt; </span><span class="s1">input</span><span class="s2">.</span><span class="s1">toUpperCase</span><span class="s2">());</span>
+<span class="s2">}</span>
+<span class="s4">// slugify</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_slugify</span><span class="s2">() {</span>
+    <span class="s0">return </span><span class="s1">_overwrite</span><span class="s2">((</span><span class="s1">input</span><span class="s2">) =&gt; </span><span class="s1">util</span><span class="s2">.</span><span class="s1">slugify</span><span class="s2">(</span><span class="s1">input</span><span class="s2">));</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_array</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">element</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;array&quot;</span><span class="s2">,</span>
+        <span class="s1">element</span><span class="s2">,</span>
+        <span class="s4">// get element() {</span>
+        <span class="s4">//   return element;</span>
+        <span class="s4">// },</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_union</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">options</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;union&quot;</span><span class="s2">,</span>
+        <span class="s1">options</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s0">export function </span><span class="s1">_xor</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">options</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;union&quot;</span><span class="s2">,</span>
+        <span class="s1">options</span><span class="s2">,</span>
+        <span class="s1">inclusive</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_discriminatedUnion</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">discriminator</span><span class="s2">, </span><span class="s1">options</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;union&quot;</span><span class="s2">,</span>
+        <span class="s1">options</span><span class="s2">,</span>
+        <span class="s1">discriminator</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_intersection</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">left</span><span class="s2">, </span><span class="s1">right</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;intersection&quot;</span><span class="s2">,</span>
+        <span class="s1">left</span><span class="s2">,</span>
+        <span class="s1">right</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// export function _tuple(</span>
+<span class="s4">//   Class: util.SchemaClass&lt;schemas.$ZodTuple&gt;,</span>
+<span class="s4">//   items: [],</span>
+<span class="s4">//   params?: string | $ZodTupleParams</span>
+<span class="s4">// ): schemas.$ZodTuple&lt;[], null&gt;;</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_tuple</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">items</span><span class="s2">, </span><span class="s1">_paramsOrRest</span><span class="s2">, </span><span class="s1">_params</span><span class="s2">) {</span>
+    <span class="s0">const </span><span class="s1">hasRest </span><span class="s2">= </span><span class="s1">_paramsOrRest </span><span class="s0">instanceof </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">$ZodType</span><span class="s2">;</span>
+    <span class="s0">const </span><span class="s1">params </span><span class="s2">= </span><span class="s1">hasRest </span><span class="s2">? </span><span class="s1">_params </span><span class="s2">: </span><span class="s1">_paramsOrRest</span><span class="s2">;</span>
+    <span class="s0">const </span><span class="s1">rest </span><span class="s2">= </span><span class="s1">hasRest </span><span class="s2">? </span><span class="s1">_paramsOrRest </span><span class="s2">: </span><span class="s0">null</span><span class="s2">;</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;tuple&quot;</span><span class="s2">,</span>
+        <span class="s1">items</span><span class="s2">,</span>
+        <span class="s1">rest</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_record</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">keyType</span><span class="s2">, </span><span class="s1">valueType</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;record&quot;</span><span class="s2">,</span>
+        <span class="s1">keyType</span><span class="s2">,</span>
+        <span class="s1">valueType</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_map</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">keyType</span><span class="s2">, </span><span class="s1">valueType</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;map&quot;</span><span class="s2">,</span>
+        <span class="s1">keyType</span><span class="s2">,</span>
+        <span class="s1">valueType</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_set</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">valueType</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;set&quot;</span><span class="s2">,</span>
+        <span class="s1">valueType</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_enum</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">values</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">const </span><span class="s1">entries </span><span class="s2">= </span><span class="s1">Array</span><span class="s2">.</span><span class="s1">isArray</span><span class="s2">(</span><span class="s1">values</span><span class="s2">) ? </span><span class="s1">Object</span><span class="s2">.</span><span class="s1">fromEntries</span><span class="s2">(</span><span class="s1">values</span><span class="s2">.</span><span class="s1">map</span><span class="s2">((</span><span class="s1">v</span><span class="s2">) =&gt; [</span><span class="s1">v</span><span class="s2">, </span><span class="s1">v</span><span class="s2">])) : </span><span class="s1">values</span><span class="s2">;</span>
+    <span class="s4">// if (Array.isArray(values)) {</span>
+    <span class="s4">//   for (const value of values) {</span>
+    <span class="s4">//     entries[value] = value;</span>
+    <span class="s4">//   }</span>
+    <span class="s4">// } else {</span>
+    <span class="s4">//   Object.assign(entries, values);</span>
+    <span class="s4">// }</span>
+    <span class="s4">// const entries: util.EnumLike = {};</span>
+    <span class="s4">// for (const val of values) {</span>
+    <span class="s4">//   entries[val] = val;</span>
+    <span class="s4">// }</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;enum&quot;</span><span class="s2">,</span>
+        <span class="s1">entries</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s6">/** </span><span class="s7">@deprecated </span><span class="s6">This API has been merged into `z.enum()`. Use `z.enum()` instead.</span>
+ <span class="s6">*</span>
+ <span class="s6">* ```ts</span>
+ <span class="s6">* enum Colors { red, green, blue }</span>
+ <span class="s6">* z.enum(Colors);</span>
+ <span class="s6">* ```</span>
+ <span class="s6">*/</span>
+<span class="s0">export function </span><span class="s1">_nativeEnum</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">entries</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;enum&quot;</span><span class="s2">,</span>
+        <span class="s1">entries</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_literal</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">value</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;literal&quot;</span><span class="s2">,</span>
+        <span class="s1">values</span><span class="s2">: </span><span class="s1">Array</span><span class="s2">.</span><span class="s1">isArray</span><span class="s2">(</span><span class="s1">value</span><span class="s2">) ? </span><span class="s1">value </span><span class="s2">: [</span><span class="s1">value</span><span class="s2">],</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_file</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;file&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_transform</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">fn</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;transform&quot;</span><span class="s2">,</span>
+        <span class="s1">transform</span><span class="s2">: </span><span class="s1">fn</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_optional</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">innerType</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;optional&quot;</span><span class="s2">,</span>
+        <span class="s1">innerType</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_nullable</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">innerType</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;nullable&quot;</span><span class="s2">,</span>
+        <span class="s1">innerType</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_default</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">innerType</span><span class="s2">, </span><span class="s1">defaultValue</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;default&quot;</span><span class="s2">,</span>
+        <span class="s1">innerType</span><span class="s2">,</span>
+        <span class="s1">get defaultValue</span><span class="s2">() {</span>
+            <span class="s0">return typeof </span><span class="s1">defaultValue </span><span class="s2">=== </span><span class="s3">&quot;function&quot; </span><span class="s2">? </span><span class="s1">defaultValue</span><span class="s2">() : </span><span class="s1">util</span><span class="s2">.</span><span class="s1">shallowClone</span><span class="s2">(</span><span class="s1">defaultValue</span><span class="s2">);</span>
+        <span class="s2">},</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_nonoptional</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">innerType</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;nonoptional&quot;</span><span class="s2">,</span>
+        <span class="s1">innerType</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_success</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">innerType</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;success&quot;</span><span class="s2">,</span>
+        <span class="s1">innerType</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_catch</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">innerType</span><span class="s2">, </span><span class="s1">catchValue</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;catch&quot;</span><span class="s2">,</span>
+        <span class="s1">innerType</span><span class="s2">,</span>
+        <span class="s1">catchValue</span><span class="s2">: (</span><span class="s0">typeof </span><span class="s1">catchValue </span><span class="s2">=== </span><span class="s3">&quot;function&quot; </span><span class="s2">? </span><span class="s1">catchValue </span><span class="s2">: () =&gt; </span><span class="s1">catchValue</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_pipe</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">in_</span><span class="s2">, </span><span class="s1">out</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;pipe&quot;</span><span class="s2">,</span>
+        <span class="s0">in</span><span class="s2">: </span><span class="s1">in_</span><span class="s2">,</span>
+        <span class="s1">out</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_readonly</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">innerType</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;readonly&quot;</span><span class="s2">,</span>
+        <span class="s1">innerType</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_templateLiteral</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">parts</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;template_literal&quot;</span><span class="s2">,</span>
+        <span class="s1">parts</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_lazy</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">getter</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;lazy&quot;</span><span class="s2">,</span>
+        <span class="s1">getter</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_promise</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">innerType</span><span class="s2">) {</span>
+    <span class="s0">return new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;promise&quot;</span><span class="s2">,</span>
+        <span class="s1">innerType</span><span class="s2">,</span>
+    <span class="s2">});</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_custom</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">fn</span><span class="s2">, </span><span class="s1">_params</span><span class="s2">) {</span>
+    <span class="s0">const </span><span class="s1">norm </span><span class="s2">= </span><span class="s1">util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">_params</span><span class="s2">);</span>
+    <span class="s1">norm</span><span class="s2">.</span><span class="s1">abort </span><span class="s2">?? (</span><span class="s1">norm</span><span class="s2">.</span><span class="s1">abort </span><span class="s2">= </span><span class="s0">true</span><span class="s2">); </span><span class="s4">// default to abort:false</span>
+    <span class="s0">const </span><span class="s1">schema </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;custom&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;custom&quot;</span><span class="s2">,</span>
+        <span class="s1">fn</span><span class="s2">: </span><span class="s1">fn</span><span class="s2">,</span>
+        <span class="s1">...norm</span><span class="s2">,</span>
+    <span class="s2">});</span>
+    <span class="s0">return </span><span class="s1">schema</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s4">// same as _custom but defaults to abort:false</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_refine</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">fn</span><span class="s2">, </span><span class="s1">_params</span><span class="s2">) {</span>
+    <span class="s0">const </span><span class="s1">schema </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Class</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;custom&quot;</span><span class="s2">,</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;custom&quot;</span><span class="s2">,</span>
+        <span class="s1">fn</span><span class="s2">: </span><span class="s1">fn</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">_params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+    <span class="s0">return </span><span class="s1">schema</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_superRefine</span><span class="s2">(</span><span class="s1">fn</span><span class="s2">) {</span>
+    <span class="s0">const </span><span class="s1">ch </span><span class="s2">= </span><span class="s1">_check</span><span class="s2">((</span><span class="s1">payload</span><span class="s2">) =&gt; {</span>
+        <span class="s1">payload</span><span class="s2">.</span><span class="s1">addIssue </span><span class="s2">= (</span><span class="s1">issue</span><span class="s2">) =&gt; {</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s0">typeof </span><span class="s1">issue </span><span class="s2">=== </span><span class="s3">&quot;string&quot;</span><span class="s2">) {</span>
+                <span class="s1">payload</span><span class="s2">.</span><span class="s1">issues</span><span class="s2">.</span><span class="s1">push</span><span class="s2">(</span><span class="s1">util</span><span class="s2">.</span><span class="s1">issue</span><span class="s2">(</span><span class="s1">issue</span><span class="s2">, </span><span class="s1">payload</span><span class="s2">.</span><span class="s1">value</span><span class="s2">, </span><span class="s1">ch</span><span class="s2">.</span><span class="s1">_zod</span><span class="s2">.</span><span class="s1">def</span><span class="s2">));</span>
+            <span class="s2">}</span>
+            <span class="s0">else </span><span class="s2">{</span>
+                <span class="s4">// for Zod 3 backwards compatibility</span>
+                <span class="s0">const </span><span class="s1">_issue </span><span class="s2">= </span><span class="s1">issue</span><span class="s2">;</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">_issue</span><span class="s2">.</span><span class="s1">fatal</span><span class="s2">)</span>
+                    <span class="s1">_issue</span><span class="s2">.</span><span class="s1">continue </span><span class="s2">= </span><span class="s0">false</span><span class="s2">;</span>
+                <span class="s1">_issue</span><span class="s2">.</span><span class="s1">code </span><span class="s2">?? (</span><span class="s1">_issue</span><span class="s2">.</span><span class="s1">code </span><span class="s2">= </span><span class="s3">&quot;custom&quot;</span><span class="s2">);</span>
+                <span class="s1">_issue</span><span class="s2">.</span><span class="s1">input </span><span class="s2">?? (</span><span class="s1">_issue</span><span class="s2">.</span><span class="s1">input </span><span class="s2">= </span><span class="s1">payload</span><span class="s2">.</span><span class="s1">value</span><span class="s2">);</span>
+                <span class="s1">_issue</span><span class="s2">.</span><span class="s1">inst </span><span class="s2">?? (</span><span class="s1">_issue</span><span class="s2">.</span><span class="s1">inst </span><span class="s2">= </span><span class="s1">ch</span><span class="s2">);</span>
+                <span class="s1">_issue</span><span class="s2">.</span><span class="s1">continue </span><span class="s2">?? (</span><span class="s1">_issue</span><span class="s2">.</span><span class="s1">continue </span><span class="s2">= !</span><span class="s1">ch</span><span class="s2">.</span><span class="s1">_zod</span><span class="s2">.</span><span class="s1">def</span><span class="s2">.</span><span class="s1">abort</span><span class="s2">); </span><span class="s4">// abort is always undefined, so this is always true...</span>
+                <span class="s1">payload</span><span class="s2">.</span><span class="s1">issues</span><span class="s2">.</span><span class="s1">push</span><span class="s2">(</span><span class="s1">util</span><span class="s2">.</span><span class="s1">issue</span><span class="s2">(</span><span class="s1">_issue</span><span class="s2">));</span>
+            <span class="s2">}</span>
+        <span class="s2">};</span>
+        <span class="s0">return </span><span class="s1">fn</span><span class="s2">(</span><span class="s1">payload</span><span class="s2">.</span><span class="s1">value</span><span class="s2">, </span><span class="s1">payload</span><span class="s2">);</span>
+    <span class="s2">});</span>
+    <span class="s0">return </span><span class="s1">ch</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_check</span><span class="s2">(</span><span class="s1">fn</span><span class="s2">, </span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">const </span><span class="s1">ch </span><span class="s2">= </span><span class="s0">new </span><span class="s1">checks</span><span class="s2">.</span><span class="s1">$ZodCheck</span><span class="s2">({</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;custom&quot;</span><span class="s2">,</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">params</span><span class="s2">),</span>
+    <span class="s2">});</span>
+    <span class="s1">ch</span><span class="s2">.</span><span class="s1">_zod</span><span class="s2">.</span><span class="s1">check </span><span class="s2">= </span><span class="s1">fn</span><span class="s2">;</span>
+    <span class="s0">return </span><span class="s1">ch</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">describe</span><span class="s2">(</span><span class="s1">description</span><span class="s2">) {</span>
+    <span class="s0">const </span><span class="s1">ch </span><span class="s2">= </span><span class="s0">new </span><span class="s1">checks</span><span class="s2">.</span><span class="s1">$ZodCheck</span><span class="s2">({ </span><span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;describe&quot; </span><span class="s2">});</span>
+    <span class="s1">ch</span><span class="s2">.</span><span class="s1">_zod</span><span class="s2">.</span><span class="s1">onattach </span><span class="s2">= [</span>
+        <span class="s2">(</span><span class="s1">inst</span><span class="s2">) =&gt; {</span>
+            <span class="s0">const </span><span class="s1">existing </span><span class="s2">= </span><span class="s1">registries</span><span class="s2">.</span><span class="s1">globalRegistry</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">inst</span><span class="s2">) ?? {};</span>
+            <span class="s1">registries</span><span class="s2">.</span><span class="s1">globalRegistry</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">inst</span><span class="s2">, { </span><span class="s1">...existing</span><span class="s2">, </span><span class="s1">description </span><span class="s2">});</span>
+        <span class="s2">},</span>
+    <span class="s2">];</span>
+    <span class="s1">ch</span><span class="s2">.</span><span class="s1">_zod</span><span class="s2">.</span><span class="s1">check </span><span class="s2">= () =&gt; { }; </span><span class="s4">// no-op check</span>
+    <span class="s0">return </span><span class="s1">ch</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">meta</span><span class="s2">(</span><span class="s1">metadata</span><span class="s2">) {</span>
+    <span class="s0">const </span><span class="s1">ch </span><span class="s2">= </span><span class="s0">new </span><span class="s1">checks</span><span class="s2">.</span><span class="s1">$ZodCheck</span><span class="s2">({ </span><span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;meta&quot; </span><span class="s2">});</span>
+    <span class="s1">ch</span><span class="s2">.</span><span class="s1">_zod</span><span class="s2">.</span><span class="s1">onattach </span><span class="s2">= [</span>
+        <span class="s2">(</span><span class="s1">inst</span><span class="s2">) =&gt; {</span>
+            <span class="s0">const </span><span class="s1">existing </span><span class="s2">= </span><span class="s1">registries</span><span class="s2">.</span><span class="s1">globalRegistry</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">inst</span><span class="s2">) ?? {};</span>
+            <span class="s1">registries</span><span class="s2">.</span><span class="s1">globalRegistry</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">inst</span><span class="s2">, { </span><span class="s1">...existing</span><span class="s2">, </span><span class="s1">...metadata </span><span class="s2">});</span>
+        <span class="s2">},</span>
+    <span class="s2">];</span>
+    <span class="s1">ch</span><span class="s2">.</span><span class="s1">_zod</span><span class="s2">.</span><span class="s1">check </span><span class="s2">= () =&gt; { }; </span><span class="s4">// no-op check</span>
+    <span class="s0">return </span><span class="s1">ch</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_stringbool</span><span class="s2">(</span><span class="s1">Classes</span><span class="s2">, </span><span class="s1">_params</span><span class="s2">) {</span>
+    <span class="s0">const </span><span class="s1">params </span><span class="s2">= </span><span class="s1">util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">_params</span><span class="s2">);</span>
+    <span class="s0">let </span><span class="s1">truthyArray </span><span class="s2">= </span><span class="s1">params</span><span class="s2">.</span><span class="s1">truthy </span><span class="s2">?? [</span><span class="s3">&quot;true&quot;</span><span class="s2">, </span><span class="s3">&quot;1&quot;</span><span class="s2">, </span><span class="s3">&quot;yes&quot;</span><span class="s2">, </span><span class="s3">&quot;on&quot;</span><span class="s2">, </span><span class="s3">&quot;y&quot;</span><span class="s2">, </span><span class="s3">&quot;enabled&quot;</span><span class="s2">];</span>
+    <span class="s0">let </span><span class="s1">falsyArray </span><span class="s2">= </span><span class="s1">params</span><span class="s2">.</span><span class="s1">falsy </span><span class="s2">?? [</span><span class="s3">&quot;false&quot;</span><span class="s2">, </span><span class="s3">&quot;0&quot;</span><span class="s2">, </span><span class="s3">&quot;no&quot;</span><span class="s2">, </span><span class="s3">&quot;off&quot;</span><span class="s2">, </span><span class="s3">&quot;n&quot;</span><span class="s2">, </span><span class="s3">&quot;disabled&quot;</span><span class="s2">];</span>
+    <span class="s0">if </span><span class="s2">(</span><span class="s1">params</span><span class="s2">.</span><span class="s1">case </span><span class="s2">!== </span><span class="s3">&quot;sensitive&quot;</span><span class="s2">) {</span>
+        <span class="s1">truthyArray </span><span class="s2">= </span><span class="s1">truthyArray</span><span class="s2">.</span><span class="s1">map</span><span class="s2">((</span><span class="s1">v</span><span class="s2">) =&gt; (</span><span class="s0">typeof </span><span class="s1">v </span><span class="s2">=== </span><span class="s3">&quot;string&quot; </span><span class="s2">? </span><span class="s1">v</span><span class="s2">.</span><span class="s1">toLowerCase</span><span class="s2">() : </span><span class="s1">v</span><span class="s2">));</span>
+        <span class="s1">falsyArray </span><span class="s2">= </span><span class="s1">falsyArray</span><span class="s2">.</span><span class="s1">map</span><span class="s2">((</span><span class="s1">v</span><span class="s2">) =&gt; (</span><span class="s0">typeof </span><span class="s1">v </span><span class="s2">=== </span><span class="s3">&quot;string&quot; </span><span class="s2">? </span><span class="s1">v</span><span class="s2">.</span><span class="s1">toLowerCase</span><span class="s2">() : </span><span class="s1">v</span><span class="s2">));</span>
+    <span class="s2">}</span>
+    <span class="s0">const </span><span class="s1">truthySet </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Set</span><span class="s2">(</span><span class="s1">truthyArray</span><span class="s2">);</span>
+    <span class="s0">const </span><span class="s1">falsySet </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Set</span><span class="s2">(</span><span class="s1">falsyArray</span><span class="s2">);</span>
+    <span class="s0">const </span><span class="s1">_Codec </span><span class="s2">= </span><span class="s1">Classes</span><span class="s2">.</span><span class="s1">Codec </span><span class="s2">?? </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">$ZodCodec</span><span class="s2">;</span>
+    <span class="s0">const </span><span class="s1">_Boolean </span><span class="s2">= </span><span class="s1">Classes</span><span class="s2">.</span><span class="s1">Boolean </span><span class="s2">?? </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">$ZodBoolean</span><span class="s2">;</span>
+    <span class="s0">const </span><span class="s1">_String </span><span class="s2">= </span><span class="s1">Classes</span><span class="s2">.</span><span class="s1">String </span><span class="s2">?? </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">$ZodString</span><span class="s2">;</span>
+    <span class="s0">const </span><span class="s1">stringSchema </span><span class="s2">= </span><span class="s0">new </span><span class="s1">_String</span><span class="s2">({ </span><span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">, </span><span class="s1">error</span><span class="s2">: </span><span class="s1">params</span><span class="s2">.</span><span class="s1">error </span><span class="s2">});</span>
+    <span class="s0">const </span><span class="s1">booleanSchema </span><span class="s2">= </span><span class="s0">new </span><span class="s1">_Boolean</span><span class="s2">({ </span><span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;boolean&quot;</span><span class="s2">, </span><span class="s1">error</span><span class="s2">: </span><span class="s1">params</span><span class="s2">.</span><span class="s1">error </span><span class="s2">});</span>
+    <span class="s0">const </span><span class="s1">codec </span><span class="s2">= </span><span class="s0">new </span><span class="s1">_Codec</span><span class="s2">({</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;pipe&quot;</span><span class="s2">,</span>
+        <span class="s0">in</span><span class="s2">: </span><span class="s1">stringSchema</span><span class="s2">,</span>
+        <span class="s1">out</span><span class="s2">: </span><span class="s1">booleanSchema</span><span class="s2">,</span>
+        <span class="s1">transform</span><span class="s2">: ((</span><span class="s1">input</span><span class="s2">, </span><span class="s1">payload</span><span class="s2">) =&gt; {</span>
+            <span class="s0">let </span><span class="s1">data </span><span class="s2">= </span><span class="s1">input</span><span class="s2">;</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">params</span><span class="s2">.</span><span class="s1">case </span><span class="s2">!== </span><span class="s3">&quot;sensitive&quot;</span><span class="s2">)</span>
+                <span class="s1">data </span><span class="s2">= </span><span class="s1">data</span><span class="s2">.</span><span class="s1">toLowerCase</span><span class="s2">();</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">truthySet</span><span class="s2">.</span><span class="s1">has</span><span class="s2">(</span><span class="s1">data</span><span class="s2">)) {</span>
+                <span class="s0">return true</span><span class="s2">;</span>
+            <span class="s2">}</span>
+            <span class="s0">else if </span><span class="s2">(</span><span class="s1">falsySet</span><span class="s2">.</span><span class="s1">has</span><span class="s2">(</span><span class="s1">data</span><span class="s2">)) {</span>
+                <span class="s0">return false</span><span class="s2">;</span>
+            <span class="s2">}</span>
+            <span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">payload</span><span class="s2">.</span><span class="s1">issues</span><span class="s2">.</span><span class="s1">push</span><span class="s2">({</span>
+                    <span class="s1">code</span><span class="s2">: </span><span class="s3">&quot;invalid_value&quot;</span><span class="s2">,</span>
+                    <span class="s1">expected</span><span class="s2">: </span><span class="s3">&quot;stringbool&quot;</span><span class="s2">,</span>
+                    <span class="s1">values</span><span class="s2">: [</span><span class="s1">...truthySet</span><span class="s2">, </span><span class="s1">...falsySet</span><span class="s2">],</span>
+                    <span class="s1">input</span><span class="s2">: </span><span class="s1">payload</span><span class="s2">.</span><span class="s1">value</span><span class="s2">,</span>
+                    <span class="s1">inst</span><span class="s2">: </span><span class="s1">codec</span><span class="s2">,</span>
+                    <span class="s0">continue</span><span class="s2">: </span><span class="s0">false</span><span class="s2">,</span>
+                <span class="s2">});</span>
+                <span class="s0">return </span><span class="s2">{};</span>
+            <span class="s2">}</span>
+        <span class="s2">}),</span>
+        <span class="s1">reverseTransform</span><span class="s2">: ((</span><span class="s1">input</span><span class="s2">, </span><span class="s1">_payload</span><span class="s2">) =&gt; {</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">input </span><span class="s2">=== </span><span class="s0">true</span><span class="s2">) {</span>
+                <span class="s0">return </span><span class="s1">truthyArray</span><span class="s2">[</span><span class="s5">0</span><span class="s2">] || </span><span class="s3">&quot;true&quot;</span><span class="s2">;</span>
+            <span class="s2">}</span>
+            <span class="s0">else </span><span class="s2">{</span>
+                <span class="s0">return </span><span class="s1">falsyArray</span><span class="s2">[</span><span class="s5">0</span><span class="s2">] || </span><span class="s3">&quot;false&quot;</span><span class="s2">;</span>
+            <span class="s2">}</span>
+        <span class="s2">}),</span>
+        <span class="s1">error</span><span class="s2">: </span><span class="s1">params</span><span class="s2">.</span><span class="s1">error</span><span class="s2">,</span>
+    <span class="s2">});</span>
+    <span class="s0">return </span><span class="s1">codec</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s4">// @__NO_SIDE_EFFECTS__</span>
+<span class="s0">export function </span><span class="s1">_stringFormat</span><span class="s2">(</span><span class="s1">Class</span><span class="s2">, </span><span class="s1">format</span><span class="s2">, </span><span class="s1">fnOrRegex</span><span class="s2">, </span><span class="s1">_params </span><span class="s2">= {}) {</span>
+    <span class="s0">const </span><span class="s1">params </span><span class="s2">= </span><span class="s1">util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">_params</span><span class="s2">);</span>
+    <span class="s0">const </span><span class="s1">def </span><span class="s2">= {</span>
+        <span class="s1">...util</span><span class="s2">.</span><span class="s1">normalizeParams</span><span class="s2">(</span><span class="s1">_params</span><span class="s2">),</span>
+        <span class="s1">check</span><span class="s2">: </span><span class="s3">&quot;string_format&quot;</span><span class="s2">,</span>
+        <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">,</span>
+        <span class="s1">format</span><span class="s2">,</span>
+        <span class="s1">fn</span><span class="s2">: </span><span class="s0">typeof </span><span class="s1">fnOrRegex </span><span class="s2">=== </span><span class="s3">&quot;function&quot; </span><span class="s2">? </span><span class="s1">fnOrRegex </span><span class="s2">: (</span><span class="s1">val</span><span class="s2">) =&gt; </span><span class="s1">fnOrRegex</span><span class="s2">.</span><span class="s1">test</span><span class="s2">(</span><span class="s1">val</span><span class="s2">),</span>
+        <span class="s1">...params</span><span class="s2">,</span>
+    <span class="s2">};</span>
+    <span class="s0">if </span><span class="s2">(</span><span class="s1">fnOrRegex </span><span class="s0">instanceof </span><span class="s1">RegExp</span><span class="s2">) {</span>
+        <span class="s1">def</span><span class="s2">.</span><span class="s1">pattern </span><span class="s2">= </span><span class="s1">fnOrRegex</span><span class="s2">;</span>
+    <span class="s2">}</span>
+    <span class="s0">const </span><span class="s1">inst </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Class</span><span class="s2">(</span><span class="s1">def</span><span class="s2">);</span>
+    <span class="s0">return </span><span class="s1">inst</span><span class="s2">;</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

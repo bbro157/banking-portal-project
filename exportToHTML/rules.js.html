@@ -1,0 +1,87 @@
+<html>
+<head>
+<title>rules.js</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #6aab73;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #cf8e6d;}
+.s4 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+rules.js</font>
+</center></td></tr></table>
+<pre><span class="s0">'use strict'</span><span class="s1">;</span>
+
+<span class="s3">var </span><span class="s2">ruleModules </span><span class="s1">= </span><span class="s2">require</span><span class="s1">(</span><span class="s0">'../dotjs'</span><span class="s1">)</span>
+  <span class="s1">, </span><span class="s2">toHash </span><span class="s1">= </span><span class="s2">require</span><span class="s1">(</span><span class="s0">'./util'</span><span class="s1">).</span><span class="s2">toHash</span><span class="s1">;</span>
+
+<span class="s2">module</span><span class="s1">.</span><span class="s2">exports </span><span class="s1">= </span><span class="s3">function </span><span class="s2">rules</span><span class="s1">() {</span>
+  <span class="s3">var </span><span class="s2">RULES </span><span class="s1">= [</span>
+    <span class="s1">{ </span><span class="s2">type</span><span class="s1">: </span><span class="s0">'number'</span><span class="s1">,</span>
+      <span class="s2">rules</span><span class="s1">: [ { </span><span class="s0">'maximum'</span><span class="s1">: [</span><span class="s0">'exclusiveMaximum'</span><span class="s1">] },</span>
+               <span class="s1">{ </span><span class="s0">'minimum'</span><span class="s1">: [</span><span class="s0">'exclusiveMinimum'</span><span class="s1">] }, </span><span class="s0">'multipleOf'</span><span class="s1">, </span><span class="s0">'format'</span><span class="s1">] },</span>
+    <span class="s1">{ </span><span class="s2">type</span><span class="s1">: </span><span class="s0">'string'</span><span class="s1">,</span>
+      <span class="s2">rules</span><span class="s1">: [ </span><span class="s0">'maxLength'</span><span class="s1">, </span><span class="s0">'minLength'</span><span class="s1">, </span><span class="s0">'pattern'</span><span class="s1">, </span><span class="s0">'format' </span><span class="s1">] },</span>
+    <span class="s1">{ </span><span class="s2">type</span><span class="s1">: </span><span class="s0">'array'</span><span class="s1">,</span>
+      <span class="s2">rules</span><span class="s1">: [ </span><span class="s0">'maxItems'</span><span class="s1">, </span><span class="s0">'minItems'</span><span class="s1">, </span><span class="s0">'items'</span><span class="s1">, </span><span class="s0">'contains'</span><span class="s1">, </span><span class="s0">'uniqueItems' </span><span class="s1">] },</span>
+    <span class="s1">{ </span><span class="s2">type</span><span class="s1">: </span><span class="s0">'object'</span><span class="s1">,</span>
+      <span class="s2">rules</span><span class="s1">: [ </span><span class="s0">'maxProperties'</span><span class="s1">, </span><span class="s0">'minProperties'</span><span class="s1">, </span><span class="s0">'required'</span><span class="s1">, </span><span class="s0">'dependencies'</span><span class="s1">, </span><span class="s0">'propertyNames'</span><span class="s1">,</span>
+               <span class="s1">{ </span><span class="s0">'properties'</span><span class="s1">: [</span><span class="s0">'additionalProperties'</span><span class="s1">, </span><span class="s0">'patternProperties'</span><span class="s1">] } ] },</span>
+    <span class="s1">{ </span><span class="s2">rules</span><span class="s1">: [ </span><span class="s0">'$ref'</span><span class="s1">, </span><span class="s0">'const'</span><span class="s1">, </span><span class="s0">'enum'</span><span class="s1">, </span><span class="s0">'not'</span><span class="s1">, </span><span class="s0">'anyOf'</span><span class="s1">, </span><span class="s0">'oneOf'</span><span class="s1">, </span><span class="s0">'allOf'</span><span class="s1">, </span><span class="s0">'if' </span><span class="s1">] }</span>
+  <span class="s1">];</span>
+
+  <span class="s3">var </span><span class="s2">ALL </span><span class="s1">= [ </span><span class="s0">'type'</span><span class="s1">, </span><span class="s0">'$comment' </span><span class="s1">];</span>
+  <span class="s3">var </span><span class="s2">KEYWORDS </span><span class="s1">= [</span>
+    <span class="s0">'$schema'</span><span class="s1">, </span><span class="s0">'$id'</span><span class="s1">, </span><span class="s0">'id'</span><span class="s1">, </span><span class="s0">'$data'</span><span class="s1">, </span><span class="s0">'$async'</span><span class="s1">, </span><span class="s0">'title'</span><span class="s1">,</span>
+    <span class="s0">'description'</span><span class="s1">, </span><span class="s0">'default'</span><span class="s1">, </span><span class="s0">'definitions'</span><span class="s1">,</span>
+    <span class="s0">'examples'</span><span class="s1">, </span><span class="s0">'readOnly'</span><span class="s1">, </span><span class="s0">'writeOnly'</span><span class="s1">,</span>
+    <span class="s0">'contentMediaType'</span><span class="s1">, </span><span class="s0">'contentEncoding'</span><span class="s1">,</span>
+    <span class="s0">'additionalItems'</span><span class="s1">, </span><span class="s0">'then'</span><span class="s1">, </span><span class="s0">'else'</span>
+  <span class="s1">];</span>
+  <span class="s3">var </span><span class="s2">TYPES </span><span class="s1">= [ </span><span class="s0">'number'</span><span class="s1">, </span><span class="s0">'integer'</span><span class="s1">, </span><span class="s0">'string'</span><span class="s1">, </span><span class="s0">'array'</span><span class="s1">, </span><span class="s0">'object'</span><span class="s1">, </span><span class="s0">'boolean'</span><span class="s1">, </span><span class="s0">'null' </span><span class="s1">];</span>
+  <span class="s2">RULES</span><span class="s1">.</span><span class="s2">all </span><span class="s1">= </span><span class="s2">toHash</span><span class="s1">(</span><span class="s2">ALL</span><span class="s1">);</span>
+  <span class="s2">RULES</span><span class="s1">.</span><span class="s2">types </span><span class="s1">= </span><span class="s2">toHash</span><span class="s1">(</span><span class="s2">TYPES</span><span class="s1">);</span>
+
+  <span class="s2">RULES</span><span class="s1">.</span><span class="s2">forEach</span><span class="s1">(</span><span class="s3">function </span><span class="s1">(</span><span class="s2">group</span><span class="s1">) {</span>
+    <span class="s2">group</span><span class="s1">.</span><span class="s2">rules </span><span class="s1">= </span><span class="s2">group</span><span class="s1">.</span><span class="s2">rules</span><span class="s1">.</span><span class="s2">map</span><span class="s1">(</span><span class="s3">function </span><span class="s1">(</span><span class="s2">keyword</span><span class="s1">) {</span>
+      <span class="s3">var </span><span class="s2">implKeywords</span><span class="s1">;</span>
+      <span class="s3">if </span><span class="s1">(</span><span class="s3">typeof </span><span class="s2">keyword </span><span class="s1">== </span><span class="s0">'object'</span><span class="s1">) {</span>
+        <span class="s3">var </span><span class="s2">key </span><span class="s1">= </span><span class="s2">Object</span><span class="s1">.</span><span class="s2">keys</span><span class="s1">(</span><span class="s2">keyword</span><span class="s1">)[</span><span class="s4">0</span><span class="s1">];</span>
+        <span class="s2">implKeywords </span><span class="s1">= </span><span class="s2">keyword</span><span class="s1">[</span><span class="s2">key</span><span class="s1">];</span>
+        <span class="s2">keyword </span><span class="s1">= </span><span class="s2">key</span><span class="s1">;</span>
+        <span class="s2">implKeywords</span><span class="s1">.</span><span class="s2">forEach</span><span class="s1">(</span><span class="s3">function </span><span class="s1">(</span><span class="s2">k</span><span class="s1">) {</span>
+          <span class="s2">ALL</span><span class="s1">.</span><span class="s2">push</span><span class="s1">(</span><span class="s2">k</span><span class="s1">);</span>
+          <span class="s2">RULES</span><span class="s1">.</span><span class="s2">all</span><span class="s1">[</span><span class="s2">k</span><span class="s1">] = </span><span class="s3">true</span><span class="s1">;</span>
+        <span class="s1">});</span>
+      <span class="s1">}</span>
+      <span class="s2">ALL</span><span class="s1">.</span><span class="s2">push</span><span class="s1">(</span><span class="s2">keyword</span><span class="s1">);</span>
+      <span class="s3">var </span><span class="s2">rule </span><span class="s1">= </span><span class="s2">RULES</span><span class="s1">.</span><span class="s2">all</span><span class="s1">[</span><span class="s2">keyword</span><span class="s1">] = {</span>
+        <span class="s2">keyword</span><span class="s1">: </span><span class="s2">keyword</span><span class="s1">,</span>
+        <span class="s2">code</span><span class="s1">: </span><span class="s2">ruleModules</span><span class="s1">[</span><span class="s2">keyword</span><span class="s1">],</span>
+        <span class="s3">implements</span><span class="s1">: </span><span class="s2">implKeywords</span>
+      <span class="s1">};</span>
+      <span class="s3">return </span><span class="s2">rule</span><span class="s1">;</span>
+    <span class="s1">});</span>
+
+    <span class="s2">RULES</span><span class="s1">.</span><span class="s2">all</span><span class="s1">.</span><span class="s2">$comment </span><span class="s1">= {</span>
+      <span class="s2">keyword</span><span class="s1">: </span><span class="s0">'$comment'</span><span class="s1">,</span>
+      <span class="s2">code</span><span class="s1">: </span><span class="s2">ruleModules</span><span class="s1">.</span><span class="s2">$comment</span>
+    <span class="s1">};</span>
+
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">group</span><span class="s1">.</span><span class="s2">type</span><span class="s1">) </span><span class="s2">RULES</span><span class="s1">.</span><span class="s2">types</span><span class="s1">[</span><span class="s2">group</span><span class="s1">.</span><span class="s2">type</span><span class="s1">] = </span><span class="s2">group</span><span class="s1">;</span>
+  <span class="s1">});</span>
+
+  <span class="s2">RULES</span><span class="s1">.</span><span class="s2">keywords </span><span class="s1">= </span><span class="s2">toHash</span><span class="s1">(</span><span class="s2">ALL</span><span class="s1">.</span><span class="s2">concat</span><span class="s1">(</span><span class="s2">KEYWORDS</span><span class="s1">));</span>
+  <span class="s2">RULES</span><span class="s1">.</span><span class="s2">custom </span><span class="s1">= {};</span>
+
+  <span class="s3">return </span><span class="s2">RULES</span><span class="s1">;</span>
+<span class="s1">};</span>
+</pre>
+</body>
+</html>

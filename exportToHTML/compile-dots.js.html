@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>compile-dots.js</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #7a7e85;}
+.s1 { color: #bcbec4;}
+.s2 { color: #6aab73;}
+.s3 { color: #bcbec4;}
+.s4 { color: #cf8e6d;}
+.s5 { color: #2aacb8;}
+.s6 { color: #42c3d4;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+compile-dots.js</font>
+</center></td></tr></table>
+<pre><span class="s0">//compile doT templates to js functions</span>
+<span class="s2">'use strict'</span><span class="s3">;</span>
+
+<span class="s4">var </span><span class="s1">glob </span><span class="s3">= </span><span class="s1">require</span><span class="s3">(</span><span class="s2">'glob'</span><span class="s3">)</span>
+  <span class="s3">, </span><span class="s1">fs </span><span class="s3">= </span><span class="s1">require</span><span class="s3">(</span><span class="s2">'fs'</span><span class="s3">)</span>
+  <span class="s3">, </span><span class="s1">path </span><span class="s3">= </span><span class="s1">require</span><span class="s3">(</span><span class="s2">'path'</span><span class="s3">)</span>
+  <span class="s3">, </span><span class="s1">doT </span><span class="s3">= </span><span class="s1">require</span><span class="s3">(</span><span class="s2">'dot'</span><span class="s3">)</span>
+  <span class="s3">, </span><span class="s1">beautify </span><span class="s3">= </span><span class="s1">require</span><span class="s3">(</span><span class="s2">'js-beautify'</span><span class="s3">).</span><span class="s1">js_beautify</span><span class="s3">;</span>
+
+<span class="s4">var </span><span class="s1">defsRootPath </span><span class="s3">= </span><span class="s1">process</span><span class="s3">.</span><span class="s1">argv</span><span class="s3">[</span><span class="s5">2</span><span class="s3">] || </span><span class="s1">path</span><span class="s3">.</span><span class="s1">join</span><span class="s3">(</span><span class="s1">__dirname</span><span class="s3">, </span><span class="s2">'../lib'</span><span class="s3">);</span>
+
+<span class="s4">var </span><span class="s1">defs </span><span class="s3">= {};</span>
+<span class="s4">var </span><span class="s1">defFiles </span><span class="s3">= </span><span class="s1">glob</span><span class="s3">.</span><span class="s1">sync</span><span class="s3">(</span><span class="s2">'./dot/**/*.def'</span><span class="s3">, { </span><span class="s1">cwd</span><span class="s3">: </span><span class="s1">defsRootPath </span><span class="s3">});</span>
+<span class="s1">defFiles</span><span class="s3">.</span><span class="s1">forEach</span><span class="s3">(</span><span class="s4">function </span><span class="s3">(</span><span class="s1">f</span><span class="s3">) {</span>
+  <span class="s4">var </span><span class="s1">name </span><span class="s3">= </span><span class="s1">path</span><span class="s3">.</span><span class="s1">basename</span><span class="s3">(</span><span class="s1">f</span><span class="s3">, </span><span class="s2">'.def'</span><span class="s3">);</span>
+  <span class="s1">defs</span><span class="s3">[</span><span class="s1">name</span><span class="s3">] = </span><span class="s1">fs</span><span class="s3">.</span><span class="s1">readFileSync</span><span class="s3">(</span><span class="s1">path</span><span class="s3">.</span><span class="s1">join</span><span class="s3">(</span><span class="s1">defsRootPath</span><span class="s3">, </span><span class="s1">f</span><span class="s3">));</span>
+<span class="s3">});</span>
+
+<span class="s4">var </span><span class="s1">filesRootPath </span><span class="s3">= </span><span class="s1">process</span><span class="s3">.</span><span class="s1">argv</span><span class="s3">[</span><span class="s5">3</span><span class="s3">] || </span><span class="s1">path</span><span class="s3">.</span><span class="s1">join</span><span class="s3">(</span><span class="s1">__dirname</span><span class="s3">, </span><span class="s2">'../lib'</span><span class="s3">);</span>
+<span class="s4">var </span><span class="s1">files </span><span class="s3">= </span><span class="s1">glob</span><span class="s3">.</span><span class="s1">sync</span><span class="s3">(</span><span class="s2">'./dot/**/*.jst'</span><span class="s3">, { </span><span class="s1">cwd</span><span class="s3">: </span><span class="s1">filesRootPath </span><span class="s3">});</span>
+
+<span class="s4">var </span><span class="s1">dotjsPath </span><span class="s3">= </span><span class="s1">path</span><span class="s3">.</span><span class="s1">join</span><span class="s3">(</span><span class="s1">filesRootPath</span><span class="s3">, </span><span class="s2">'./dotjs'</span><span class="s3">);</span>
+<span class="s4">try </span><span class="s3">{ </span><span class="s1">fs</span><span class="s3">.</span><span class="s1">mkdirSync</span><span class="s3">(</span><span class="s1">dotjsPath</span><span class="s3">); } </span><span class="s4">catch</span><span class="s3">(</span><span class="s1">e</span><span class="s3">) {}</span>
+
+<span class="s1">console</span><span class="s3">.</span><span class="s1">log</span><span class="s3">(</span><span class="s2">'</span><span class="s4">\n\n</span><span class="s2">Compiling:'</span><span class="s3">);</span>
+
+<span class="s4">var </span><span class="s1">FUNCTION_NAME </span><span class="s3">= </span><span class="s6">/function\s+anonymous\s*\(it[^)]*\)\s*{/</span><span class="s3">;</span>
+<span class="s4">var </span><span class="s1">OUT_EMPTY_STRING </span><span class="s3">= </span><span class="s6">/out\s*\+=\s*'\s*';/g</span><span class="s3">;</span>
+<span class="s4">var </span><span class="s1">ISTANBUL </span><span class="s3">= </span><span class="s6">/'(istanbul[^']+)';/g</span><span class="s3">;</span>
+<span class="s4">var </span><span class="s1">ERROR_KEYWORD </span><span class="s3">= </span><span class="s6">/\$errorKeyword/g</span><span class="s3">;</span>
+<span class="s4">var </span><span class="s1">ERROR_KEYWORD_OR </span><span class="s3">= </span><span class="s6">/\$errorKeyword\s+\|\|/g</span><span class="s3">;</span>
+<span class="s4">var </span><span class="s1">VARS </span><span class="s3">= [</span>
+  <span class="s2">'$errs'</span><span class="s3">, </span><span class="s2">'$valid'</span><span class="s3">, </span><span class="s2">'$lvl'</span><span class="s3">, </span><span class="s2">'$data'</span><span class="s3">, </span><span class="s2">'$dataLvl'</span><span class="s3">,</span>
+  <span class="s2">'$errorKeyword'</span><span class="s3">, </span><span class="s2">'$closingBraces'</span><span class="s3">, </span><span class="s2">'$schemaPath'</span><span class="s3">,</span>
+  <span class="s2">'$validate'</span>
+<span class="s3">];</span>
+
+<span class="s1">files</span><span class="s3">.</span><span class="s1">forEach</span><span class="s3">(</span><span class="s4">function </span><span class="s3">(</span><span class="s1">f</span><span class="s3">) {</span>
+  <span class="s4">var </span><span class="s1">keyword </span><span class="s3">= </span><span class="s1">path</span><span class="s3">.</span><span class="s1">basename</span><span class="s3">(</span><span class="s1">f</span><span class="s3">, </span><span class="s2">'.jst'</span><span class="s3">);</span>
+  <span class="s4">var </span><span class="s1">targetPath </span><span class="s3">= </span><span class="s1">path</span><span class="s3">.</span><span class="s1">join</span><span class="s3">(</span><span class="s1">dotjsPath</span><span class="s3">, </span><span class="s1">keyword </span><span class="s3">+ </span><span class="s2">'.js'</span><span class="s3">);</span>
+  <span class="s4">var </span><span class="s1">template </span><span class="s3">= </span><span class="s1">fs</span><span class="s3">.</span><span class="s1">readFileSync</span><span class="s3">(</span><span class="s1">path</span><span class="s3">.</span><span class="s1">join</span><span class="s3">(</span><span class="s1">filesRootPath</span><span class="s3">, </span><span class="s1">f</span><span class="s3">));</span>
+  <span class="s4">var </span><span class="s1">code </span><span class="s3">= </span><span class="s1">doT</span><span class="s3">.</span><span class="s1">compile</span><span class="s3">(</span><span class="s1">template</span><span class="s3">, </span><span class="s1">defs</span><span class="s3">);</span>
+  <span class="s1">code </span><span class="s3">= </span><span class="s1">code</span><span class="s3">.</span><span class="s1">toString</span><span class="s3">()</span>
+             <span class="s3">.</span><span class="s1">replace</span><span class="s3">(</span><span class="s1">OUT_EMPTY_STRING</span><span class="s3">, </span><span class="s2">''</span><span class="s3">)</span>
+             <span class="s3">.</span><span class="s1">replace</span><span class="s3">(</span><span class="s1">FUNCTION_NAME</span><span class="s3">, </span><span class="s2">'function generate_' </span><span class="s3">+ </span><span class="s1">keyword </span><span class="s3">+ </span><span class="s2">'(it, $keyword, $ruleType) {'</span><span class="s3">)</span>
+             <span class="s3">.</span><span class="s1">replace</span><span class="s3">(</span><span class="s1">ISTANBUL</span><span class="s3">, </span><span class="s2">'/* $1 */'</span><span class="s3">);</span>
+  <span class="s1">removeAlwaysFalsyInOr</span><span class="s3">();</span>
+  <span class="s1">VARS</span><span class="s3">.</span><span class="s1">forEach</span><span class="s3">(</span><span class="s1">removeUnusedVar</span><span class="s3">);</span>
+  <span class="s1">code </span><span class="s3">= </span><span class="s2">&quot;'use strict';</span><span class="s4">\n</span><span class="s2">module.exports = &quot; </span><span class="s3">+ </span><span class="s1">code</span><span class="s3">;</span>
+  <span class="s1">code </span><span class="s3">= </span><span class="s1">beautify</span><span class="s3">(</span><span class="s1">code</span><span class="s3">, { </span><span class="s1">indent_size</span><span class="s3">: </span><span class="s5">2 </span><span class="s3">}) + </span><span class="s2">'</span><span class="s4">\n</span><span class="s2">'</span><span class="s3">;</span>
+  <span class="s1">fs</span><span class="s3">.</span><span class="s1">writeFileSync</span><span class="s3">(</span><span class="s1">targetPath</span><span class="s3">, </span><span class="s1">code</span><span class="s3">);</span>
+  <span class="s1">console</span><span class="s3">.</span><span class="s1">log</span><span class="s3">(</span><span class="s2">'compiled'</span><span class="s3">, </span><span class="s1">keyword</span><span class="s3">);</span>
+
+  <span class="s4">function </span><span class="s1">removeUnusedVar</span><span class="s3">(</span><span class="s1">v</span><span class="s3">) {</span>
+    <span class="s1">v </span><span class="s3">= </span><span class="s1">v</span><span class="s3">.</span><span class="s1">replace</span><span class="s3">(</span><span class="s6">/\$/g</span><span class="s3">, </span><span class="s2">'</span><span class="s4">\\</span><span class="s2">$$'</span><span class="s3">);</span>
+    <span class="s4">var </span><span class="s1">regexp </span><span class="s3">= </span><span class="s4">new </span><span class="s1">RegExp</span><span class="s3">(</span><span class="s1">v </span><span class="s3">+ </span><span class="s2">'[^A-Za-z0-9_$]'</span><span class="s3">, </span><span class="s2">'g'</span><span class="s3">);</span>
+    <span class="s4">var </span><span class="s1">count </span><span class="s3">= </span><span class="s1">occurrences</span><span class="s3">(</span><span class="s1">regexp</span><span class="s3">);</span>
+    <span class="s4">if </span><span class="s3">(</span><span class="s1">count </span><span class="s3">== </span><span class="s5">1</span><span class="s3">) {</span>
+      <span class="s1">regexp </span><span class="s3">= </span><span class="s4">new </span><span class="s1">RegExp</span><span class="s3">(</span><span class="s2">'var</span><span class="s4">\\</span><span class="s2">s+' </span><span class="s3">+ </span><span class="s1">v </span><span class="s3">+ </span><span class="s2">'</span><span class="s4">\\</span><span class="s2">s*=[^;]+;|var</span><span class="s4">\\</span><span class="s2">s+' </span><span class="s3">+ </span><span class="s1">v </span><span class="s3">+ </span><span class="s2">';'</span><span class="s3">);</span>
+      <span class="s1">code </span><span class="s3">= </span><span class="s1">code</span><span class="s3">.</span><span class="s1">replace</span><span class="s3">(</span><span class="s1">regexp</span><span class="s3">, </span><span class="s2">''</span><span class="s3">);</span>
+    <span class="s3">}</span>
+  <span class="s3">}</span>
+
+  <span class="s4">function </span><span class="s1">removeAlwaysFalsyInOr</span><span class="s3">() {</span>
+    <span class="s4">var </span><span class="s1">countUsed </span><span class="s3">= </span><span class="s1">occurrences</span><span class="s3">(</span><span class="s1">ERROR_KEYWORD</span><span class="s3">);</span>
+    <span class="s4">var </span><span class="s1">countOr </span><span class="s3">= </span><span class="s1">occurrences</span><span class="s3">(</span><span class="s1">ERROR_KEYWORD_OR</span><span class="s3">);</span>
+    <span class="s4">if </span><span class="s3">(</span><span class="s1">countUsed </span><span class="s3">== </span><span class="s1">countOr </span><span class="s3">+ </span><span class="s5">1</span><span class="s3">) </span><span class="s1">code </span><span class="s3">= </span><span class="s1">code</span><span class="s3">.</span><span class="s1">replace</span><span class="s3">(</span><span class="s1">ERROR_KEYWORD_OR</span><span class="s3">, </span><span class="s2">''</span><span class="s3">);</span>
+  <span class="s3">}</span>
+
+  <span class="s4">function </span><span class="s1">occurrences</span><span class="s3">(</span><span class="s1">regexp</span><span class="s3">) {</span>
+    <span class="s4">return </span><span class="s3">(</span><span class="s1">code</span><span class="s3">.</span><span class="s1">match</span><span class="s3">(</span><span class="s1">regexp</span><span class="s3">) || []).</span><span class="s1">length</span><span class="s3">;</span>
+  <span class="s3">}</span>
+<span class="s3">});</span>
+</pre>
+</body>
+</html>

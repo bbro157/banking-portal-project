@@ -1,0 +1,148 @@
+<html>
+<head>
+<title>standard-schema.d.cts</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #5f826b; font-style: italic;}
+.s1 { color: #bcbec4;}
+.s2 { color: #cf8e6d;}
+.s3 { color: #bcbec4;}
+.s4 { color: #6aab73;}
+.s5 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+standard-schema.d.cts</font>
+</center></td></tr></table>
+<pre><span class="s0">/** The Standard interface. */</span>
+<span class="s2">export interface </span><span class="s1">StandardTypedV1</span><span class="s3">&lt;</span><span class="s1">Input </span><span class="s3">= </span><span class="s1">unknown</span><span class="s3">, </span><span class="s1">Output </span><span class="s3">= </span><span class="s1">Input</span><span class="s3">&gt; {</span>
+    <span class="s0">/** The Standard properties. */</span>
+    <span class="s1">readonly </span><span class="s4">&quot;~standard&quot;</span><span class="s3">: </span><span class="s1">StandardTypedV1</span><span class="s3">.</span><span class="s1">Props</span><span class="s3">&lt;</span><span class="s1">Input</span><span class="s3">, </span><span class="s1">Output</span><span class="s3">&gt;;</span>
+<span class="s3">}</span>
+<span class="s2">export </span><span class="s1">declare namespace StandardTypedV1 </span><span class="s3">{</span>
+    <span class="s0">/** The Standard properties interface. */</span>
+    <span class="s2">interface </span><span class="s1">Props</span><span class="s3">&lt;</span><span class="s1">Input </span><span class="s3">= </span><span class="s1">unknown</span><span class="s3">, </span><span class="s1">Output </span><span class="s3">= </span><span class="s1">Input</span><span class="s3">&gt; {</span>
+        <span class="s0">/** The version number of the standard. */</span>
+        <span class="s1">readonly version</span><span class="s3">: </span><span class="s5">1</span><span class="s3">;</span>
+        <span class="s0">/** The vendor name of the schema library. */</span>
+        <span class="s1">readonly vendor</span><span class="s3">: </span><span class="s1">string</span><span class="s3">;</span>
+        <span class="s0">/** Inferred types associated with the schema. */</span>
+        <span class="s1">readonly types</span><span class="s3">?: </span><span class="s1">Types</span><span class="s3">&lt;</span><span class="s1">Input</span><span class="s3">, </span><span class="s1">Output</span><span class="s3">&gt; | </span><span class="s1">undefined</span><span class="s3">;</span>
+    <span class="s3">}</span>
+    <span class="s0">/** The Standard types interface. */</span>
+    <span class="s2">interface </span><span class="s1">Types</span><span class="s3">&lt;</span><span class="s1">Input </span><span class="s3">= </span><span class="s1">unknown</span><span class="s3">, </span><span class="s1">Output </span><span class="s3">= </span><span class="s1">Input</span><span class="s3">&gt; {</span>
+        <span class="s0">/** The input type of the schema. */</span>
+        <span class="s1">readonly input</span><span class="s3">: </span><span class="s1">Input</span><span class="s3">;</span>
+        <span class="s0">/** The output type of the schema. */</span>
+        <span class="s1">readonly output</span><span class="s3">: </span><span class="s1">Output</span><span class="s3">;</span>
+    <span class="s3">}</span>
+    <span class="s0">/** Infers the input type of a Standard. */</span>
+    <span class="s1">type InferInput</span><span class="s3">&lt;</span><span class="s1">Schema </span><span class="s2">extends </span><span class="s1">StandardTypedV1</span><span class="s3">&gt; = </span><span class="s1">NonNullable</span><span class="s3">&lt;</span><span class="s1">Schema</span><span class="s3">[</span><span class="s4">&quot;~standard&quot;</span><span class="s3">][</span><span class="s4">&quot;types&quot;</span><span class="s3">]&gt;[</span><span class="s4">&quot;input&quot;</span><span class="s3">];</span>
+    <span class="s0">/** Infers the output type of a Standard. */</span>
+    <span class="s1">type InferOutput</span><span class="s3">&lt;</span><span class="s1">Schema </span><span class="s2">extends </span><span class="s1">StandardTypedV1</span><span class="s3">&gt; = </span><span class="s1">NonNullable</span><span class="s3">&lt;</span><span class="s1">Schema</span><span class="s3">[</span><span class="s4">&quot;~standard&quot;</span><span class="s3">][</span><span class="s4">&quot;types&quot;</span><span class="s3">]&gt;[</span><span class="s4">&quot;output&quot;</span><span class="s3">];</span>
+<span class="s3">}</span>
+<span class="s0">/** The Standard Schema interface. */</span>
+<span class="s2">export interface </span><span class="s1">StandardSchemaV1</span><span class="s3">&lt;</span><span class="s1">Input </span><span class="s3">= </span><span class="s1">unknown</span><span class="s3">, </span><span class="s1">Output </span><span class="s3">= </span><span class="s1">Input</span><span class="s3">&gt; {</span>
+    <span class="s0">/** The Standard Schema properties. */</span>
+    <span class="s1">readonly </span><span class="s4">&quot;~standard&quot;</span><span class="s3">: </span><span class="s1">StandardSchemaV1</span><span class="s3">.</span><span class="s1">Props</span><span class="s3">&lt;</span><span class="s1">Input</span><span class="s3">, </span><span class="s1">Output</span><span class="s3">&gt;;</span>
+<span class="s3">}</span>
+<span class="s2">export </span><span class="s1">declare namespace StandardSchemaV1 </span><span class="s3">{</span>
+    <span class="s0">/** The Standard Schema properties interface. */</span>
+    <span class="s2">interface </span><span class="s1">Props</span><span class="s3">&lt;</span><span class="s1">Input </span><span class="s3">= </span><span class="s1">unknown</span><span class="s3">, </span><span class="s1">Output </span><span class="s3">= </span><span class="s1">Input</span><span class="s3">&gt; </span><span class="s2">extends </span><span class="s1">StandardTypedV1</span><span class="s3">.</span><span class="s1">Props</span><span class="s3">&lt;</span><span class="s1">Input</span><span class="s3">, </span><span class="s1">Output</span><span class="s3">&gt; {</span>
+        <span class="s0">/** Validates unknown input values. */</span>
+        <span class="s1">readonly validate</span><span class="s3">: (</span><span class="s1">value</span><span class="s3">: </span><span class="s1">unknown</span><span class="s3">, </span><span class="s1">options</span><span class="s3">?: </span><span class="s1">StandardSchemaV1</span><span class="s3">.</span><span class="s1">Options </span><span class="s3">| </span><span class="s1">undefined</span><span class="s3">) =&gt; </span><span class="s1">Result</span><span class="s3">&lt;</span><span class="s1">Output</span><span class="s3">&gt; | </span><span class="s1">Promise</span><span class="s3">&lt;</span><span class="s1">Result</span><span class="s3">&lt;</span><span class="s1">Output</span><span class="s3">&gt;&gt;;</span>
+    <span class="s3">}</span>
+    <span class="s0">/** The result interface of the validate function. */</span>
+    <span class="s1">type Result</span><span class="s3">&lt;</span><span class="s1">Output</span><span class="s3">&gt; = </span><span class="s1">SuccessResult</span><span class="s3">&lt;</span><span class="s1">Output</span><span class="s3">&gt; | </span><span class="s1">FailureResult</span><span class="s3">;</span>
+    <span class="s0">/** The result interface if validation succeeds. */</span>
+    <span class="s2">interface </span><span class="s1">SuccessResult</span><span class="s3">&lt;</span><span class="s1">Output</span><span class="s3">&gt; {</span>
+        <span class="s0">/** The typed output value. */</span>
+        <span class="s1">readonly value</span><span class="s3">: </span><span class="s1">Output</span><span class="s3">;</span>
+        <span class="s0">/** The absence of issues indicates success. */</span>
+        <span class="s1">readonly issues</span><span class="s3">?: </span><span class="s1">undefined</span><span class="s3">;</span>
+    <span class="s3">}</span>
+    <span class="s2">interface </span><span class="s1">Options </span><span class="s3">{</span>
+        <span class="s0">/** Implicit support for additional vendor-specific parameters, if needed. */</span>
+        <span class="s1">readonly libraryOptions</span><span class="s3">?: </span><span class="s1">Record</span><span class="s3">&lt;</span><span class="s1">string</span><span class="s3">, </span><span class="s1">unknown</span><span class="s3">&gt; | </span><span class="s1">undefined</span><span class="s3">;</span>
+    <span class="s3">}</span>
+    <span class="s0">/** The result interface if validation fails. */</span>
+    <span class="s2">interface </span><span class="s1">FailureResult </span><span class="s3">{</span>
+        <span class="s0">/** The issues of failed validation. */</span>
+        <span class="s1">readonly issues</span><span class="s3">: </span><span class="s1">ReadonlyArray</span><span class="s3">&lt;</span><span class="s1">Issue</span><span class="s3">&gt;;</span>
+    <span class="s3">}</span>
+    <span class="s0">/** The issue interface of the failure output. */</span>
+    <span class="s2">interface </span><span class="s1">Issue </span><span class="s3">{</span>
+        <span class="s0">/** The error message of the issue. */</span>
+        <span class="s1">readonly message</span><span class="s3">: </span><span class="s1">string</span><span class="s3">;</span>
+        <span class="s0">/** The path of the issue, if any. */</span>
+        <span class="s1">readonly path</span><span class="s3">?: </span><span class="s1">ReadonlyArray</span><span class="s3">&lt;</span><span class="s1">PropertyKey </span><span class="s3">| </span><span class="s1">PathSegment</span><span class="s3">&gt; | </span><span class="s1">undefined</span><span class="s3">;</span>
+    <span class="s3">}</span>
+    <span class="s0">/** The path segment interface of the issue. */</span>
+    <span class="s2">interface </span><span class="s1">PathSegment </span><span class="s3">{</span>
+        <span class="s0">/** The key representing a path segment. */</span>
+        <span class="s1">readonly key</span><span class="s3">: </span><span class="s1">PropertyKey</span><span class="s3">;</span>
+    <span class="s3">}</span>
+    <span class="s0">/** The Standard types interface. */</span>
+    <span class="s2">interface </span><span class="s1">Types</span><span class="s3">&lt;</span><span class="s1">Input </span><span class="s3">= </span><span class="s1">unknown</span><span class="s3">, </span><span class="s1">Output </span><span class="s3">= </span><span class="s1">Input</span><span class="s3">&gt; </span><span class="s2">extends </span><span class="s1">StandardTypedV1</span><span class="s3">.</span><span class="s1">Types</span><span class="s3">&lt;</span><span class="s1">Input</span><span class="s3">, </span><span class="s1">Output</span><span class="s3">&gt; {</span>
+    <span class="s3">}</span>
+    <span class="s0">/** Infers the input type of a Standard. */</span>
+    <span class="s1">type InferInput</span><span class="s3">&lt;</span><span class="s1">Schema </span><span class="s2">extends </span><span class="s1">StandardTypedV1</span><span class="s3">&gt; = </span><span class="s1">StandardTypedV1</span><span class="s3">.</span><span class="s1">InferInput</span><span class="s3">&lt;</span><span class="s1">Schema</span><span class="s3">&gt;;</span>
+    <span class="s0">/** Infers the output type of a Standard. */</span>
+    <span class="s1">type InferOutput</span><span class="s3">&lt;</span><span class="s1">Schema </span><span class="s2">extends </span><span class="s1">StandardTypedV1</span><span class="s3">&gt; = </span><span class="s1">StandardTypedV1</span><span class="s3">.</span><span class="s1">InferOutput</span><span class="s3">&lt;</span><span class="s1">Schema</span><span class="s3">&gt;;</span>
+<span class="s3">}</span>
+<span class="s0">/** The Standard JSON Schema interface. */</span>
+<span class="s2">export interface </span><span class="s1">StandardJSONSchemaV1</span><span class="s3">&lt;</span><span class="s1">Input </span><span class="s3">= </span><span class="s1">unknown</span><span class="s3">, </span><span class="s1">Output </span><span class="s3">= </span><span class="s1">Input</span><span class="s3">&gt; {</span>
+    <span class="s0">/** The Standard JSON Schema properties. */</span>
+    <span class="s1">readonly </span><span class="s4">&quot;~standard&quot;</span><span class="s3">: </span><span class="s1">StandardJSONSchemaV1</span><span class="s3">.</span><span class="s1">Props</span><span class="s3">&lt;</span><span class="s1">Input</span><span class="s3">, </span><span class="s1">Output</span><span class="s3">&gt;;</span>
+<span class="s3">}</span>
+<span class="s2">export </span><span class="s1">declare namespace StandardJSONSchemaV1 </span><span class="s3">{</span>
+    <span class="s0">/** The Standard JSON Schema properties interface. */</span>
+    <span class="s2">interface </span><span class="s1">Props</span><span class="s3">&lt;</span><span class="s1">Input </span><span class="s3">= </span><span class="s1">unknown</span><span class="s3">, </span><span class="s1">Output </span><span class="s3">= </span><span class="s1">Input</span><span class="s3">&gt; </span><span class="s2">extends </span><span class="s1">StandardTypedV1</span><span class="s3">.</span><span class="s1">Props</span><span class="s3">&lt;</span><span class="s1">Input</span><span class="s3">, </span><span class="s1">Output</span><span class="s3">&gt; {</span>
+        <span class="s0">/** Methods for generating the input/output JSON Schema. */</span>
+        <span class="s1">readonly jsonSchema</span><span class="s3">: </span><span class="s1">Converter</span><span class="s3">;</span>
+    <span class="s3">}</span>
+    <span class="s0">/** The Standard JSON Schema converter interface. */</span>
+    <span class="s2">interface </span><span class="s1">Converter </span><span class="s3">{</span>
+        <span class="s0">/** Converts the input type to JSON Schema. May throw if conversion is not supported. */</span>
+        <span class="s1">readonly input</span><span class="s3">: (</span><span class="s1">options</span><span class="s3">: </span><span class="s1">StandardJSONSchemaV1</span><span class="s3">.</span><span class="s1">Options</span><span class="s3">) =&gt; </span><span class="s1">Record</span><span class="s3">&lt;</span><span class="s1">string</span><span class="s3">, </span><span class="s1">unknown</span><span class="s3">&gt;;</span>
+        <span class="s0">/** Converts the output type to JSON Schema. May throw if conversion is not supported. */</span>
+        <span class="s1">readonly output</span><span class="s3">: (</span><span class="s1">options</span><span class="s3">: </span><span class="s1">StandardJSONSchemaV1</span><span class="s3">.</span><span class="s1">Options</span><span class="s3">) =&gt; </span><span class="s1">Record</span><span class="s3">&lt;</span><span class="s1">string</span><span class="s3">, </span><span class="s1">unknown</span><span class="s3">&gt;;</span>
+    <span class="s3">}</span>
+    <span class="s0">/** The target version of the generated JSON Schema.</span>
+     <span class="s0">*</span>
+     <span class="s0">* It is *strongly recommended* that implementers support `&quot;draft-2020-12&quot;` and `&quot;draft-07&quot;`, as they are both in wide use.</span>
+     <span class="s0">*</span>
+     <span class="s0">* The `&quot;openapi-3.0&quot;` target is intended as a standardized specifier for OpenAPI 3.0 which is a superset of JSON Schema `&quot;draft-04&quot;`.</span>
+     <span class="s0">*</span>
+     <span class="s0">* All other targets can be implemented on a best-effort basis. Libraries should throw if they don't support a specified target.</span>
+     <span class="s0">*/</span>
+    <span class="s1">type Target </span><span class="s3">= </span><span class="s4">&quot;draft-2020-12&quot; </span><span class="s3">| </span><span class="s4">&quot;draft-07&quot; </span><span class="s3">| </span><span class="s4">&quot;openapi-3.0&quot; </span><span class="s3">| ({} &amp; </span><span class="s1">string</span><span class="s3">);</span>
+    <span class="s0">/** The options for the input/output methods. */</span>
+    <span class="s2">interface </span><span class="s1">Options </span><span class="s3">{</span>
+        <span class="s0">/** Specifies the target version of the generated JSON Schema. Support for all versions is on a best-effort basis. If a given version is not supported, the library should throw. */</span>
+        <span class="s1">readonly target</span><span class="s3">: </span><span class="s1">Target</span><span class="s3">;</span>
+        <span class="s0">/** Implicit support for additional vendor-specific parameters, if needed. */</span>
+        <span class="s1">readonly libraryOptions</span><span class="s3">?: </span><span class="s1">Record</span><span class="s3">&lt;</span><span class="s1">string</span><span class="s3">, </span><span class="s1">unknown</span><span class="s3">&gt; | </span><span class="s1">undefined</span><span class="s3">;</span>
+    <span class="s3">}</span>
+    <span class="s0">/** The Standard types interface. */</span>
+    <span class="s2">interface </span><span class="s1">Types</span><span class="s3">&lt;</span><span class="s1">Input </span><span class="s3">= </span><span class="s1">unknown</span><span class="s3">, </span><span class="s1">Output </span><span class="s3">= </span><span class="s1">Input</span><span class="s3">&gt; </span><span class="s2">extends </span><span class="s1">StandardTypedV1</span><span class="s3">.</span><span class="s1">Types</span><span class="s3">&lt;</span><span class="s1">Input</span><span class="s3">, </span><span class="s1">Output</span><span class="s3">&gt; {</span>
+    <span class="s3">}</span>
+    <span class="s0">/** Infers the input type of a Standard. */</span>
+    <span class="s1">type InferInput</span><span class="s3">&lt;</span><span class="s1">Schema </span><span class="s2">extends </span><span class="s1">StandardTypedV1</span><span class="s3">&gt; = </span><span class="s1">StandardTypedV1</span><span class="s3">.</span><span class="s1">InferInput</span><span class="s3">&lt;</span><span class="s1">Schema</span><span class="s3">&gt;;</span>
+    <span class="s0">/** Infers the output type of a Standard. */</span>
+    <span class="s1">type InferOutput</span><span class="s3">&lt;</span><span class="s1">Schema </span><span class="s2">extends </span><span class="s1">StandardTypedV1</span><span class="s3">&gt; = </span><span class="s1">StandardTypedV1</span><span class="s3">.</span><span class="s1">InferOutput</span><span class="s3">&lt;</span><span class="s1">Schema</span><span class="s3">&gt;;</span>
+<span class="s3">}</span>
+<span class="s2">export interface </span><span class="s1">StandardSchemaWithJSONProps</span><span class="s3">&lt;</span><span class="s1">Input </span><span class="s3">= </span><span class="s1">unknown</span><span class="s3">, </span><span class="s1">Output </span><span class="s3">= </span><span class="s1">Input</span><span class="s3">&gt; </span><span class="s2">extends </span><span class="s1">StandardSchemaV1</span><span class="s3">.</span><span class="s1">Props</span><span class="s3">&lt;</span><span class="s1">Input</span><span class="s3">, </span><span class="s1">Output</span><span class="s3">&gt;, </span><span class="s1">StandardJSONSchemaV1</span><span class="s3">.</span><span class="s1">Props</span><span class="s3">&lt;</span><span class="s1">Input</span><span class="s3">, </span><span class="s1">Output</span><span class="s3">&gt; {</span>
+<span class="s3">}</span>
+<span class="s0">/**</span>
+ <span class="s0">* An interface that combines StandardJSONSchema and StandardSchema.</span>
+ <span class="s0">*/</span>
+<span class="s2">export interface </span><span class="s1">StandardSchemaWithJSON</span><span class="s3">&lt;</span><span class="s1">Input </span><span class="s3">= </span><span class="s1">unknown</span><span class="s3">, </span><span class="s1">Output </span><span class="s3">= </span><span class="s1">Input</span><span class="s3">&gt; {</span>
+    <span class="s4">&quot;~standard&quot;</span><span class="s3">: </span><span class="s1">StandardSchemaWithJSONProps</span><span class="s3">&lt;</span><span class="s1">Input</span><span class="s3">, </span><span class="s1">Output</span><span class="s3">&gt;;</span>
+<span class="s3">}</span>
+</pre>
+</body>
+</html>

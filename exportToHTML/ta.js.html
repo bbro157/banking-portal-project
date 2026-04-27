@@ -1,0 +1,133 @@
+<html>
+<head>
+<title>ta.js</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #42c3d4;}
+.s5 { color: #2aacb8;}
+.s6 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+ta.js</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s2">* as </span><span class="s1">util from </span><span class="s3">&quot;../core/util.js&quot;</span><span class="s2">;</span>
+<span class="s0">const </span><span class="s1">error </span><span class="s2">= () =&gt; {</span>
+    <span class="s0">const </span><span class="s1">Sizable </span><span class="s2">= {</span>
+        <span class="s1">string</span><span class="s2">: { </span><span class="s1">unit</span><span class="s2">: </span><span class="s3">&quot;எழுத்துக்கள்&quot;</span><span class="s2">, </span><span class="s1">verb</span><span class="s2">: </span><span class="s3">&quot;கொண்டிருக்க வேண்டும்&quot; </span><span class="s2">},</span>
+        <span class="s1">file</span><span class="s2">: { </span><span class="s1">unit</span><span class="s2">: </span><span class="s3">&quot;பைட்டுகள்&quot;</span><span class="s2">, </span><span class="s1">verb</span><span class="s2">: </span><span class="s3">&quot;கொண்டிருக்க வேண்டும்&quot; </span><span class="s2">},</span>
+        <span class="s1">array</span><span class="s2">: { </span><span class="s1">unit</span><span class="s2">: </span><span class="s3">&quot;உறுப்புகள்&quot;</span><span class="s2">, </span><span class="s1">verb</span><span class="s2">: </span><span class="s3">&quot;கொண்டிருக்க வேண்டும்&quot; </span><span class="s2">},</span>
+        <span class="s1">set</span><span class="s2">: { </span><span class="s1">unit</span><span class="s2">: </span><span class="s3">&quot;உறுப்புகள்&quot;</span><span class="s2">, </span><span class="s1">verb</span><span class="s2">: </span><span class="s3">&quot;கொண்டிருக்க வேண்டும்&quot; </span><span class="s2">},</span>
+    <span class="s2">};</span>
+    <span class="s0">function </span><span class="s1">getSizing</span><span class="s2">(</span><span class="s1">origin</span><span class="s2">) {</span>
+        <span class="s0">return </span><span class="s1">Sizable</span><span class="s2">[</span><span class="s1">origin</span><span class="s2">] ?? </span><span class="s0">null</span><span class="s2">;</span>
+    <span class="s2">}</span>
+    <span class="s0">const </span><span class="s1">FormatDictionary </span><span class="s2">= {</span>
+        <span class="s1">regex</span><span class="s2">: </span><span class="s3">&quot;உள்ளீடு&quot;</span><span class="s2">,</span>
+        <span class="s1">email</span><span class="s2">: </span><span class="s3">&quot;மின்னஞ்சல் முகவரி&quot;</span><span class="s2">,</span>
+        <span class="s1">url</span><span class="s2">: </span><span class="s3">&quot;URL&quot;</span><span class="s2">,</span>
+        <span class="s1">emoji</span><span class="s2">: </span><span class="s3">&quot;emoji&quot;</span><span class="s2">,</span>
+        <span class="s1">uuid</span><span class="s2">: </span><span class="s3">&quot;UUID&quot;</span><span class="s2">,</span>
+        <span class="s1">uuidv4</span><span class="s2">: </span><span class="s3">&quot;UUIDv4&quot;</span><span class="s2">,</span>
+        <span class="s1">uuidv6</span><span class="s2">: </span><span class="s3">&quot;UUIDv6&quot;</span><span class="s2">,</span>
+        <span class="s1">nanoid</span><span class="s2">: </span><span class="s3">&quot;nanoid&quot;</span><span class="s2">,</span>
+        <span class="s1">guid</span><span class="s2">: </span><span class="s3">&quot;GUID&quot;</span><span class="s2">,</span>
+        <span class="s1">cuid</span><span class="s2">: </span><span class="s3">&quot;cuid&quot;</span><span class="s2">,</span>
+        <span class="s1">cuid2</span><span class="s2">: </span><span class="s3">&quot;cuid2&quot;</span><span class="s2">,</span>
+        <span class="s1">ulid</span><span class="s2">: </span><span class="s3">&quot;ULID&quot;</span><span class="s2">,</span>
+        <span class="s1">xid</span><span class="s2">: </span><span class="s3">&quot;XID&quot;</span><span class="s2">,</span>
+        <span class="s1">ksuid</span><span class="s2">: </span><span class="s3">&quot;KSUID&quot;</span><span class="s2">,</span>
+        <span class="s1">datetime</span><span class="s2">: </span><span class="s3">&quot;ISO தேதி நேரம்&quot;</span><span class="s2">,</span>
+        <span class="s1">date</span><span class="s2">: </span><span class="s3">&quot;ISO தேதி&quot;</span><span class="s2">,</span>
+        <span class="s1">time</span><span class="s2">: </span><span class="s3">&quot;ISO நேரம்&quot;</span><span class="s2">,</span>
+        <span class="s1">duration</span><span class="s2">: </span><span class="s3">&quot;ISO கால அளவு&quot;</span><span class="s2">,</span>
+        <span class="s1">ipv4</span><span class="s2">: </span><span class="s3">&quot;IPv4 முகவரி&quot;</span><span class="s2">,</span>
+        <span class="s1">ipv6</span><span class="s2">: </span><span class="s3">&quot;IPv6 முகவரி&quot;</span><span class="s2">,</span>
+        <span class="s1">cidrv4</span><span class="s2">: </span><span class="s3">&quot;IPv4 வரம்பு&quot;</span><span class="s2">,</span>
+        <span class="s1">cidrv6</span><span class="s2">: </span><span class="s3">&quot;IPv6 வரம்பு&quot;</span><span class="s2">,</span>
+        <span class="s1">base64</span><span class="s2">: </span><span class="s3">&quot;base64-encoded சரம்&quot;</span><span class="s2">,</span>
+        <span class="s1">base64url</span><span class="s2">: </span><span class="s3">&quot;base64url-encoded சரம்&quot;</span><span class="s2">,</span>
+        <span class="s1">json_string</span><span class="s2">: </span><span class="s3">&quot;JSON சரம்&quot;</span><span class="s2">,</span>
+        <span class="s1">e164</span><span class="s2">: </span><span class="s3">&quot;E.164 எண்&quot;</span><span class="s2">,</span>
+        <span class="s1">jwt</span><span class="s2">: </span><span class="s3">&quot;JWT&quot;</span><span class="s2">,</span>
+        <span class="s1">template_literal</span><span class="s2">: </span><span class="s3">&quot;input&quot;</span><span class="s2">,</span>
+    <span class="s2">};</span>
+    <span class="s0">const </span><span class="s1">TypeDictionary </span><span class="s2">= {</span>
+        <span class="s1">nan</span><span class="s2">: </span><span class="s3">&quot;NaN&quot;</span><span class="s2">,</span>
+        <span class="s1">number</span><span class="s2">: </span><span class="s3">&quot;எண்&quot;</span><span class="s2">,</span>
+        <span class="s1">array</span><span class="s2">: </span><span class="s3">&quot;அணி&quot;</span><span class="s2">,</span>
+        <span class="s0">null</span><span class="s2">: </span><span class="s3">&quot;வெறுமை&quot;</span><span class="s2">,</span>
+    <span class="s2">};</span>
+    <span class="s0">return </span><span class="s2">(</span><span class="s1">issue</span><span class="s2">) =&gt; {</span>
+        <span class="s0">switch </span><span class="s2">(</span><span class="s1">issue</span><span class="s2">.</span><span class="s1">code</span><span class="s2">) {</span>
+            <span class="s0">case </span><span class="s3">&quot;invalid_type&quot;</span><span class="s2">: {</span>
+                <span class="s0">const </span><span class="s1">expected </span><span class="s2">= </span><span class="s1">TypeDictionary</span><span class="s2">[</span><span class="s1">issue</span><span class="s2">.</span><span class="s1">expected</span><span class="s2">] ?? </span><span class="s1">issue</span><span class="s2">.</span><span class="s1">expected</span><span class="s2">;</span>
+                <span class="s0">const </span><span class="s1">receivedType </span><span class="s2">= </span><span class="s1">util</span><span class="s2">.</span><span class="s1">parsedType</span><span class="s2">(</span><span class="s1">issue</span><span class="s2">.</span><span class="s1">input</span><span class="s2">);</span>
+                <span class="s0">const </span><span class="s1">received </span><span class="s2">= </span><span class="s1">TypeDictionary</span><span class="s2">[</span><span class="s1">receivedType</span><span class="s2">] ?? </span><span class="s1">receivedType</span><span class="s2">;</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s4">/^[A-Z]/</span><span class="s2">.</span><span class="s1">test</span><span class="s2">(</span><span class="s1">issue</span><span class="s2">.</span><span class="s1">expected</span><span class="s2">)) {</span>
+                    <span class="s0">return </span><span class="s3">`தவறான உள்ளீடு: எதிர்பார்க்கப்பட்டது instanceof </span><span class="s1">$</span><span class="s2">{</span><span class="s1">issue</span><span class="s2">.</span><span class="s1">expected</span><span class="s2">}</span><span class="s3">, பெறப்பட்டது </span><span class="s1">$</span><span class="s2">{</span><span class="s1">received</span><span class="s2">}</span><span class="s3">`</span><span class="s2">;</span>
+                <span class="s2">}</span>
+                <span class="s0">return </span><span class="s3">`தவறான உள்ளீடு: எதிர்பார்க்கப்பட்டது </span><span class="s1">$</span><span class="s2">{</span><span class="s1">expected</span><span class="s2">}</span><span class="s3">, பெறப்பட்டது </span><span class="s1">$</span><span class="s2">{</span><span class="s1">received</span><span class="s2">}</span><span class="s3">`</span><span class="s2">;</span>
+            <span class="s2">}</span>
+            <span class="s0">case </span><span class="s3">&quot;invalid_value&quot;</span><span class="s2">:</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">issue</span><span class="s2">.</span><span class="s1">values</span><span class="s2">.</span><span class="s1">length </span><span class="s2">=== </span><span class="s5">1</span><span class="s2">)</span>
+                    <span class="s0">return </span><span class="s3">`தவறான உள்ளீடு: எதிர்பார்க்கப்பட்டது </span><span class="s1">$</span><span class="s2">{</span><span class="s1">util</span><span class="s2">.</span><span class="s1">stringifyPrimitive</span><span class="s2">(</span><span class="s1">issue</span><span class="s2">.</span><span class="s1">values</span><span class="s2">[</span><span class="s5">0</span><span class="s2">])}</span><span class="s3">`</span><span class="s2">;</span>
+                <span class="s0">return </span><span class="s3">`தவறான விருப்பம்: எதிர்பார்க்கப்பட்டது </span><span class="s1">$</span><span class="s2">{</span><span class="s1">util</span><span class="s2">.</span><span class="s1">joinValues</span><span class="s2">(</span><span class="s1">issue</span><span class="s2">.</span><span class="s1">values</span><span class="s2">, </span><span class="s3">&quot;|&quot;</span><span class="s2">)} </span><span class="s3">இல் ஒன்று`</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s3">&quot;too_big&quot;</span><span class="s2">: {</span>
+                <span class="s0">const </span><span class="s1">adj </span><span class="s2">= </span><span class="s1">issue</span><span class="s2">.</span><span class="s1">inclusive </span><span class="s2">? </span><span class="s3">&quot;&lt;=&quot; </span><span class="s2">: </span><span class="s3">&quot;&lt;&quot;</span><span class="s2">;</span>
+                <span class="s0">const </span><span class="s1">sizing </span><span class="s2">= </span><span class="s1">getSizing</span><span class="s2">(</span><span class="s1">issue</span><span class="s2">.</span><span class="s1">origin</span><span class="s2">);</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">sizing</span><span class="s2">) {</span>
+                    <span class="s0">return </span><span class="s3">`மிக பெரியது: எதிர்பார்க்கப்பட்டது </span><span class="s1">$</span><span class="s2">{</span><span class="s1">issue</span><span class="s2">.</span><span class="s1">origin </span><span class="s2">?? </span><span class="s3">&quot;மதிப்பு&quot;</span><span class="s2">} </span><span class="s1">$</span><span class="s2">{</span><span class="s1">adj</span><span class="s2">}</span><span class="s1">$</span><span class="s2">{</span><span class="s1">issue</span><span class="s2">.</span><span class="s1">maximum</span><span class="s2">.</span><span class="s1">toString</span><span class="s2">()} </span><span class="s1">$</span><span class="s2">{</span><span class="s1">sizing</span><span class="s2">.</span><span class="s1">unit </span><span class="s2">?? </span><span class="s3">&quot;உறுப்புகள்&quot;</span><span class="s2">} </span><span class="s3">ஆக இருக்க வேண்டும்`</span><span class="s2">;</span>
+                <span class="s2">}</span>
+                <span class="s0">return </span><span class="s3">`மிக பெரியது: எதிர்பார்க்கப்பட்டது </span><span class="s1">$</span><span class="s2">{</span><span class="s1">issue</span><span class="s2">.</span><span class="s1">origin </span><span class="s2">?? </span><span class="s3">&quot;மதிப்பு&quot;</span><span class="s2">} </span><span class="s1">$</span><span class="s2">{</span><span class="s1">adj</span><span class="s2">}</span><span class="s1">$</span><span class="s2">{</span><span class="s1">issue</span><span class="s2">.</span><span class="s1">maximum</span><span class="s2">.</span><span class="s1">toString</span><span class="s2">()} </span><span class="s3">ஆக இருக்க வேண்டும்`</span><span class="s2">;</span>
+            <span class="s2">}</span>
+            <span class="s0">case </span><span class="s3">&quot;too_small&quot;</span><span class="s2">: {</span>
+                <span class="s0">const </span><span class="s1">adj </span><span class="s2">= </span><span class="s1">issue</span><span class="s2">.</span><span class="s1">inclusive </span><span class="s2">? </span><span class="s3">&quot;&gt;=&quot; </span><span class="s2">: </span><span class="s3">&quot;&gt;&quot;</span><span class="s2">;</span>
+                <span class="s0">const </span><span class="s1">sizing </span><span class="s2">= </span><span class="s1">getSizing</span><span class="s2">(</span><span class="s1">issue</span><span class="s2">.</span><span class="s1">origin</span><span class="s2">);</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">sizing</span><span class="s2">) {</span>
+                    <span class="s0">return </span><span class="s3">`மிகச் சிறியது: எதிர்பார்க்கப்பட்டது </span><span class="s1">$</span><span class="s2">{</span><span class="s1">issue</span><span class="s2">.</span><span class="s1">origin</span><span class="s2">} </span><span class="s1">$</span><span class="s2">{</span><span class="s1">adj</span><span class="s2">}</span><span class="s1">$</span><span class="s2">{</span><span class="s1">issue</span><span class="s2">.</span><span class="s1">minimum</span><span class="s2">.</span><span class="s1">toString</span><span class="s2">()} </span><span class="s1">$</span><span class="s2">{</span><span class="s1">sizing</span><span class="s2">.</span><span class="s1">unit</span><span class="s2">} </span><span class="s3">ஆக இருக்க வேண்டும்`</span><span class="s2">; </span><span class="s6">//</span>
+                <span class="s2">}</span>
+                <span class="s0">return </span><span class="s3">`மிகச் சிறியது: எதிர்பார்க்கப்பட்டது </span><span class="s1">$</span><span class="s2">{</span><span class="s1">issue</span><span class="s2">.</span><span class="s1">origin</span><span class="s2">} </span><span class="s1">$</span><span class="s2">{</span><span class="s1">adj</span><span class="s2">}</span><span class="s1">$</span><span class="s2">{</span><span class="s1">issue</span><span class="s2">.</span><span class="s1">minimum</span><span class="s2">.</span><span class="s1">toString</span><span class="s2">()} </span><span class="s3">ஆக இருக்க வேண்டும்`</span><span class="s2">;</span>
+            <span class="s2">}</span>
+            <span class="s0">case </span><span class="s3">&quot;invalid_format&quot;</span><span class="s2">: {</span>
+                <span class="s0">const </span><span class="s1">_issue </span><span class="s2">= </span><span class="s1">issue</span><span class="s2">;</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">_issue</span><span class="s2">.</span><span class="s1">format </span><span class="s2">=== </span><span class="s3">&quot;starts_with&quot;</span><span class="s2">)</span>
+                    <span class="s0">return </span><span class="s3">`தவறான சரம்: &quot;</span><span class="s1">$</span><span class="s2">{</span><span class="s1">_issue</span><span class="s2">.</span><span class="s1">prefix</span><span class="s2">}</span><span class="s3">&quot; இல் தொடங்க வேண்டும்`</span><span class="s2">;</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">_issue</span><span class="s2">.</span><span class="s1">format </span><span class="s2">=== </span><span class="s3">&quot;ends_with&quot;</span><span class="s2">)</span>
+                    <span class="s0">return </span><span class="s3">`தவறான சரம்: &quot;</span><span class="s1">$</span><span class="s2">{</span><span class="s1">_issue</span><span class="s2">.</span><span class="s1">suffix</span><span class="s2">}</span><span class="s3">&quot; இல் முடிவடைய வேண்டும்`</span><span class="s2">;</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">_issue</span><span class="s2">.</span><span class="s1">format </span><span class="s2">=== </span><span class="s3">&quot;includes&quot;</span><span class="s2">)</span>
+                    <span class="s0">return </span><span class="s3">`தவறான சரம்: &quot;</span><span class="s1">$</span><span class="s2">{</span><span class="s1">_issue</span><span class="s2">.</span><span class="s1">includes</span><span class="s2">}</span><span class="s3">&quot; ஐ உள்ளடக்க வேண்டும்`</span><span class="s2">;</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">_issue</span><span class="s2">.</span><span class="s1">format </span><span class="s2">=== </span><span class="s3">&quot;regex&quot;</span><span class="s2">)</span>
+                    <span class="s0">return </span><span class="s3">`தவறான சரம்: </span><span class="s1">$</span><span class="s2">{</span><span class="s1">_issue</span><span class="s2">.</span><span class="s1">pattern</span><span class="s2">} </span><span class="s3">முறைபாட்டுடன் பொருந்த வேண்டும்`</span><span class="s2">;</span>
+                <span class="s0">return </span><span class="s3">`தவறான </span><span class="s1">$</span><span class="s2">{</span><span class="s1">FormatDictionary</span><span class="s2">[</span><span class="s1">_issue</span><span class="s2">.</span><span class="s1">format</span><span class="s2">] ?? </span><span class="s1">issue</span><span class="s2">.</span><span class="s1">format</span><span class="s2">}</span><span class="s3">`</span><span class="s2">;</span>
+            <span class="s2">}</span>
+            <span class="s0">case </span><span class="s3">&quot;not_multiple_of&quot;</span><span class="s2">:</span>
+                <span class="s0">return </span><span class="s3">`தவறான எண்: </span><span class="s1">$</span><span class="s2">{</span><span class="s1">issue</span><span class="s2">.</span><span class="s1">divisor</span><span class="s2">} </span><span class="s3">இன் பலமாக இருக்க வேண்டும்`</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s3">&quot;unrecognized_keys&quot;</span><span class="s2">:</span>
+                <span class="s0">return </span><span class="s3">`அடையாளம் தெரியாத விசை</span><span class="s1">$</span><span class="s2">{</span><span class="s1">issue</span><span class="s2">.</span><span class="s1">keys</span><span class="s2">.</span><span class="s1">length </span><span class="s2">&gt; </span><span class="s5">1 </span><span class="s2">? </span><span class="s3">&quot;கள்&quot; </span><span class="s2">: </span><span class="s3">&quot;&quot;</span><span class="s2">}</span><span class="s3">: </span><span class="s1">$</span><span class="s2">{</span><span class="s1">util</span><span class="s2">.</span><span class="s1">joinValues</span><span class="s2">(</span><span class="s1">issue</span><span class="s2">.</span><span class="s1">keys</span><span class="s2">, </span><span class="s3">&quot;, &quot;</span><span class="s2">)}</span><span class="s3">`</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s3">&quot;invalid_key&quot;</span><span class="s2">:</span>
+                <span class="s0">return </span><span class="s3">`</span><span class="s1">$</span><span class="s2">{</span><span class="s1">issue</span><span class="s2">.</span><span class="s1">origin</span><span class="s2">} </span><span class="s3">இல் தவறான விசை`</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s3">&quot;invalid_union&quot;</span><span class="s2">:</span>
+                <span class="s0">return </span><span class="s3">&quot;தவறான உள்ளீடு&quot;</span><span class="s2">;</span>
+            <span class="s0">case </span><span class="s3">&quot;invalid_element&quot;</span><span class="s2">:</span>
+                <span class="s0">return </span><span class="s3">`</span><span class="s1">$</span><span class="s2">{</span><span class="s1">issue</span><span class="s2">.</span><span class="s1">origin</span><span class="s2">} </span><span class="s3">இல் தவறான மதிப்பு`</span><span class="s2">;</span>
+            <span class="s0">default</span><span class="s2">:</span>
+                <span class="s0">return </span><span class="s3">`தவறான உள்ளீடு`</span><span class="s2">;</span>
+        <span class="s2">}</span>
+    <span class="s2">};</span>
+<span class="s2">};</span>
+<span class="s0">export default function </span><span class="s2">() {</span>
+    <span class="s0">return </span><span class="s2">{</span>
+        <span class="s1">localeError</span><span class="s2">: </span><span class="s1">error</span><span class="s2">(),</span>
+    <span class="s2">};</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

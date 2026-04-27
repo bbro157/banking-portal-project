@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>core.d.cts</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #5f826b; font-style: italic;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+core.d.cts</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">type </span><span class="s2">* as </span><span class="s1">errors from </span><span class="s3">&quot;./errors.cjs&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">type </span><span class="s2">* as </span><span class="s1">schemas from </span><span class="s3">&quot;./schemas.cjs&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">type </span><span class="s2">{ </span><span class="s1">Class </span><span class="s2">} </span><span class="s1">from </span><span class="s3">&quot;./util.cjs&quot;</span><span class="s2">;</span>
+<span class="s1">type ZodTrait </span><span class="s2">= {</span>
+    <span class="s1">_zod</span><span class="s2">: {</span>
+        <span class="s1">def</span><span class="s2">: </span><span class="s1">any</span><span class="s2">;</span>
+        <span class="s2">[</span><span class="s1">k</span><span class="s2">: </span><span class="s1">string</span><span class="s2">]: </span><span class="s1">any</span><span class="s2">;</span>
+    <span class="s2">};</span>
+<span class="s2">};</span>
+<span class="s0">export interface </span><span class="s1">$constructor</span><span class="s2">&lt;</span><span class="s1">T </span><span class="s0">extends </span><span class="s1">ZodTrait</span><span class="s2">, </span><span class="s1">D </span><span class="s2">= </span><span class="s1">T</span><span class="s2">[</span><span class="s3">&quot;_zod&quot;</span><span class="s2">][</span><span class="s3">&quot;def&quot;</span><span class="s2">]&gt; {</span>
+    <span class="s0">new </span><span class="s2">(</span><span class="s1">def</span><span class="s2">: </span><span class="s1">D</span><span class="s2">): </span><span class="s1">T</span><span class="s2">;</span>
+    <span class="s1">init</span><span class="s2">(</span><span class="s1">inst</span><span class="s2">: </span><span class="s1">T</span><span class="s2">, </span><span class="s1">def</span><span class="s2">: </span><span class="s1">D</span><span class="s2">): </span><span class="s1">asserts inst </span><span class="s2">is </span><span class="s1">T</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s4">/** A special constant with type `never` */</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">const </span><span class="s1">NEVER</span><span class="s2">: </span><span class="s1">never</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">function </span><span class="s1">$constructor</span><span class="s2">&lt;</span><span class="s1">T </span><span class="s0">extends </span><span class="s1">ZodTrait</span><span class="s2">, </span><span class="s1">D </span><span class="s2">= </span><span class="s1">T</span><span class="s2">[</span><span class="s3">&quot;_zod&quot;</span><span class="s2">][</span><span class="s3">&quot;def&quot;</span><span class="s2">]&gt;(</span><span class="s1">name</span><span class="s2">: </span><span class="s1">string</span><span class="s2">, </span><span class="s1">initializer</span><span class="s2">: (</span><span class="s1">inst</span><span class="s2">: </span><span class="s1">T</span><span class="s2">, </span><span class="s1">def</span><span class="s2">: </span><span class="s1">D</span><span class="s2">) =&gt; </span><span class="s0">void</span><span class="s2">, </span><span class="s1">params</span><span class="s2">?: {</span>
+    <span class="s1">Parent</span><span class="s2">?: </span><span class="s0">typeof </span><span class="s1">Class</span><span class="s2">;</span>
+<span class="s2">}): </span><span class="s1">$constructor</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">, </span><span class="s1">D</span><span class="s2">&gt;;</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">const </span><span class="s1">$brand</span><span class="s2">: </span><span class="s1">unique symbol</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s1">type $brand</span><span class="s2">&lt;</span><span class="s1">T </span><span class="s0">extends </span><span class="s1">string </span><span class="s2">| </span><span class="s1">number </span><span class="s2">| </span><span class="s1">symbol </span><span class="s2">= </span><span class="s1">string </span><span class="s2">| </span><span class="s1">number </span><span class="s2">| </span><span class="s1">symbol</span><span class="s2">&gt; = {</span>
+    <span class="s2">[</span><span class="s1">$brand</span><span class="s2">]: {</span>
+        <span class="s2">[</span><span class="s1">k </span><span class="s0">in </span><span class="s1">T</span><span class="s2">]: </span><span class="s0">true</span><span class="s2">;</span>
+    <span class="s2">};</span>
+<span class="s2">};</span>
+<span class="s0">export </span><span class="s1">type $ZodBranded</span><span class="s2">&lt;</span><span class="s1">T </span><span class="s0">extends </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">SomeType</span><span class="s2">, </span><span class="s1">Brand </span><span class="s0">extends </span><span class="s1">string </span><span class="s2">| </span><span class="s1">number </span><span class="s2">| </span><span class="s1">symbol</span><span class="s2">, </span><span class="s1">Dir </span><span class="s0">extends </span><span class="s3">&quot;in&quot; </span><span class="s2">| </span><span class="s3">&quot;out&quot; </span><span class="s2">| </span><span class="s3">&quot;inout&quot; </span><span class="s2">= </span><span class="s3">&quot;out&quot;</span><span class="s2">&gt; = </span><span class="s1">T </span><span class="s2">&amp; (</span><span class="s1">Dir </span><span class="s0">extends </span><span class="s3">&quot;inout&quot; </span><span class="s2">? {</span>
+    <span class="s1">_zod</span><span class="s2">: {</span>
+        <span class="s1">input</span><span class="s2">: </span><span class="s1">input</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt; &amp; </span><span class="s1">$brand</span><span class="s2">&lt;</span><span class="s1">Brand</span><span class="s2">&gt;;</span>
+        <span class="s1">output</span><span class="s2">: </span><span class="s1">output</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt; &amp; </span><span class="s1">$brand</span><span class="s2">&lt;</span><span class="s1">Brand</span><span class="s2">&gt;;</span>
+    <span class="s2">};</span>
+<span class="s2">} : </span><span class="s1">Dir </span><span class="s0">extends </span><span class="s3">&quot;in&quot; </span><span class="s2">? {</span>
+    <span class="s1">_zod</span><span class="s2">: {</span>
+        <span class="s1">input</span><span class="s2">: </span><span class="s1">input</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt; &amp; </span><span class="s1">$brand</span><span class="s2">&lt;</span><span class="s1">Brand</span><span class="s2">&gt;;</span>
+    <span class="s2">};</span>
+<span class="s2">} : {</span>
+    <span class="s1">_zod</span><span class="s2">: {</span>
+        <span class="s1">output</span><span class="s2">: </span><span class="s1">output</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt; &amp; </span><span class="s1">$brand</span><span class="s2">&lt;</span><span class="s1">Brand</span><span class="s2">&gt;;</span>
+    <span class="s2">};</span>
+<span class="s2">});</span>
+<span class="s0">export </span><span class="s1">type $ZodNarrow</span><span class="s2">&lt;</span><span class="s1">T </span><span class="s0">extends </span><span class="s1">schemas</span><span class="s2">.</span><span class="s1">SomeType</span><span class="s2">, </span><span class="s1">Out</span><span class="s2">&gt; = </span><span class="s1">T </span><span class="s2">&amp; {</span>
+    <span class="s1">_zod</span><span class="s2">: {</span>
+        <span class="s1">output</span><span class="s2">: </span><span class="s1">Out</span><span class="s2">;</span>
+    <span class="s2">};</span>
+<span class="s2">};</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">class </span><span class="s1">$ZodAsyncError </span><span class="s0">extends </span><span class="s1">Error </span><span class="s2">{</span>
+    <span class="s1">constructor</span><span class="s2">();</span>
+<span class="s2">}</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">class </span><span class="s1">$ZodEncodeError </span><span class="s0">extends </span><span class="s1">Error </span><span class="s2">{</span>
+    <span class="s1">constructor</span><span class="s2">(</span><span class="s1">name</span><span class="s2">: </span><span class="s1">string</span><span class="s2">);</span>
+<span class="s2">}</span>
+<span class="s0">export </span><span class="s1">type input</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt; = </span><span class="s1">T </span><span class="s0">extends </span><span class="s2">{</span>
+    <span class="s1">_zod</span><span class="s2">: {</span>
+        <span class="s1">input</span><span class="s2">: </span><span class="s1">any</span><span class="s2">;</span>
+    <span class="s2">};</span>
+<span class="s2">} ? </span><span class="s1">T</span><span class="s2">[</span><span class="s3">&quot;_zod&quot;</span><span class="s2">][</span><span class="s3">&quot;input&quot;</span><span class="s2">] : </span><span class="s1">unknown</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s1">type output</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt; = </span><span class="s1">T </span><span class="s0">extends </span><span class="s2">{</span>
+    <span class="s1">_zod</span><span class="s2">: {</span>
+        <span class="s1">output</span><span class="s2">: </span><span class="s1">any</span><span class="s2">;</span>
+    <span class="s2">};</span>
+<span class="s2">} ? </span><span class="s1">T</span><span class="s2">[</span><span class="s3">&quot;_zod&quot;</span><span class="s2">][</span><span class="s3">&quot;output&quot;</span><span class="s2">] : </span><span class="s1">unknown</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s1">type </span><span class="s2">{ </span><span class="s1">output </span><span class="s2">as </span><span class="s1">infer </span><span class="s2">};</span>
+<span class="s0">export interface </span><span class="s1">$ZodConfig </span><span class="s2">{</span>
+    <span class="s4">/** Custom error map. Overrides `config().localeError`. */</span>
+    <span class="s1">customError</span><span class="s2">?: </span><span class="s1">errors</span><span class="s2">.</span><span class="s1">$ZodErrorMap </span><span class="s2">| </span><span class="s1">undefined</span><span class="s2">;</span>
+    <span class="s4">/** Localized error map. Lowest priority. */</span>
+    <span class="s1">localeError</span><span class="s2">?: </span><span class="s1">errors</span><span class="s2">.</span><span class="s1">$ZodErrorMap </span><span class="s2">| </span><span class="s1">undefined</span><span class="s2">;</span>
+    <span class="s4">/** Disable JIT schema compilation. Useful in environments that disallow `eval`. */</span>
+    <span class="s1">jitless</span><span class="s2">?: </span><span class="s1">boolean </span><span class="s2">| </span><span class="s1">undefined</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">const </span><span class="s1">globalConfig</span><span class="s2">: </span><span class="s1">$ZodConfig</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">function </span><span class="s1">config</span><span class="s2">(</span><span class="s1">newConfig</span><span class="s2">?: </span><span class="s1">Partial</span><span class="s2">&lt;</span><span class="s1">$ZodConfig</span><span class="s2">&gt;): </span><span class="s1">$ZodConfig</span><span class="s2">;</span>
+</pre>
+</body>
+</html>

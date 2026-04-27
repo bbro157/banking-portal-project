@@ -1,0 +1,98 @@
+<html>
+<head>
+<title>parseUtil.d.ts</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+parseUtil.d.ts</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">type </span><span class="s2">{ </span><span class="s1">IssueData</span><span class="s2">, </span><span class="s1">ZodErrorMap</span><span class="s2">, </span><span class="s1">ZodIssue </span><span class="s2">} </span><span class="s1">from </span><span class="s3">&quot;../ZodError.js&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">type </span><span class="s2">{ </span><span class="s1">ZodParsedType </span><span class="s2">} </span><span class="s1">from </span><span class="s3">&quot;./util.js&quot;</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">const </span><span class="s1">makeIssue</span><span class="s2">: (</span><span class="s1">params</span><span class="s2">: {</span>
+    <span class="s1">data</span><span class="s2">: </span><span class="s1">any</span><span class="s2">;</span>
+    <span class="s1">path</span><span class="s2">: (</span><span class="s1">string </span><span class="s2">| </span><span class="s1">number</span><span class="s2">)[];</span>
+    <span class="s1">errorMaps</span><span class="s2">: </span><span class="s1">ZodErrorMap</span><span class="s2">[];</span>
+    <span class="s1">issueData</span><span class="s2">: </span><span class="s1">IssueData</span><span class="s2">;</span>
+<span class="s2">}) =&gt; </span><span class="s1">ZodIssue</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s1">type ParseParams </span><span class="s2">= {</span>
+    <span class="s1">path</span><span class="s2">: (</span><span class="s1">string </span><span class="s2">| </span><span class="s1">number</span><span class="s2">)[];</span>
+    <span class="s1">errorMap</span><span class="s2">: </span><span class="s1">ZodErrorMap</span><span class="s2">;</span>
+    <span class="s1">async</span><span class="s2">: </span><span class="s1">boolean</span><span class="s2">;</span>
+<span class="s2">};</span>
+<span class="s0">export </span><span class="s1">type ParsePathComponent </span><span class="s2">= </span><span class="s1">string </span><span class="s2">| </span><span class="s1">number</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s1">type ParsePath </span><span class="s2">= </span><span class="s1">ParsePathComponent</span><span class="s2">[];</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">const </span><span class="s1">EMPTY_PATH</span><span class="s2">: </span><span class="s1">ParsePath</span><span class="s2">;</span>
+<span class="s0">export interface </span><span class="s1">ParseContext </span><span class="s2">{</span>
+    <span class="s1">readonly common</span><span class="s2">: {</span>
+        <span class="s1">readonly issues</span><span class="s2">: </span><span class="s1">ZodIssue</span><span class="s2">[];</span>
+        <span class="s1">readonly contextualErrorMap</span><span class="s2">?: </span><span class="s1">ZodErrorMap </span><span class="s2">| </span><span class="s1">undefined</span><span class="s2">;</span>
+        <span class="s1">readonly async</span><span class="s2">: </span><span class="s1">boolean</span><span class="s2">;</span>
+    <span class="s2">};</span>
+    <span class="s1">readonly path</span><span class="s2">: </span><span class="s1">ParsePath</span><span class="s2">;</span>
+    <span class="s1">readonly schemaErrorMap</span><span class="s2">?: </span><span class="s1">ZodErrorMap </span><span class="s2">| </span><span class="s1">undefined</span><span class="s2">;</span>
+    <span class="s1">readonly parent</span><span class="s2">: </span><span class="s1">ParseContext </span><span class="s2">| </span><span class="s0">null</span><span class="s2">;</span>
+    <span class="s1">readonly data</span><span class="s2">: </span><span class="s1">any</span><span class="s2">;</span>
+    <span class="s1">readonly parsedType</span><span class="s2">: </span><span class="s1">ZodParsedType</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s0">export </span><span class="s1">type ParseInput </span><span class="s2">= {</span>
+    <span class="s1">data</span><span class="s2">: </span><span class="s1">any</span><span class="s2">;</span>
+    <span class="s1">path</span><span class="s2">: (</span><span class="s1">string </span><span class="s2">| </span><span class="s1">number</span><span class="s2">)[];</span>
+    <span class="s1">parent</span><span class="s2">: </span><span class="s1">ParseContext</span><span class="s2">;</span>
+<span class="s2">};</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">function </span><span class="s1">addIssueToContext</span><span class="s2">(</span><span class="s1">ctx</span><span class="s2">: </span><span class="s1">ParseContext</span><span class="s2">, </span><span class="s1">issueData</span><span class="s2">: </span><span class="s1">IssueData</span><span class="s2">): </span><span class="s0">void</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s1">type ObjectPair </span><span class="s2">= {</span>
+    <span class="s1">key</span><span class="s2">: </span><span class="s1">SyncParseReturnType</span><span class="s2">&lt;</span><span class="s1">any</span><span class="s2">&gt;;</span>
+    <span class="s1">value</span><span class="s2">: </span><span class="s1">SyncParseReturnType</span><span class="s2">&lt;</span><span class="s1">any</span><span class="s2">&gt;;</span>
+<span class="s2">};</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">class </span><span class="s1">ParseStatus </span><span class="s2">{</span>
+    <span class="s1">value</span><span class="s2">: </span><span class="s3">&quot;aborted&quot; </span><span class="s2">| </span><span class="s3">&quot;dirty&quot; </span><span class="s2">| </span><span class="s3">&quot;valid&quot;</span><span class="s2">;</span>
+    <span class="s1">dirty</span><span class="s2">(): </span><span class="s0">void</span><span class="s2">;</span>
+    <span class="s1">abort</span><span class="s2">(): </span><span class="s0">void</span><span class="s2">;</span>
+    <span class="s0">static </span><span class="s1">mergeArray</span><span class="s2">(</span><span class="s1">status</span><span class="s2">: </span><span class="s1">ParseStatus</span><span class="s2">, </span><span class="s1">results</span><span class="s2">: </span><span class="s1">SyncParseReturnType</span><span class="s2">&lt;</span><span class="s1">any</span><span class="s2">&gt;[]): </span><span class="s1">SyncParseReturnType</span><span class="s2">;</span>
+    <span class="s0">static </span><span class="s1">mergeObjectAsync</span><span class="s2">(</span><span class="s1">status</span><span class="s2">: </span><span class="s1">ParseStatus</span><span class="s2">, </span><span class="s1">pairs</span><span class="s2">: {</span>
+        <span class="s1">key</span><span class="s2">: </span><span class="s1">ParseReturnType</span><span class="s2">&lt;</span><span class="s1">any</span><span class="s2">&gt;;</span>
+        <span class="s1">value</span><span class="s2">: </span><span class="s1">ParseReturnType</span><span class="s2">&lt;</span><span class="s1">any</span><span class="s2">&gt;;</span>
+    <span class="s2">}[]): </span><span class="s1">Promise</span><span class="s2">&lt;</span><span class="s1">SyncParseReturnType</span><span class="s2">&lt;</span><span class="s1">any</span><span class="s2">&gt;&gt;;</span>
+    <span class="s0">static </span><span class="s1">mergeObjectSync</span><span class="s2">(</span><span class="s1">status</span><span class="s2">: </span><span class="s1">ParseStatus</span><span class="s2">, </span><span class="s1">pairs</span><span class="s2">: {</span>
+        <span class="s1">key</span><span class="s2">: </span><span class="s1">SyncParseReturnType</span><span class="s2">&lt;</span><span class="s1">any</span><span class="s2">&gt;;</span>
+        <span class="s1">value</span><span class="s2">: </span><span class="s1">SyncParseReturnType</span><span class="s2">&lt;</span><span class="s1">any</span><span class="s2">&gt;;</span>
+        <span class="s1">alwaysSet</span><span class="s2">?: </span><span class="s1">boolean</span><span class="s2">;</span>
+    <span class="s2">}[]): </span><span class="s1">SyncParseReturnType</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s0">export interface </span><span class="s1">ParseResult </span><span class="s2">{</span>
+    <span class="s1">status</span><span class="s2">: </span><span class="s3">&quot;aborted&quot; </span><span class="s2">| </span><span class="s3">&quot;dirty&quot; </span><span class="s2">| </span><span class="s3">&quot;valid&quot;</span><span class="s2">;</span>
+    <span class="s1">data</span><span class="s2">: </span><span class="s1">any</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s0">export </span><span class="s1">type INVALID </span><span class="s2">= {</span>
+    <span class="s1">status</span><span class="s2">: </span><span class="s3">&quot;aborted&quot;</span><span class="s2">;</span>
+<span class="s2">};</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">const </span><span class="s1">INVALID</span><span class="s2">: </span><span class="s1">INVALID</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s1">type DIRTY</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt; = {</span>
+    <span class="s1">status</span><span class="s2">: </span><span class="s3">&quot;dirty&quot;</span><span class="s2">;</span>
+    <span class="s1">value</span><span class="s2">: </span><span class="s1">T</span><span class="s2">;</span>
+<span class="s2">};</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">const </span><span class="s1">DIRTY</span><span class="s2">: &lt;</span><span class="s1">T</span><span class="s2">&gt;(</span><span class="s1">value</span><span class="s2">: </span><span class="s1">T</span><span class="s2">) =&gt; </span><span class="s1">DIRTY</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;;</span>
+<span class="s0">export </span><span class="s1">type OK</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt; = {</span>
+    <span class="s1">status</span><span class="s2">: </span><span class="s3">&quot;valid&quot;</span><span class="s2">;</span>
+    <span class="s1">value</span><span class="s2">: </span><span class="s1">T</span><span class="s2">;</span>
+<span class="s2">};</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">const </span><span class="s1">OK</span><span class="s2">: &lt;</span><span class="s1">T</span><span class="s2">&gt;(</span><span class="s1">value</span><span class="s2">: </span><span class="s1">T</span><span class="s2">) =&gt; </span><span class="s1">OK</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;;</span>
+<span class="s0">export </span><span class="s1">type SyncParseReturnType</span><span class="s2">&lt;</span><span class="s1">T </span><span class="s2">= </span><span class="s1">any</span><span class="s2">&gt; = </span><span class="s1">OK</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt; | </span><span class="s1">DIRTY</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt; | </span><span class="s1">INVALID</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s1">type AsyncParseReturnType</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt; = </span><span class="s1">Promise</span><span class="s2">&lt;</span><span class="s1">SyncParseReturnType</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;&gt;;</span>
+<span class="s0">export </span><span class="s1">type ParseReturnType</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt; = </span><span class="s1">SyncParseReturnType</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt; | </span><span class="s1">AsyncParseReturnType</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;;</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">const </span><span class="s1">isAborted</span><span class="s2">: (</span><span class="s1">x</span><span class="s2">: </span><span class="s1">ParseReturnType</span><span class="s2">&lt;</span><span class="s1">any</span><span class="s2">&gt;) =&gt; </span><span class="s1">x </span><span class="s2">is </span><span class="s1">INVALID</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">const </span><span class="s1">isDirty</span><span class="s2">: &lt;</span><span class="s1">T</span><span class="s2">&gt;(</span><span class="s1">x</span><span class="s2">: </span><span class="s1">ParseReturnType</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;) =&gt; </span><span class="s1">x </span><span class="s2">is </span><span class="s1">OK</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt; | </span><span class="s1">DIRTY</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;;</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">const </span><span class="s1">isValid</span><span class="s2">: &lt;</span><span class="s1">T</span><span class="s2">&gt;(</span><span class="s1">x</span><span class="s2">: </span><span class="s1">ParseReturnType</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;) =&gt; </span><span class="s1">x </span><span class="s2">is </span><span class="s1">OK</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;;</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">const </span><span class="s1">isAsync</span><span class="s2">: &lt;</span><span class="s1">T</span><span class="s2">&gt;(</span><span class="s1">x</span><span class="s2">: </span><span class="s1">ParseReturnType</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;) =&gt; </span><span class="s1">x </span><span class="s2">is </span><span class="s1">AsyncParseReturnType</span><span class="s2">&lt;</span><span class="s1">T</span><span class="s2">&gt;;</span>
+</pre>
+</body>
+</html>

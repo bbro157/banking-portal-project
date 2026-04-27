@@ -1,0 +1,33 @@
+<html>
+<head>
+<title>from-json-schema.d.cts</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #5f826b; font-style: italic;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+from-json-schema.d.cts</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">type </span><span class="s2">* as </span><span class="s1">JSONSchema from </span><span class="s3">&quot;../core/json-schema.cjs&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s2">{ </span><span class="s1">type $ZodRegistry </span><span class="s2">} </span><span class="s1">from </span><span class="s3">&quot;../core/registries.cjs&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">type </span><span class="s2">{ </span><span class="s1">ZodType </span><span class="s2">} </span><span class="s1">from </span><span class="s3">&quot;./schemas.cjs&quot;</span><span class="s2">;</span>
+<span class="s1">type JSONSchemaVersion </span><span class="s2">= </span><span class="s3">&quot;draft-2020-12&quot; </span><span class="s2">| </span><span class="s3">&quot;draft-7&quot; </span><span class="s2">| </span><span class="s3">&quot;draft-4&quot; </span><span class="s2">| </span><span class="s3">&quot;openapi-3.0&quot;</span><span class="s2">;</span>
+<span class="s0">interface </span><span class="s1">FromJSONSchemaParams </span><span class="s2">{</span>
+    <span class="s1">defaultTarget</span><span class="s2">?: </span><span class="s1">JSONSchemaVersion</span><span class="s2">;</span>
+    <span class="s1">registry</span><span class="s2">?: </span><span class="s1">$ZodRegistry</span><span class="s2">&lt;</span><span class="s1">any</span><span class="s2">&gt;;</span>
+<span class="s2">}</span>
+<span class="s4">/**</span>
+ <span class="s4">* Converts a JSON Schema to a Zod schema. This function should be considered semi-experimental. It's behavior is liable to change. */</span>
+<span class="s0">export </span><span class="s1">declare </span><span class="s0">function </span><span class="s1">fromJSONSchema</span><span class="s2">(</span><span class="s1">schema</span><span class="s2">: </span><span class="s1">JSONSchema</span><span class="s2">.</span><span class="s1">JSONSchema </span><span class="s2">| </span><span class="s1">boolean</span><span class="s2">, </span><span class="s1">params</span><span class="s2">?: </span><span class="s1">FromJSONSchemaParams</span><span class="s2">): </span><span class="s1">ZodType</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s2">{};</span>
+</pre>
+</body>
+</html>

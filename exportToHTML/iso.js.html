@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>iso.js</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+iso.js</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s2">* as </span><span class="s1">core from </span><span class="s3">&quot;../core/index.js&quot;</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s2">* as </span><span class="s1">schemas from </span><span class="s3">&quot;./schemas.js&quot;</span><span class="s2">;</span>
+<span class="s0">export const </span><span class="s1">ZodISODateTime </span><span class="s2">= </span><span class="s4">/*@__PURE__*/ </span><span class="s1">core</span><span class="s2">.</span><span class="s1">$constructor</span><span class="s2">(</span><span class="s3">&quot;ZodISODateTime&quot;</span><span class="s2">, (</span><span class="s1">inst</span><span class="s2">, </span><span class="s1">def</span><span class="s2">) =&gt; {</span>
+    <span class="s1">core</span><span class="s2">.</span><span class="s1">$ZodISODateTime</span><span class="s2">.</span><span class="s1">init</span><span class="s2">(</span><span class="s1">inst</span><span class="s2">, </span><span class="s1">def</span><span class="s2">);</span>
+    <span class="s1">schemas</span><span class="s2">.</span><span class="s1">ZodStringFormat</span><span class="s2">.</span><span class="s1">init</span><span class="s2">(</span><span class="s1">inst</span><span class="s2">, </span><span class="s1">def</span><span class="s2">);</span>
+<span class="s2">});</span>
+<span class="s0">export function </span><span class="s1">datetime</span><span class="s2">(</span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return </span><span class="s1">core</span><span class="s2">.</span><span class="s1">_isoDateTime</span><span class="s2">(</span><span class="s1">ZodISODateTime</span><span class="s2">, </span><span class="s1">params</span><span class="s2">);</span>
+<span class="s2">}</span>
+<span class="s0">export const </span><span class="s1">ZodISODate </span><span class="s2">= </span><span class="s4">/*@__PURE__*/ </span><span class="s1">core</span><span class="s2">.</span><span class="s1">$constructor</span><span class="s2">(</span><span class="s3">&quot;ZodISODate&quot;</span><span class="s2">, (</span><span class="s1">inst</span><span class="s2">, </span><span class="s1">def</span><span class="s2">) =&gt; {</span>
+    <span class="s1">core</span><span class="s2">.</span><span class="s1">$ZodISODate</span><span class="s2">.</span><span class="s1">init</span><span class="s2">(</span><span class="s1">inst</span><span class="s2">, </span><span class="s1">def</span><span class="s2">);</span>
+    <span class="s1">schemas</span><span class="s2">.</span><span class="s1">ZodStringFormat</span><span class="s2">.</span><span class="s1">init</span><span class="s2">(</span><span class="s1">inst</span><span class="s2">, </span><span class="s1">def</span><span class="s2">);</span>
+<span class="s2">});</span>
+<span class="s0">export function </span><span class="s1">date</span><span class="s2">(</span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return </span><span class="s1">core</span><span class="s2">.</span><span class="s1">_isoDate</span><span class="s2">(</span><span class="s1">ZodISODate</span><span class="s2">, </span><span class="s1">params</span><span class="s2">);</span>
+<span class="s2">}</span>
+<span class="s0">export const </span><span class="s1">ZodISOTime </span><span class="s2">= </span><span class="s4">/*@__PURE__*/ </span><span class="s1">core</span><span class="s2">.</span><span class="s1">$constructor</span><span class="s2">(</span><span class="s3">&quot;ZodISOTime&quot;</span><span class="s2">, (</span><span class="s1">inst</span><span class="s2">, </span><span class="s1">def</span><span class="s2">) =&gt; {</span>
+    <span class="s1">core</span><span class="s2">.</span><span class="s1">$ZodISOTime</span><span class="s2">.</span><span class="s1">init</span><span class="s2">(</span><span class="s1">inst</span><span class="s2">, </span><span class="s1">def</span><span class="s2">);</span>
+    <span class="s1">schemas</span><span class="s2">.</span><span class="s1">ZodStringFormat</span><span class="s2">.</span><span class="s1">init</span><span class="s2">(</span><span class="s1">inst</span><span class="s2">, </span><span class="s1">def</span><span class="s2">);</span>
+<span class="s2">});</span>
+<span class="s0">export function </span><span class="s1">time</span><span class="s2">(</span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return </span><span class="s1">core</span><span class="s2">.</span><span class="s1">_isoTime</span><span class="s2">(</span><span class="s1">ZodISOTime</span><span class="s2">, </span><span class="s1">params</span><span class="s2">);</span>
+<span class="s2">}</span>
+<span class="s0">export const </span><span class="s1">ZodISODuration </span><span class="s2">= </span><span class="s4">/*@__PURE__*/ </span><span class="s1">core</span><span class="s2">.</span><span class="s1">$constructor</span><span class="s2">(</span><span class="s3">&quot;ZodISODuration&quot;</span><span class="s2">, (</span><span class="s1">inst</span><span class="s2">, </span><span class="s1">def</span><span class="s2">) =&gt; {</span>
+    <span class="s1">core</span><span class="s2">.</span><span class="s1">$ZodISODuration</span><span class="s2">.</span><span class="s1">init</span><span class="s2">(</span><span class="s1">inst</span><span class="s2">, </span><span class="s1">def</span><span class="s2">);</span>
+    <span class="s1">schemas</span><span class="s2">.</span><span class="s1">ZodStringFormat</span><span class="s2">.</span><span class="s1">init</span><span class="s2">(</span><span class="s1">inst</span><span class="s2">, </span><span class="s1">def</span><span class="s2">);</span>
+<span class="s2">});</span>
+<span class="s0">export function </span><span class="s1">duration</span><span class="s2">(</span><span class="s1">params</span><span class="s2">) {</span>
+    <span class="s0">return </span><span class="s1">core</span><span class="s2">.</span><span class="s1">_isoDuration</span><span class="s2">(</span><span class="s1">ZodISODuration</span><span class="s2">, </span><span class="s1">params</span><span class="s2">);</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

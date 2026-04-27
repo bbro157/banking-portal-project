@@ -1,0 +1,108 @@
+<html>
+<head>
+<title>json-schema.d.cts</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+json-schema.d.cts</font>
+</center></td></tr></table>
+<pre><span class="s0">export </span><span class="s1">type Schema </span><span class="s2">= </span><span class="s1">ObjectSchema </span><span class="s2">| </span><span class="s1">ArraySchema </span><span class="s2">| </span><span class="s1">StringSchema </span><span class="s2">| </span><span class="s1">NumberSchema </span><span class="s2">| </span><span class="s1">IntegerSchema </span><span class="s2">| </span><span class="s1">BooleanSchema </span><span class="s2">| </span><span class="s1">NullSchema</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s1">type _JSONSchema </span><span class="s2">= </span><span class="s1">boolean </span><span class="s2">| </span><span class="s1">JSONSchema</span><span class="s2">;</span>
+<span class="s0">export </span><span class="s1">type JSONSchema </span><span class="s2">= {</span>
+    <span class="s2">[</span><span class="s1">k</span><span class="s2">: </span><span class="s1">string</span><span class="s2">]: </span><span class="s1">unknown</span><span class="s2">;</span>
+    <span class="s1">$schema</span><span class="s2">?: </span><span class="s3">&quot;https://json-schema.org/draft/2020-12/schema&quot; </span><span class="s2">| </span><span class="s3">&quot;http://json-schema.org/draft-07/schema#&quot; </span><span class="s2">| </span><span class="s3">&quot;http://json-schema.org/draft-04/schema#&quot;</span><span class="s2">;</span>
+    <span class="s1">$id</span><span class="s2">?: </span><span class="s1">string</span><span class="s2">;</span>
+    <span class="s1">$anchor</span><span class="s2">?: </span><span class="s1">string</span><span class="s2">;</span>
+    <span class="s1">$ref</span><span class="s2">?: </span><span class="s1">string</span><span class="s2">;</span>
+    <span class="s1">$dynamicRef</span><span class="s2">?: </span><span class="s1">string</span><span class="s2">;</span>
+    <span class="s1">$dynamicAnchor</span><span class="s2">?: </span><span class="s1">string</span><span class="s2">;</span>
+    <span class="s1">$vocabulary</span><span class="s2">?: </span><span class="s1">Record</span><span class="s2">&lt;</span><span class="s1">string</span><span class="s2">, </span><span class="s1">boolean</span><span class="s2">&gt;;</span>
+    <span class="s1">$comment</span><span class="s2">?: </span><span class="s1">string</span><span class="s2">;</span>
+    <span class="s1">$defs</span><span class="s2">?: </span><span class="s1">Record</span><span class="s2">&lt;</span><span class="s1">string</span><span class="s2">, </span><span class="s1">JSONSchema</span><span class="s2">&gt;;</span>
+    <span class="s1">type</span><span class="s2">?: </span><span class="s3">&quot;object&quot; </span><span class="s2">| </span><span class="s3">&quot;array&quot; </span><span class="s2">| </span><span class="s3">&quot;string&quot; </span><span class="s2">| </span><span class="s3">&quot;number&quot; </span><span class="s2">| </span><span class="s3">&quot;boolean&quot; </span><span class="s2">| </span><span class="s3">&quot;null&quot; </span><span class="s2">| </span><span class="s3">&quot;integer&quot;</span><span class="s2">;</span>
+    <span class="s1">additionalItems</span><span class="s2">?: </span><span class="s1">_JSONSchema</span><span class="s2">;</span>
+    <span class="s1">unevaluatedItems</span><span class="s2">?: </span><span class="s1">_JSONSchema</span><span class="s2">;</span>
+    <span class="s1">prefixItems</span><span class="s2">?: </span><span class="s1">_JSONSchema</span><span class="s2">[];</span>
+    <span class="s1">items</span><span class="s2">?: </span><span class="s1">_JSONSchema </span><span class="s2">| </span><span class="s1">_JSONSchema</span><span class="s2">[];</span>
+    <span class="s1">contains</span><span class="s2">?: </span><span class="s1">_JSONSchema</span><span class="s2">;</span>
+    <span class="s1">additionalProperties</span><span class="s2">?: </span><span class="s1">_JSONSchema</span><span class="s2">;</span>
+    <span class="s1">unevaluatedProperties</span><span class="s2">?: </span><span class="s1">_JSONSchema</span><span class="s2">;</span>
+    <span class="s1">properties</span><span class="s2">?: </span><span class="s1">Record</span><span class="s2">&lt;</span><span class="s1">string</span><span class="s2">, </span><span class="s1">_JSONSchema</span><span class="s2">&gt;;</span>
+    <span class="s1">patternProperties</span><span class="s2">?: </span><span class="s1">Record</span><span class="s2">&lt;</span><span class="s1">string</span><span class="s2">, </span><span class="s1">_JSONSchema</span><span class="s2">&gt;;</span>
+    <span class="s1">dependentSchemas</span><span class="s2">?: </span><span class="s1">Record</span><span class="s2">&lt;</span><span class="s1">string</span><span class="s2">, </span><span class="s1">_JSONSchema</span><span class="s2">&gt;;</span>
+    <span class="s1">propertyNames</span><span class="s2">?: </span><span class="s1">_JSONSchema</span><span class="s2">;</span>
+    <span class="s0">if</span><span class="s2">?: </span><span class="s1">_JSONSchema</span><span class="s2">;</span>
+    <span class="s1">then</span><span class="s2">?: </span><span class="s1">_JSONSchema</span><span class="s2">;</span>
+    <span class="s0">else</span><span class="s2">?: </span><span class="s1">_JSONSchema</span><span class="s2">;</span>
+    <span class="s1">allOf</span><span class="s2">?: </span><span class="s1">JSONSchema</span><span class="s2">[];</span>
+    <span class="s1">anyOf</span><span class="s2">?: </span><span class="s1">JSONSchema</span><span class="s2">[];</span>
+    <span class="s1">oneOf</span><span class="s2">?: </span><span class="s1">JSONSchema</span><span class="s2">[];</span>
+    <span class="s1">not</span><span class="s2">?: </span><span class="s1">_JSONSchema</span><span class="s2">;</span>
+    <span class="s1">multipleOf</span><span class="s2">?: </span><span class="s1">number</span><span class="s2">;</span>
+    <span class="s1">maximum</span><span class="s2">?: </span><span class="s1">number</span><span class="s2">;</span>
+    <span class="s1">exclusiveMaximum</span><span class="s2">?: </span><span class="s1">number </span><span class="s2">| </span><span class="s1">boolean</span><span class="s2">;</span>
+    <span class="s1">minimum</span><span class="s2">?: </span><span class="s1">number</span><span class="s2">;</span>
+    <span class="s1">exclusiveMinimum</span><span class="s2">?: </span><span class="s1">number </span><span class="s2">| </span><span class="s1">boolean</span><span class="s2">;</span>
+    <span class="s1">maxLength</span><span class="s2">?: </span><span class="s1">number</span><span class="s2">;</span>
+    <span class="s1">minLength</span><span class="s2">?: </span><span class="s1">number</span><span class="s2">;</span>
+    <span class="s1">pattern</span><span class="s2">?: </span><span class="s1">string</span><span class="s2">;</span>
+    <span class="s1">maxItems</span><span class="s2">?: </span><span class="s1">number</span><span class="s2">;</span>
+    <span class="s1">minItems</span><span class="s2">?: </span><span class="s1">number</span><span class="s2">;</span>
+    <span class="s1">uniqueItems</span><span class="s2">?: </span><span class="s1">boolean</span><span class="s2">;</span>
+    <span class="s1">maxContains</span><span class="s2">?: </span><span class="s1">number</span><span class="s2">;</span>
+    <span class="s1">minContains</span><span class="s2">?: </span><span class="s1">number</span><span class="s2">;</span>
+    <span class="s1">maxProperties</span><span class="s2">?: </span><span class="s1">number</span><span class="s2">;</span>
+    <span class="s1">minProperties</span><span class="s2">?: </span><span class="s1">number</span><span class="s2">;</span>
+    <span class="s1">required</span><span class="s2">?: </span><span class="s1">string</span><span class="s2">[];</span>
+    <span class="s1">dependentRequired</span><span class="s2">?: </span><span class="s1">Record</span><span class="s2">&lt;</span><span class="s1">string</span><span class="s2">, </span><span class="s1">string</span><span class="s2">[]&gt;;</span>
+    <span class="s0">enum</span><span class="s2">?: </span><span class="s1">Array</span><span class="s2">&lt;</span><span class="s1">string </span><span class="s2">| </span><span class="s1">number </span><span class="s2">| </span><span class="s1">boolean </span><span class="s2">| </span><span class="s0">null</span><span class="s2">&gt;;</span>
+    <span class="s0">const</span><span class="s2">?: </span><span class="s1">string </span><span class="s2">| </span><span class="s1">number </span><span class="s2">| </span><span class="s1">boolean </span><span class="s2">| </span><span class="s0">null</span><span class="s2">;</span>
+    <span class="s1">id</span><span class="s2">?: </span><span class="s1">string</span><span class="s2">;</span>
+    <span class="s1">title</span><span class="s2">?: </span><span class="s1">string</span><span class="s2">;</span>
+    <span class="s1">description</span><span class="s2">?: </span><span class="s1">string</span><span class="s2">;</span>
+    <span class="s0">default</span><span class="s2">?: </span><span class="s1">unknown</span><span class="s2">;</span>
+    <span class="s1">deprecated</span><span class="s2">?: </span><span class="s1">boolean</span><span class="s2">;</span>
+    <span class="s1">readOnly</span><span class="s2">?: </span><span class="s1">boolean</span><span class="s2">;</span>
+    <span class="s1">writeOnly</span><span class="s2">?: </span><span class="s1">boolean</span><span class="s2">;</span>
+    <span class="s1">nullable</span><span class="s2">?: </span><span class="s1">boolean</span><span class="s2">;</span>
+    <span class="s1">examples</span><span class="s2">?: </span><span class="s1">unknown</span><span class="s2">[];</span>
+    <span class="s1">format</span><span class="s2">?: </span><span class="s1">string</span><span class="s2">;</span>
+    <span class="s1">contentMediaType</span><span class="s2">?: </span><span class="s1">string</span><span class="s2">;</span>
+    <span class="s1">contentEncoding</span><span class="s2">?: </span><span class="s1">string</span><span class="s2">;</span>
+    <span class="s1">contentSchema</span><span class="s2">?: </span><span class="s1">JSONSchema</span><span class="s2">;</span>
+    <span class="s1">_prefault</span><span class="s2">?: </span><span class="s1">unknown</span><span class="s2">;</span>
+<span class="s2">};</span>
+<span class="s0">export </span><span class="s1">type BaseSchema </span><span class="s2">= </span><span class="s1">JSONSchema</span><span class="s2">;</span>
+<span class="s0">export interface </span><span class="s1">ObjectSchema </span><span class="s0">extends </span><span class="s1">JSONSchema </span><span class="s2">{</span>
+    <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;object&quot;</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s0">export interface </span><span class="s1">ArraySchema </span><span class="s0">extends </span><span class="s1">JSONSchema </span><span class="s2">{</span>
+    <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;array&quot;</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s0">export interface </span><span class="s1">StringSchema </span><span class="s0">extends </span><span class="s1">JSONSchema </span><span class="s2">{</span>
+    <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;string&quot;</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s0">export interface </span><span class="s1">NumberSchema </span><span class="s0">extends </span><span class="s1">JSONSchema </span><span class="s2">{</span>
+    <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;number&quot;</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s0">export interface </span><span class="s1">IntegerSchema </span><span class="s0">extends </span><span class="s1">JSONSchema </span><span class="s2">{</span>
+    <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;integer&quot;</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s0">export interface </span><span class="s1">BooleanSchema </span><span class="s0">extends </span><span class="s1">JSONSchema </span><span class="s2">{</span>
+    <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;boolean&quot;</span><span class="s2">;</span>
+<span class="s2">}</span>
+<span class="s0">export interface </span><span class="s1">NullSchema </span><span class="s0">extends </span><span class="s1">JSONSchema </span><span class="s2">{</span>
+    <span class="s1">type</span><span class="s2">: </span><span class="s3">&quot;null&quot;</span><span class="s2">;</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

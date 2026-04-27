@@ -1,0 +1,425 @@
+<html>
+<head>
+<title>ajv.d.ts</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #bcbec4;}
+.s1 { color: #cf8e6d;}
+.s2 { color: #bcbec4;}
+.s3 { color: #5f826b; font-style: italic;}
+.s4 { color: #67a37c; font-style: italic;}
+.s5 { color: #6aab73;}
+.s6 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+ajv.d.ts</font>
+</center></td></tr></table>
+<pre><span class="s0">declare </span><span class="s1">var </span><span class="s0">ajv</span><span class="s2">: {</span>
+  <span class="s2">(</span><span class="s0">options</span><span class="s2">?: </span><span class="s0">ajv</span><span class="s2">.</span><span class="s0">Options</span><span class="s2">): </span><span class="s0">ajv</span><span class="s2">.</span><span class="s0">Ajv</span><span class="s2">;</span>
+  <span class="s1">new</span><span class="s2">(</span><span class="s0">options</span><span class="s2">?: </span><span class="s0">ajv</span><span class="s2">.</span><span class="s0">Options</span><span class="s2">): </span><span class="s0">ajv</span><span class="s2">.</span><span class="s0">Ajv</span><span class="s2">;</span>
+  <span class="s0">ValidationError</span><span class="s2">: </span><span class="s1">typeof </span><span class="s0">AjvErrors</span><span class="s2">.</span><span class="s0">ValidationError</span><span class="s2">;</span>
+  <span class="s0">MissingRefError</span><span class="s2">: </span><span class="s1">typeof </span><span class="s0">AjvErrors</span><span class="s2">.</span><span class="s0">MissingRefError</span><span class="s2">;</span>
+  <span class="s0">$dataMetaSchema</span><span class="s2">: </span><span class="s0">object</span><span class="s2">;</span>
+<span class="s2">}</span>
+
+<span class="s0">declare namespace AjvErrors </span><span class="s2">{</span>
+  <span class="s1">class </span><span class="s0">ValidationError </span><span class="s1">extends </span><span class="s0">Error </span><span class="s2">{</span>
+    <span class="s0">constructor</span><span class="s2">(</span><span class="s0">errors</span><span class="s2">: </span><span class="s0">Array</span><span class="s2">&lt;</span><span class="s0">ajv</span><span class="s2">.</span><span class="s0">ErrorObject</span><span class="s2">&gt;);</span>
+
+    <span class="s0">message</span><span class="s2">: </span><span class="s0">string</span><span class="s2">;</span>
+    <span class="s0">errors</span><span class="s2">: </span><span class="s0">Array</span><span class="s2">&lt;</span><span class="s0">ajv</span><span class="s2">.</span><span class="s0">ErrorObject</span><span class="s2">&gt;;</span>
+    <span class="s0">ajv</span><span class="s2">: </span><span class="s1">true</span><span class="s2">;</span>
+    <span class="s0">validation</span><span class="s2">: </span><span class="s1">true</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">class </span><span class="s0">MissingRefError </span><span class="s1">extends </span><span class="s0">Error </span><span class="s2">{</span>
+    <span class="s0">constructor</span><span class="s2">(</span><span class="s0">baseId</span><span class="s2">: </span><span class="s0">string</span><span class="s2">, </span><span class="s0">ref</span><span class="s2">: </span><span class="s0">string</span><span class="s2">, </span><span class="s0">message</span><span class="s2">?: </span><span class="s0">string</span><span class="s2">);</span>
+    <span class="s1">static </span><span class="s0">message</span><span class="s2">: (</span><span class="s0">baseId</span><span class="s2">: </span><span class="s0">string</span><span class="s2">, </span><span class="s0">ref</span><span class="s2">: </span><span class="s0">string</span><span class="s2">) =&gt; </span><span class="s0">string</span><span class="s2">;</span>
+
+    <span class="s0">message</span><span class="s2">: </span><span class="s0">string</span><span class="s2">;</span>
+    <span class="s0">missingRef</span><span class="s2">: </span><span class="s0">string</span><span class="s2">;</span>
+    <span class="s0">missingSchema</span><span class="s2">: </span><span class="s0">string</span><span class="s2">;</span>
+  <span class="s2">}</span>
+<span class="s2">}</span>
+
+<span class="s0">declare namespace ajv </span><span class="s2">{</span>
+  <span class="s0">type ValidationError </span><span class="s2">= </span><span class="s0">AjvErrors</span><span class="s2">.</span><span class="s0">ValidationError</span><span class="s2">;</span>
+
+  <span class="s0">type MissingRefError </span><span class="s2">= </span><span class="s0">AjvErrors</span><span class="s2">.</span><span class="s0">MissingRefError</span><span class="s2">;</span>
+
+  <span class="s1">interface </span><span class="s0">Ajv </span><span class="s2">{</span>
+    <span class="s3">/**</span>
+    <span class="s3">* Validate data using schema</span>
+    <span class="s3">* Schema will be compiled and cached (using serialized JSON as key, [fast-json-stable-stringify](https://github.com/epoberezkin/fast-json-stable-stringify) is used to serialize by default).</span>
+    <span class="s3">* </span><span class="s4">@param  </span><span class="s3">{string|object|Boolean} schemaKeyRef key, ref or schema object</span>
+    <span class="s3">* </span><span class="s4">@param  </span><span class="s3">{Any} data to be validated</span>
+    <span class="s3">* </span><span class="s4">@return </span><span class="s3">{Boolean} validation result. Errors from the last validation will be available in `ajv.errors` (and also in compiled schema: `schema.errors`).</span>
+    <span class="s3">*/</span>
+    <span class="s0">validate</span><span class="s2">(</span><span class="s0">schemaKeyRef</span><span class="s2">: </span><span class="s0">object </span><span class="s2">| </span><span class="s0">string </span><span class="s2">| </span><span class="s0">boolean</span><span class="s2">, </span><span class="s0">data</span><span class="s2">: </span><span class="s0">any</span><span class="s2">): </span><span class="s0">boolean </span><span class="s2">| </span><span class="s0">PromiseLike</span><span class="s2">&lt;</span><span class="s0">any</span><span class="s2">&gt;;</span>
+    <span class="s3">/**</span>
+    <span class="s3">* Create validating function for passed schema.</span>
+    <span class="s3">* </span><span class="s4">@param  </span><span class="s3">{object|Boolean} schema schema object</span>
+    <span class="s3">* </span><span class="s4">@return </span><span class="s3">{Function} validating function</span>
+    <span class="s3">*/</span>
+    <span class="s0">compile</span><span class="s2">(</span><span class="s0">schema</span><span class="s2">: </span><span class="s0">object </span><span class="s2">| </span><span class="s0">boolean</span><span class="s2">): </span><span class="s0">ValidateFunction</span><span class="s2">;</span>
+    <span class="s3">/**</span>
+    <span class="s3">* Creates validating function for passed schema with asynchronous loading of missing schemas.</span>
+    <span class="s3">* `loadSchema` option should be a function that accepts schema uri and node-style callback.</span>
+    <span class="s3">* </span><span class="s4">@this  </span><span class="s3">Ajv</span>
+    <span class="s3">* </span><span class="s4">@param </span><span class="s3">{object|Boolean} schema schema object</span>
+    <span class="s3">* </span><span class="s4">@param </span><span class="s3">{Boolean} meta optional true to compile meta-schema; this parameter can be skipped</span>
+    <span class="s3">* </span><span class="s4">@param </span><span class="s3">{Function} callback optional node-style callback, it is always called with 2 parameters: error (or null) and validating function.</span>
+    <span class="s3">* </span><span class="s4">@return </span><span class="s3">{PromiseLike&lt;ValidateFunction&gt;} validating function</span>
+    <span class="s3">*/</span>
+    <span class="s0">compileAsync</span><span class="s2">(</span><span class="s0">schema</span><span class="s2">: </span><span class="s0">object </span><span class="s2">| </span><span class="s0">boolean</span><span class="s2">, </span><span class="s0">meta</span><span class="s2">?: </span><span class="s0">Boolean</span><span class="s2">, </span><span class="s0">callback</span><span class="s2">?: (</span><span class="s0">err</span><span class="s2">: </span><span class="s0">Error</span><span class="s2">, </span><span class="s0">validate</span><span class="s2">: </span><span class="s0">ValidateFunction</span><span class="s2">) =&gt; </span><span class="s0">any</span><span class="s2">): </span><span class="s0">PromiseLike</span><span class="s2">&lt;</span><span class="s0">ValidateFunction</span><span class="s2">&gt;;</span>
+    <span class="s3">/**</span>
+    <span class="s3">* Adds schema to the instance.</span>
+    <span class="s3">* </span><span class="s4">@param </span><span class="s3">{object|Array} schema schema or array of schemas. If array is passed, `key` and other parameters will be ignored.</span>
+    <span class="s3">* </span><span class="s4">@param </span><span class="s3">{string} key Optional schema key. Can be passed to `validate` method instead of schema object or id/ref. One schema per instance can have empty `id` and `key`.</span>
+    <span class="s3">* </span><span class="s4">@return </span><span class="s3">{Ajv} this for method chaining</span>
+    <span class="s3">*/</span>
+    <span class="s0">addSchema</span><span class="s2">(</span><span class="s0">schema</span><span class="s2">: </span><span class="s0">Array</span><span class="s2">&lt;</span><span class="s0">object</span><span class="s2">&gt; | </span><span class="s0">object</span><span class="s2">, </span><span class="s0">key</span><span class="s2">?: </span><span class="s0">string</span><span class="s2">): </span><span class="s0">Ajv</span><span class="s2">;</span>
+    <span class="s3">/**</span>
+    <span class="s3">* Add schema that will be used to validate other schemas</span>
+    <span class="s3">* options in META_IGNORE_OPTIONS are alway set to false</span>
+    <span class="s3">* </span><span class="s4">@param </span><span class="s3">{object} schema schema object</span>
+    <span class="s3">* </span><span class="s4">@param </span><span class="s3">{string} key optional schema key</span>
+    <span class="s3">* </span><span class="s4">@return </span><span class="s3">{Ajv} this for method chaining</span>
+    <span class="s3">*/</span>
+    <span class="s0">addMetaSchema</span><span class="s2">(</span><span class="s0">schema</span><span class="s2">: </span><span class="s0">object</span><span class="s2">, </span><span class="s0">key</span><span class="s2">?: </span><span class="s0">string</span><span class="s2">): </span><span class="s0">Ajv</span><span class="s2">;</span>
+    <span class="s3">/**</span>
+    <span class="s3">* Validate schema</span>
+    <span class="s3">* </span><span class="s4">@param </span><span class="s3">{object|Boolean} schema schema to validate</span>
+    <span class="s3">* </span><span class="s4">@return </span><span class="s3">{Boolean} true if schema is valid</span>
+    <span class="s3">*/</span>
+    <span class="s0">validateSchema</span><span class="s2">(</span><span class="s0">schema</span><span class="s2">: </span><span class="s0">object </span><span class="s2">| </span><span class="s0">boolean</span><span class="s2">): </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s3">/**</span>
+    <span class="s3">* Get compiled schema from the instance by `key` or `ref`.</span>
+    <span class="s3">* </span><span class="s4">@param  </span><span class="s3">{string} keyRef `key` that was passed to `addSchema` or full schema reference (`schema.id` or resolved id).</span>
+    <span class="s3">* </span><span class="s4">@return </span><span class="s3">{Function} schema validating function (with property `schema`). Returns undefined if keyRef can't be resolved to an existing schema.</span>
+    <span class="s3">*/</span>
+    <span class="s0">getSchema</span><span class="s2">(</span><span class="s0">keyRef</span><span class="s2">: </span><span class="s0">string</span><span class="s2">): </span><span class="s0">ValidateFunction </span><span class="s2">| </span><span class="s0">undefined</span><span class="s2">;</span>
+    <span class="s3">/**</span>
+    <span class="s3">* Remove cached schema(s).</span>
+    <span class="s3">* If no parameter is passed all schemas but meta-schemas are removed.</span>
+    <span class="s3">* If RegExp is passed all schemas with key/id matching pattern but meta-schemas are removed.</span>
+    <span class="s3">* Even if schema is referenced by other schemas it still can be removed as other schemas have local references.</span>
+    <span class="s3">* </span><span class="s4">@param  </span><span class="s3">{string|object|RegExp|Boolean} schemaKeyRef key, ref, pattern to match key/ref or schema object</span>
+    <span class="s3">* </span><span class="s4">@return </span><span class="s3">{Ajv} this for method chaining</span>
+    <span class="s3">*/</span>
+    <span class="s0">removeSchema</span><span class="s2">(</span><span class="s0">schemaKeyRef</span><span class="s2">?: </span><span class="s0">object </span><span class="s2">| </span><span class="s0">string </span><span class="s2">| </span><span class="s0">RegExp </span><span class="s2">| </span><span class="s0">boolean</span><span class="s2">): </span><span class="s0">Ajv</span><span class="s2">;</span>
+    <span class="s3">/**</span>
+    <span class="s3">* Add custom format</span>
+    <span class="s3">* </span><span class="s4">@param </span><span class="s3">{string} name format name</span>
+    <span class="s3">* </span><span class="s4">@param </span><span class="s3">{string|RegExp|Function} format string is converted to RegExp; function should return boolean (true when valid)</span>
+    <span class="s3">* </span><span class="s4">@return </span><span class="s3">{Ajv} this for method chaining</span>
+    <span class="s3">*/</span>
+    <span class="s0">addFormat</span><span class="s2">(</span><span class="s0">name</span><span class="s2">: </span><span class="s0">string</span><span class="s2">, </span><span class="s0">format</span><span class="s2">: </span><span class="s0">FormatValidator </span><span class="s2">| </span><span class="s0">FormatDefinition</span><span class="s2">): </span><span class="s0">Ajv</span><span class="s2">;</span>
+    <span class="s3">/**</span>
+    <span class="s3">* Define custom keyword</span>
+    <span class="s3">* </span><span class="s4">@this  </span><span class="s3">Ajv</span>
+    <span class="s3">* </span><span class="s4">@param </span><span class="s3">{string} keyword custom keyword, should be a valid identifier, should be different from all standard, custom and macro keywords.</span>
+    <span class="s3">* </span><span class="s4">@param </span><span class="s3">{object} definition keyword definition object with properties `type` (type(s) which the keyword applies to), `validate` or `compile`.</span>
+    <span class="s3">* </span><span class="s4">@return </span><span class="s3">{Ajv} this for method chaining</span>
+    <span class="s3">*/</span>
+    <span class="s0">addKeyword</span><span class="s2">(</span><span class="s0">keyword</span><span class="s2">: </span><span class="s0">string</span><span class="s2">, </span><span class="s0">definition</span><span class="s2">: </span><span class="s0">KeywordDefinition</span><span class="s2">): </span><span class="s0">Ajv</span><span class="s2">;</span>
+    <span class="s3">/**</span>
+    <span class="s3">* Get keyword definition</span>
+    <span class="s3">* </span><span class="s4">@this  </span><span class="s3">Ajv</span>
+    <span class="s3">* </span><span class="s4">@param </span><span class="s3">{string} keyword pre-defined or custom keyword.</span>
+    <span class="s3">* </span><span class="s4">@return </span><span class="s3">{object|Boolean} custom keyword definition, `true` if it is a predefined keyword, `false` otherwise.</span>
+    <span class="s3">*/</span>
+    <span class="s0">getKeyword</span><span class="s2">(</span><span class="s0">keyword</span><span class="s2">: </span><span class="s0">string</span><span class="s2">): </span><span class="s0">object </span><span class="s2">| </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s3">/**</span>
+    <span class="s3">* Remove keyword</span>
+    <span class="s3">* </span><span class="s4">@this  </span><span class="s3">Ajv</span>
+    <span class="s3">* </span><span class="s4">@param </span><span class="s3">{string} keyword pre-defined or custom keyword.</span>
+    <span class="s3">* </span><span class="s4">@return </span><span class="s3">{Ajv} this for method chaining</span>
+    <span class="s3">*/</span>
+    <span class="s0">removeKeyword</span><span class="s2">(</span><span class="s0">keyword</span><span class="s2">: </span><span class="s0">string</span><span class="s2">): </span><span class="s0">Ajv</span><span class="s2">;</span>
+    <span class="s3">/**</span>
+    <span class="s3">* Validate keyword</span>
+    <span class="s3">* </span><span class="s4">@this  </span><span class="s3">Ajv</span>
+    <span class="s3">* </span><span class="s4">@param </span><span class="s3">{object} definition keyword definition object</span>
+    <span class="s3">* </span><span class="s4">@param </span><span class="s3">{boolean} throwError true to throw exception if definition is invalid</span>
+    <span class="s3">* </span><span class="s4">@return </span><span class="s3">{boolean} validation result</span>
+    <span class="s3">*/</span>
+    <span class="s0">validateKeyword</span><span class="s2">(</span><span class="s0">definition</span><span class="s2">: </span><span class="s0">KeywordDefinition</span><span class="s2">, </span><span class="s0">throwError</span><span class="s2">: </span><span class="s0">boolean</span><span class="s2">): </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s3">/**</span>
+    <span class="s3">* Convert array of error message objects to string</span>
+    <span class="s3">* </span><span class="s4">@param  </span><span class="s3">{Array&lt;object&gt;} errors optional array of validation errors, if not passed errors from the instance are used.</span>
+    <span class="s3">* </span><span class="s4">@param  </span><span class="s3">{object} options optional options with properties `separator` and `dataVar`.</span>
+    <span class="s3">* </span><span class="s4">@return </span><span class="s3">{string} human readable string with all errors descriptions</span>
+    <span class="s3">*/</span>
+    <span class="s0">errorsText</span><span class="s2">(</span><span class="s0">errors</span><span class="s2">?: </span><span class="s0">Array</span><span class="s2">&lt;</span><span class="s0">ErrorObject</span><span class="s2">&gt; | </span><span class="s1">null</span><span class="s2">, </span><span class="s0">options</span><span class="s2">?: </span><span class="s0">ErrorsTextOptions</span><span class="s2">): </span><span class="s0">string</span><span class="s2">;</span>
+    <span class="s0">errors</span><span class="s2">?: </span><span class="s0">Array</span><span class="s2">&lt;</span><span class="s0">ErrorObject</span><span class="s2">&gt; | </span><span class="s1">null</span><span class="s2">;</span>
+    <span class="s0">_opts</span><span class="s2">: </span><span class="s0">Options</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">CustomLogger </span><span class="s2">{</span>
+    <span class="s0">log</span><span class="s2">(</span><span class="s0">...args</span><span class="s2">: </span><span class="s0">any</span><span class="s2">[]): </span><span class="s0">any</span><span class="s2">;</span>
+    <span class="s0">warn</span><span class="s2">(</span><span class="s0">...args</span><span class="s2">: </span><span class="s0">any</span><span class="s2">[]): </span><span class="s0">any</span><span class="s2">;</span>
+    <span class="s0">error</span><span class="s2">(</span><span class="s0">...args</span><span class="s2">: </span><span class="s0">any</span><span class="s2">[]): </span><span class="s0">any</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">ValidateFunction </span><span class="s2">{</span>
+    <span class="s2">(</span>
+      <span class="s0">data</span><span class="s2">: </span><span class="s0">any</span><span class="s2">,</span>
+      <span class="s0">dataPath</span><span class="s2">?: </span><span class="s0">string</span><span class="s2">,</span>
+      <span class="s0">parentData</span><span class="s2">?: </span><span class="s0">object </span><span class="s2">| </span><span class="s0">Array</span><span class="s2">&lt;</span><span class="s0">any</span><span class="s2">&gt;,</span>
+      <span class="s0">parentDataProperty</span><span class="s2">?: </span><span class="s0">string </span><span class="s2">| </span><span class="s0">number</span><span class="s2">,</span>
+      <span class="s0">rootData</span><span class="s2">?: </span><span class="s0">object </span><span class="s2">| </span><span class="s0">Array</span><span class="s2">&lt;</span><span class="s0">any</span><span class="s2">&gt;</span>
+    <span class="s2">): </span><span class="s0">boolean </span><span class="s2">| </span><span class="s0">PromiseLike</span><span class="s2">&lt;</span><span class="s0">any</span><span class="s2">&gt;;</span>
+    <span class="s0">schema</span><span class="s2">?: </span><span class="s0">object </span><span class="s2">| </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s0">errors</span><span class="s2">?: </span><span class="s1">null </span><span class="s2">| </span><span class="s0">Array</span><span class="s2">&lt;</span><span class="s0">ErrorObject</span><span class="s2">&gt;;</span>
+    <span class="s0">refs</span><span class="s2">?: </span><span class="s0">object</span><span class="s2">;</span>
+    <span class="s0">refVal</span><span class="s2">?: </span><span class="s0">Array</span><span class="s2">&lt;</span><span class="s0">any</span><span class="s2">&gt;;</span>
+    <span class="s0">root</span><span class="s2">?: </span><span class="s0">ValidateFunction </span><span class="s2">| </span><span class="s0">object</span><span class="s2">;</span>
+    <span class="s0">$async</span><span class="s2">?: </span><span class="s1">true</span><span class="s2">;</span>
+    <span class="s0">source</span><span class="s2">?: </span><span class="s0">object</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">Options </span><span class="s2">{</span>
+    <span class="s0">$data</span><span class="s2">?: </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s0">allErrors</span><span class="s2">?: </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s0">verbose</span><span class="s2">?: </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s0">jsonPointers</span><span class="s2">?: </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s0">uniqueItems</span><span class="s2">?: </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s0">unicode</span><span class="s2">?: </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s0">format</span><span class="s2">?: </span><span class="s1">false </span><span class="s2">| </span><span class="s0">string</span><span class="s2">;</span>
+    <span class="s0">formats</span><span class="s2">?: </span><span class="s0">object</span><span class="s2">;</span>
+    <span class="s0">keywords</span><span class="s2">?: </span><span class="s0">object</span><span class="s2">;</span>
+    <span class="s0">unknownFormats</span><span class="s2">?: </span><span class="s1">true </span><span class="s2">| </span><span class="s0">string</span><span class="s2">[] | </span><span class="s5">'ignore'</span><span class="s2">;</span>
+    <span class="s0">schemas</span><span class="s2">?: </span><span class="s0">Array</span><span class="s2">&lt;</span><span class="s0">object</span><span class="s2">&gt; | </span><span class="s0">object</span><span class="s2">;</span>
+    <span class="s0">schemaId</span><span class="s2">?: </span><span class="s5">'$id' </span><span class="s2">| </span><span class="s5">'id' </span><span class="s2">| </span><span class="s5">'auto'</span><span class="s2">;</span>
+    <span class="s0">missingRefs</span><span class="s2">?: </span><span class="s1">true </span><span class="s2">| </span><span class="s5">'ignore' </span><span class="s2">| </span><span class="s5">'fail'</span><span class="s2">;</span>
+    <span class="s0">extendRefs</span><span class="s2">?: </span><span class="s1">true </span><span class="s2">| </span><span class="s5">'ignore' </span><span class="s2">| </span><span class="s5">'fail'</span><span class="s2">;</span>
+    <span class="s0">loadSchema</span><span class="s2">?: (</span><span class="s0">uri</span><span class="s2">: </span><span class="s0">string</span><span class="s2">, </span><span class="s0">cb</span><span class="s2">?: (</span><span class="s0">err</span><span class="s2">: </span><span class="s0">Error</span><span class="s2">, </span><span class="s0">schema</span><span class="s2">: </span><span class="s0">object</span><span class="s2">) =&gt; </span><span class="s1">void</span><span class="s2">) =&gt; </span><span class="s0">PromiseLike</span><span class="s2">&lt;</span><span class="s0">object </span><span class="s2">| </span><span class="s0">boolean</span><span class="s2">&gt;;</span>
+    <span class="s0">removeAdditional</span><span class="s2">?: </span><span class="s0">boolean </span><span class="s2">| </span><span class="s5">'all' </span><span class="s2">| </span><span class="s5">'failing'</span><span class="s2">;</span>
+    <span class="s0">useDefaults</span><span class="s2">?: </span><span class="s0">boolean </span><span class="s2">| </span><span class="s5">'empty' </span><span class="s2">| </span><span class="s5">'shared'</span><span class="s2">;</span>
+    <span class="s0">coerceTypes</span><span class="s2">?: </span><span class="s0">boolean </span><span class="s2">| </span><span class="s5">'array'</span><span class="s2">;</span>
+    <span class="s0">strictDefaults</span><span class="s2">?: </span><span class="s0">boolean </span><span class="s2">| </span><span class="s5">'log'</span><span class="s2">;</span>
+    <span class="s0">strictKeywords</span><span class="s2">?: </span><span class="s0">boolean </span><span class="s2">| </span><span class="s5">'log'</span><span class="s2">;</span>
+    <span class="s0">strictNumbers</span><span class="s2">?: </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s0">async</span><span class="s2">?: </span><span class="s0">boolean </span><span class="s2">| </span><span class="s0">string</span><span class="s2">;</span>
+    <span class="s0">transpile</span><span class="s2">?: </span><span class="s0">string </span><span class="s2">| ((</span><span class="s0">code</span><span class="s2">: </span><span class="s0">string</span><span class="s2">) =&gt; </span><span class="s0">string</span><span class="s2">);</span>
+    <span class="s0">meta</span><span class="s2">?: </span><span class="s0">boolean </span><span class="s2">| </span><span class="s0">object</span><span class="s2">;</span>
+    <span class="s0">validateSchema</span><span class="s2">?: </span><span class="s0">boolean </span><span class="s2">| </span><span class="s5">'log'</span><span class="s2">;</span>
+    <span class="s0">addUsedSchema</span><span class="s2">?: </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s0">inlineRefs</span><span class="s2">?: </span><span class="s0">boolean </span><span class="s2">| </span><span class="s0">number</span><span class="s2">;</span>
+    <span class="s0">passContext</span><span class="s2">?: </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s0">loopRequired</span><span class="s2">?: </span><span class="s0">number</span><span class="s2">;</span>
+    <span class="s0">ownProperties</span><span class="s2">?: </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s0">multipleOfPrecision</span><span class="s2">?: </span><span class="s0">boolean </span><span class="s2">| </span><span class="s0">number</span><span class="s2">;</span>
+    <span class="s0">errorDataPath</span><span class="s2">?: </span><span class="s0">string</span><span class="s2">,</span>
+    <span class="s0">messages</span><span class="s2">?: </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s0">sourceCode</span><span class="s2">?: </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s0">processCode</span><span class="s2">?: (</span><span class="s0">code</span><span class="s2">: </span><span class="s0">string</span><span class="s2">, </span><span class="s0">schema</span><span class="s2">: </span><span class="s0">object</span><span class="s2">) =&gt; </span><span class="s0">string</span><span class="s2">;</span>
+    <span class="s0">cache</span><span class="s2">?: </span><span class="s0">object</span><span class="s2">;</span>
+    <span class="s0">logger</span><span class="s2">?: </span><span class="s0">CustomLogger </span><span class="s2">| </span><span class="s1">false</span><span class="s2">;</span>
+    <span class="s0">nullable</span><span class="s2">?: </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s0">serialize</span><span class="s2">?: ((</span><span class="s0">schema</span><span class="s2">: </span><span class="s0">object </span><span class="s2">| </span><span class="s0">boolean</span><span class="s2">) =&gt; </span><span class="s0">any</span><span class="s2">) | </span><span class="s1">false</span><span class="s2">;</span>
+    <span class="s0">regExp</span><span class="s2">?: (</span><span class="s0">pattern</span><span class="s2">: </span><span class="s0">string</span><span class="s2">) =&gt; </span><span class="s0">RegExpLike</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">RegExpLike </span><span class="s2">{</span>
+    <span class="s0">test</span><span class="s2">: (</span><span class="s0">s</span><span class="s2">: </span><span class="s0">string</span><span class="s2">) =&gt; </span><span class="s0">boolean</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s0">type FormatValidator </span><span class="s2">= </span><span class="s0">string </span><span class="s2">| </span><span class="s0">RegExp </span><span class="s2">| ((</span><span class="s0">data</span><span class="s2">: </span><span class="s0">string</span><span class="s2">) =&gt; </span><span class="s0">boolean </span><span class="s2">| </span><span class="s0">PromiseLike</span><span class="s2">&lt;</span><span class="s0">any</span><span class="s2">&gt;);</span>
+  <span class="s0">type NumberFormatValidator </span><span class="s2">= ((</span><span class="s0">data</span><span class="s2">: </span><span class="s0">number</span><span class="s2">) =&gt; </span><span class="s0">boolean </span><span class="s2">| </span><span class="s0">PromiseLike</span><span class="s2">&lt;</span><span class="s0">any</span><span class="s2">&gt;);</span>
+
+  <span class="s1">interface </span><span class="s0">NumberFormatDefinition </span><span class="s2">{</span>
+    <span class="s0">type</span><span class="s2">: </span><span class="s5">&quot;number&quot;</span><span class="s2">,</span>
+    <span class="s0">validate</span><span class="s2">: </span><span class="s0">NumberFormatValidator</span><span class="s2">;</span>
+    <span class="s0">compare</span><span class="s2">?: (</span><span class="s0">data1</span><span class="s2">: </span><span class="s0">number</span><span class="s2">, </span><span class="s0">data2</span><span class="s2">: </span><span class="s0">number</span><span class="s2">) =&gt; </span><span class="s0">number</span><span class="s2">;</span>
+    <span class="s0">async</span><span class="s2">?: </span><span class="s0">boolean</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">StringFormatDefinition </span><span class="s2">{</span>
+    <span class="s0">type</span><span class="s2">?: </span><span class="s5">&quot;string&quot;</span><span class="s2">,</span>
+    <span class="s0">validate</span><span class="s2">: </span><span class="s0">FormatValidator</span><span class="s2">;</span>
+    <span class="s0">compare</span><span class="s2">?: (</span><span class="s0">data1</span><span class="s2">: </span><span class="s0">string</span><span class="s2">, </span><span class="s0">data2</span><span class="s2">: </span><span class="s0">string</span><span class="s2">) =&gt; </span><span class="s0">number</span><span class="s2">;</span>
+    <span class="s0">async</span><span class="s2">?: </span><span class="s0">boolean</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s0">type FormatDefinition </span><span class="s2">= </span><span class="s0">NumberFormatDefinition </span><span class="s2">| </span><span class="s0">StringFormatDefinition</span><span class="s2">;</span>
+
+  <span class="s1">interface </span><span class="s0">KeywordDefinition </span><span class="s2">{</span>
+    <span class="s0">type</span><span class="s2">?: </span><span class="s0">string </span><span class="s2">| </span><span class="s0">Array</span><span class="s2">&lt;</span><span class="s0">string</span><span class="s2">&gt;;</span>
+    <span class="s0">async</span><span class="s2">?: </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s0">$data</span><span class="s2">?: </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s0">errors</span><span class="s2">?: </span><span class="s0">boolean </span><span class="s2">| </span><span class="s0">string</span><span class="s2">;</span>
+    <span class="s0">metaSchema</span><span class="s2">?: </span><span class="s0">object</span><span class="s2">;</span>
+    <span class="s6">// schema: false makes validate not to expect schema (ValidateFunction)</span>
+    <span class="s0">schema</span><span class="s2">?: </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s0">statements</span><span class="s2">?: </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s0">dependencies</span><span class="s2">?: </span><span class="s0">Array</span><span class="s2">&lt;</span><span class="s0">string</span><span class="s2">&gt;;</span>
+    <span class="s0">modifying</span><span class="s2">?: </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s0">valid</span><span class="s2">?: </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s6">// one and only one of the following properties should be present</span>
+    <span class="s0">validate</span><span class="s2">?: </span><span class="s0">SchemaValidateFunction </span><span class="s2">| </span><span class="s0">ValidateFunction</span><span class="s2">;</span>
+    <span class="s0">compile</span><span class="s2">?: (</span><span class="s0">schema</span><span class="s2">: </span><span class="s0">any</span><span class="s2">, </span><span class="s0">parentSchema</span><span class="s2">: </span><span class="s0">object</span><span class="s2">, </span><span class="s0">it</span><span class="s2">: </span><span class="s0">CompilationContext</span><span class="s2">) =&gt; </span><span class="s0">ValidateFunction</span><span class="s2">;</span>
+    <span class="s0">macro</span><span class="s2">?: (</span><span class="s0">schema</span><span class="s2">: </span><span class="s0">any</span><span class="s2">, </span><span class="s0">parentSchema</span><span class="s2">: </span><span class="s0">object</span><span class="s2">, </span><span class="s0">it</span><span class="s2">: </span><span class="s0">CompilationContext</span><span class="s2">) =&gt; </span><span class="s0">object </span><span class="s2">| </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s0">inline</span><span class="s2">?: (</span><span class="s0">it</span><span class="s2">: </span><span class="s0">CompilationContext</span><span class="s2">, </span><span class="s0">keyword</span><span class="s2">: </span><span class="s0">string</span><span class="s2">, </span><span class="s0">schema</span><span class="s2">: </span><span class="s0">any</span><span class="s2">, </span><span class="s0">parentSchema</span><span class="s2">: </span><span class="s0">object</span><span class="s2">) =&gt; </span><span class="s0">string</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">CompilationContext </span><span class="s2">{</span>
+    <span class="s0">level</span><span class="s2">: </span><span class="s0">number</span><span class="s2">;</span>
+    <span class="s0">dataLevel</span><span class="s2">: </span><span class="s0">number</span><span class="s2">;</span>
+    <span class="s0">dataPathArr</span><span class="s2">: </span><span class="s0">string</span><span class="s2">[];</span>
+    <span class="s0">schema</span><span class="s2">: </span><span class="s0">any</span><span class="s2">;</span>
+    <span class="s0">schemaPath</span><span class="s2">: </span><span class="s0">string</span><span class="s2">;</span>
+    <span class="s0">baseId</span><span class="s2">: </span><span class="s0">string</span><span class="s2">;</span>
+    <span class="s0">async</span><span class="s2">: </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s0">opts</span><span class="s2">: </span><span class="s0">Options</span><span class="s2">;</span>
+    <span class="s0">formats</span><span class="s2">: {</span>
+      <span class="s2">[</span><span class="s0">index</span><span class="s2">: </span><span class="s0">string</span><span class="s2">]: </span><span class="s0">FormatDefinition </span><span class="s2">| </span><span class="s0">undefined</span><span class="s2">;</span>
+    <span class="s2">};</span>
+    <span class="s0">keywords</span><span class="s2">: {</span>
+      <span class="s2">[</span><span class="s0">index</span><span class="s2">: </span><span class="s0">string</span><span class="s2">]: </span><span class="s0">KeywordDefinition </span><span class="s2">| </span><span class="s0">undefined</span><span class="s2">;</span>
+    <span class="s2">};</span>
+    <span class="s0">compositeRule</span><span class="s2">: </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s0">validate</span><span class="s2">: (</span><span class="s0">schema</span><span class="s2">: </span><span class="s0">object</span><span class="s2">) =&gt; </span><span class="s0">boolean</span><span class="s2">;</span>
+    <span class="s0">util</span><span class="s2">: {</span>
+      <span class="s0">copy</span><span class="s2">(</span><span class="s0">obj</span><span class="s2">: </span><span class="s0">any</span><span class="s2">, </span><span class="s0">target</span><span class="s2">?: </span><span class="s0">any</span><span class="s2">): </span><span class="s0">any</span><span class="s2">;</span>
+      <span class="s0">toHash</span><span class="s2">(</span><span class="s0">source</span><span class="s2">: </span><span class="s0">string</span><span class="s2">[]): { [</span><span class="s0">index</span><span class="s2">: </span><span class="s0">string</span><span class="s2">]: </span><span class="s1">true </span><span class="s2">| </span><span class="s0">undefined </span><span class="s2">};</span>
+      <span class="s0">equal</span><span class="s2">(</span><span class="s0">obj</span><span class="s2">: </span><span class="s0">any</span><span class="s2">, </span><span class="s0">target</span><span class="s2">: </span><span class="s0">any</span><span class="s2">): </span><span class="s0">boolean</span><span class="s2">;</span>
+      <span class="s0">getProperty</span><span class="s2">(</span><span class="s0">str</span><span class="s2">: </span><span class="s0">string</span><span class="s2">): </span><span class="s0">string</span><span class="s2">;</span>
+      <span class="s0">schemaHasRules</span><span class="s2">(</span><span class="s0">schema</span><span class="s2">: </span><span class="s0">object</span><span class="s2">, </span><span class="s0">rules</span><span class="s2">: </span><span class="s0">any</span><span class="s2">): </span><span class="s0">string</span><span class="s2">;</span>
+      <span class="s0">escapeQuotes</span><span class="s2">(</span><span class="s0">str</span><span class="s2">: </span><span class="s0">string</span><span class="s2">): </span><span class="s0">string</span><span class="s2">;</span>
+      <span class="s0">toQuotedString</span><span class="s2">(</span><span class="s0">str</span><span class="s2">: </span><span class="s0">string</span><span class="s2">): </span><span class="s0">string</span><span class="s2">;</span>
+      <span class="s0">getData</span><span class="s2">(</span><span class="s0">jsonPointer</span><span class="s2">: </span><span class="s0">string</span><span class="s2">, </span><span class="s0">dataLevel</span><span class="s2">: </span><span class="s0">number</span><span class="s2">, </span><span class="s0">paths</span><span class="s2">: </span><span class="s0">string</span><span class="s2">[]): </span><span class="s0">string</span><span class="s2">;</span>
+      <span class="s0">escapeJsonPointer</span><span class="s2">(</span><span class="s0">str</span><span class="s2">: </span><span class="s0">string</span><span class="s2">): </span><span class="s0">string</span><span class="s2">;</span>
+      <span class="s0">unescapeJsonPointer</span><span class="s2">(</span><span class="s0">str</span><span class="s2">: </span><span class="s0">string</span><span class="s2">): </span><span class="s0">string</span><span class="s2">;</span>
+      <span class="s0">escapeFragment</span><span class="s2">(</span><span class="s0">str</span><span class="s2">: </span><span class="s0">string</span><span class="s2">): </span><span class="s0">string</span><span class="s2">;</span>
+      <span class="s0">unescapeFragment</span><span class="s2">(</span><span class="s0">str</span><span class="s2">: </span><span class="s0">string</span><span class="s2">): </span><span class="s0">string</span><span class="s2">;</span>
+    <span class="s2">};</span>
+    <span class="s0">self</span><span class="s2">: </span><span class="s0">Ajv</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">SchemaValidateFunction </span><span class="s2">{</span>
+    <span class="s2">(</span>
+      <span class="s0">schema</span><span class="s2">: </span><span class="s0">any</span><span class="s2">,</span>
+      <span class="s0">data</span><span class="s2">: </span><span class="s0">any</span><span class="s2">,</span>
+      <span class="s0">parentSchema</span><span class="s2">?: </span><span class="s0">object</span><span class="s2">,</span>
+      <span class="s0">dataPath</span><span class="s2">?: </span><span class="s0">string</span><span class="s2">,</span>
+      <span class="s0">parentData</span><span class="s2">?: </span><span class="s0">object </span><span class="s2">| </span><span class="s0">Array</span><span class="s2">&lt;</span><span class="s0">any</span><span class="s2">&gt;,</span>
+      <span class="s0">parentDataProperty</span><span class="s2">?: </span><span class="s0">string </span><span class="s2">| </span><span class="s0">number</span><span class="s2">,</span>
+      <span class="s0">rootData</span><span class="s2">?: </span><span class="s0">object </span><span class="s2">| </span><span class="s0">Array</span><span class="s2">&lt;</span><span class="s0">any</span><span class="s2">&gt;</span>
+    <span class="s2">): </span><span class="s0">boolean </span><span class="s2">| </span><span class="s0">PromiseLike</span><span class="s2">&lt;</span><span class="s0">any</span><span class="s2">&gt;;</span>
+    <span class="s0">errors</span><span class="s2">?: </span><span class="s0">Array</span><span class="s2">&lt;</span><span class="s0">ErrorObject</span><span class="s2">&gt;;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">ErrorsTextOptions </span><span class="s2">{</span>
+    <span class="s0">separator</span><span class="s2">?: </span><span class="s0">string</span><span class="s2">;</span>
+    <span class="s0">dataVar</span><span class="s2">?: </span><span class="s0">string</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">ErrorObject </span><span class="s2">{</span>
+    <span class="s0">keyword</span><span class="s2">: </span><span class="s0">string</span><span class="s2">;</span>
+    <span class="s0">dataPath</span><span class="s2">: </span><span class="s0">string</span><span class="s2">;</span>
+    <span class="s0">schemaPath</span><span class="s2">: </span><span class="s0">string</span><span class="s2">;</span>
+    <span class="s0">params</span><span class="s2">: </span><span class="s0">ErrorParameters</span><span class="s2">;</span>
+    <span class="s6">// Added to validation errors of propertyNames keyword schema</span>
+    <span class="s0">propertyName</span><span class="s2">?: </span><span class="s0">string</span><span class="s2">;</span>
+    <span class="s6">// Excluded if messages set to false.</span>
+    <span class="s0">message</span><span class="s2">?: </span><span class="s0">string</span><span class="s2">;</span>
+    <span class="s6">// These are added with the `verbose` option.</span>
+    <span class="s0">schema</span><span class="s2">?: </span><span class="s0">any</span><span class="s2">;</span>
+    <span class="s0">parentSchema</span><span class="s2">?: </span><span class="s0">object</span><span class="s2">;</span>
+    <span class="s0">data</span><span class="s2">?: </span><span class="s0">any</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s0">type ErrorParameters </span><span class="s2">= </span><span class="s0">RefParams </span><span class="s2">| </span><span class="s0">LimitParams </span><span class="s2">| </span><span class="s0">AdditionalPropertiesParams </span><span class="s2">|</span>
+    <span class="s0">DependenciesParams </span><span class="s2">| </span><span class="s0">FormatParams </span><span class="s2">| </span><span class="s0">ComparisonParams </span><span class="s2">|</span>
+    <span class="s0">MultipleOfParams </span><span class="s2">| </span><span class="s0">PatternParams </span><span class="s2">| </span><span class="s0">RequiredParams </span><span class="s2">|</span>
+    <span class="s0">TypeParams </span><span class="s2">| </span><span class="s0">UniqueItemsParams </span><span class="s2">| </span><span class="s0">CustomParams </span><span class="s2">|</span>
+    <span class="s0">PatternRequiredParams </span><span class="s2">| </span><span class="s0">PropertyNamesParams </span><span class="s2">|</span>
+    <span class="s0">IfParams </span><span class="s2">| </span><span class="s0">SwitchParams </span><span class="s2">| </span><span class="s0">NoParams </span><span class="s2">| </span><span class="s0">EnumParams</span><span class="s2">;</span>
+
+  <span class="s1">interface </span><span class="s0">RefParams </span><span class="s2">{</span>
+    <span class="s0">ref</span><span class="s2">: </span><span class="s0">string</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">LimitParams </span><span class="s2">{</span>
+    <span class="s0">limit</span><span class="s2">: </span><span class="s0">number</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">AdditionalPropertiesParams </span><span class="s2">{</span>
+    <span class="s0">additionalProperty</span><span class="s2">: </span><span class="s0">string</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">DependenciesParams </span><span class="s2">{</span>
+    <span class="s0">property</span><span class="s2">: </span><span class="s0">string</span><span class="s2">;</span>
+    <span class="s0">missingProperty</span><span class="s2">: </span><span class="s0">string</span><span class="s2">;</span>
+    <span class="s0">depsCount</span><span class="s2">: </span><span class="s0">number</span><span class="s2">;</span>
+    <span class="s0">deps</span><span class="s2">: </span><span class="s0">string</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">FormatParams </span><span class="s2">{</span>
+    <span class="s0">format</span><span class="s2">: </span><span class="s0">string</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">ComparisonParams </span><span class="s2">{</span>
+    <span class="s0">comparison</span><span class="s2">: </span><span class="s0">string</span><span class="s2">;</span>
+    <span class="s0">limit</span><span class="s2">: </span><span class="s0">number </span><span class="s2">| </span><span class="s0">string</span><span class="s2">;</span>
+    <span class="s0">exclusive</span><span class="s2">: </span><span class="s0">boolean</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">MultipleOfParams </span><span class="s2">{</span>
+    <span class="s0">multipleOf</span><span class="s2">: </span><span class="s0">number</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">PatternParams </span><span class="s2">{</span>
+    <span class="s0">pattern</span><span class="s2">: </span><span class="s0">string</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">RequiredParams </span><span class="s2">{</span>
+    <span class="s0">missingProperty</span><span class="s2">: </span><span class="s0">string</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">TypeParams </span><span class="s2">{</span>
+    <span class="s0">type</span><span class="s2">: </span><span class="s0">string</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">UniqueItemsParams </span><span class="s2">{</span>
+    <span class="s0">i</span><span class="s2">: </span><span class="s0">number</span><span class="s2">;</span>
+    <span class="s0">j</span><span class="s2">: </span><span class="s0">number</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">CustomParams </span><span class="s2">{</span>
+    <span class="s0">keyword</span><span class="s2">: </span><span class="s0">string</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">PatternRequiredParams </span><span class="s2">{</span>
+    <span class="s0">missingPattern</span><span class="s2">: </span><span class="s0">string</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">PropertyNamesParams </span><span class="s2">{</span>
+    <span class="s0">propertyName</span><span class="s2">: </span><span class="s0">string</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">IfParams </span><span class="s2">{</span>
+    <span class="s0">failingKeyword</span><span class="s2">: </span><span class="s0">string</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">SwitchParams </span><span class="s2">{</span>
+    <span class="s0">caseIndex</span><span class="s2">: </span><span class="s0">number</span><span class="s2">;</span>
+  <span class="s2">}</span>
+
+  <span class="s1">interface </span><span class="s0">NoParams </span><span class="s2">{ }</span>
+
+  <span class="s1">interface </span><span class="s0">EnumParams </span><span class="s2">{</span>
+    <span class="s0">allowedValues</span><span class="s2">: </span><span class="s0">Array</span><span class="s2">&lt;</span><span class="s0">any</span><span class="s2">&gt;;</span>
+  <span class="s2">}</span>
+<span class="s2">}</span>
+
+<span class="s1">export </span><span class="s2">= </span><span class="s0">ajv</span><span class="s2">;</span>
+</pre>
+</body>
+</html>

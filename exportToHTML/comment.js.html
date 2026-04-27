@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>comment.js</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #6aab73;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #cf8e6d;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+comment.js</font>
+</center></td></tr></table>
+<pre><span class="s0">'use strict'</span><span class="s1">;</span>
+<span class="s2">module</span><span class="s1">.</span><span class="s2">exports </span><span class="s1">= </span><span class="s3">function </span><span class="s2">generate_comment</span><span class="s1">(</span><span class="s2">it</span><span class="s1">, </span><span class="s2">$keyword</span><span class="s1">, </span><span class="s2">$ruleType</span><span class="s1">) {</span>
+  <span class="s3">var </span><span class="s2">out </span><span class="s1">= </span><span class="s0">' '</span><span class="s1">;</span>
+  <span class="s3">var </span><span class="s2">$schema </span><span class="s1">= </span><span class="s2">it</span><span class="s1">.</span><span class="s2">schema</span><span class="s1">[</span><span class="s2">$keyword</span><span class="s1">];</span>
+  <span class="s3">var </span><span class="s2">$errSchemaPath </span><span class="s1">= </span><span class="s2">it</span><span class="s1">.</span><span class="s2">errSchemaPath </span><span class="s1">+ </span><span class="s0">'/' </span><span class="s1">+ </span><span class="s2">$keyword</span><span class="s1">;</span>
+  <span class="s3">var </span><span class="s2">$breakOnError </span><span class="s1">= !</span><span class="s2">it</span><span class="s1">.</span><span class="s2">opts</span><span class="s1">.</span><span class="s2">allErrors</span><span class="s1">;</span>
+  <span class="s3">var </span><span class="s2">$comment </span><span class="s1">= </span><span class="s2">it</span><span class="s1">.</span><span class="s2">util</span><span class="s1">.</span><span class="s2">toQuotedString</span><span class="s1">(</span><span class="s2">$schema</span><span class="s1">);</span>
+  <span class="s3">if </span><span class="s1">(</span><span class="s2">it</span><span class="s1">.</span><span class="s2">opts</span><span class="s1">.</span><span class="s2">$comment </span><span class="s1">=== </span><span class="s3">true</span><span class="s1">) {</span>
+    <span class="s2">out </span><span class="s1">+= </span><span class="s0">' console.log(' </span><span class="s1">+ (</span><span class="s2">$comment</span><span class="s1">) + </span><span class="s0">');'</span><span class="s1">;</span>
+  <span class="s1">} </span><span class="s3">else if </span><span class="s1">(</span><span class="s3">typeof </span><span class="s2">it</span><span class="s1">.</span><span class="s2">opts</span><span class="s1">.</span><span class="s2">$comment </span><span class="s1">== </span><span class="s0">'function'</span><span class="s1">) {</span>
+    <span class="s2">out </span><span class="s1">+= </span><span class="s0">' self._opts.$comment(' </span><span class="s1">+ (</span><span class="s2">$comment</span><span class="s1">) + </span><span class="s0">', ' </span><span class="s1">+ (</span><span class="s2">it</span><span class="s1">.</span><span class="s2">util</span><span class="s1">.</span><span class="s2">toQuotedString</span><span class="s1">(</span><span class="s2">$errSchemaPath</span><span class="s1">)) + </span><span class="s0">', validate.root.schema);'</span><span class="s1">;</span>
+  <span class="s1">}</span>
+  <span class="s3">return </span><span class="s2">out</span><span class="s1">;</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

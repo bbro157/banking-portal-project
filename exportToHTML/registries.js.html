@@ -1,0 +1,73 @@
+<html>
+<head>
+<title>registries.js</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #2aacb8;}
+.s5 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+registries.js</font>
+</center></td></tr></table>
+<pre><span class="s0">var </span><span class="s1">_a</span><span class="s2">;</span>
+<span class="s0">export const </span><span class="s1">$output </span><span class="s2">= </span><span class="s1">Symbol</span><span class="s2">(</span><span class="s3">&quot;ZodOutput&quot;</span><span class="s2">);</span>
+<span class="s0">export const </span><span class="s1">$input </span><span class="s2">= </span><span class="s1">Symbol</span><span class="s2">(</span><span class="s3">&quot;ZodInput&quot;</span><span class="s2">);</span>
+<span class="s0">export class </span><span class="s1">$ZodRegistry </span><span class="s2">{</span>
+    <span class="s1">constructor</span><span class="s2">() {</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">_map </span><span class="s2">= </span><span class="s0">new </span><span class="s1">WeakMap</span><span class="s2">();</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">_idmap </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Map</span><span class="s2">();</span>
+    <span class="s2">}</span>
+    <span class="s1">add</span><span class="s2">(</span><span class="s1">schema</span><span class="s2">, </span><span class="s1">..._meta</span><span class="s2">) {</span>
+        <span class="s0">const </span><span class="s1">meta </span><span class="s2">= </span><span class="s1">_meta</span><span class="s2">[</span><span class="s4">0</span><span class="s2">];</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">_map</span><span class="s2">.</span><span class="s1">set</span><span class="s2">(</span><span class="s1">schema</span><span class="s2">, </span><span class="s1">meta</span><span class="s2">);</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">meta </span><span class="s2">&amp;&amp; </span><span class="s0">typeof </span><span class="s1">meta </span><span class="s2">=== </span><span class="s3">&quot;object&quot; </span><span class="s2">&amp;&amp; </span><span class="s3">&quot;id&quot; </span><span class="s0">in </span><span class="s1">meta</span><span class="s2">) {</span>
+            <span class="s0">this</span><span class="s2">.</span><span class="s1">_idmap</span><span class="s2">.</span><span class="s1">set</span><span class="s2">(</span><span class="s1">meta</span><span class="s2">.</span><span class="s1">id</span><span class="s2">, </span><span class="s1">schema</span><span class="s2">);</span>
+        <span class="s2">}</span>
+        <span class="s0">return this</span><span class="s2">;</span>
+    <span class="s2">}</span>
+    <span class="s1">clear</span><span class="s2">() {</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">_map </span><span class="s2">= </span><span class="s0">new </span><span class="s1">WeakMap</span><span class="s2">();</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">_idmap </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Map</span><span class="s2">();</span>
+        <span class="s0">return this</span><span class="s2">;</span>
+    <span class="s2">}</span>
+    <span class="s1">remove</span><span class="s2">(</span><span class="s1">schema</span><span class="s2">) {</span>
+        <span class="s0">const </span><span class="s1">meta </span><span class="s2">= </span><span class="s0">this</span><span class="s2">.</span><span class="s1">_map</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">schema</span><span class="s2">);</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">meta </span><span class="s2">&amp;&amp; </span><span class="s0">typeof </span><span class="s1">meta </span><span class="s2">=== </span><span class="s3">&quot;object&quot; </span><span class="s2">&amp;&amp; </span><span class="s3">&quot;id&quot; </span><span class="s0">in </span><span class="s1">meta</span><span class="s2">) {</span>
+            <span class="s0">this</span><span class="s2">.</span><span class="s1">_idmap</span><span class="s2">.</span><span class="s1">delete</span><span class="s2">(</span><span class="s1">meta</span><span class="s2">.</span><span class="s1">id</span><span class="s2">);</span>
+        <span class="s2">}</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">_map</span><span class="s2">.</span><span class="s1">delete</span><span class="s2">(</span><span class="s1">schema</span><span class="s2">);</span>
+        <span class="s0">return this</span><span class="s2">;</span>
+    <span class="s2">}</span>
+    <span class="s1">get</span><span class="s2">(</span><span class="s1">schema</span><span class="s2">) {</span>
+        <span class="s5">// return this._map.get(schema) as any;</span>
+        <span class="s5">// inherit metadata</span>
+        <span class="s0">const </span><span class="s1">p </span><span class="s2">= </span><span class="s1">schema</span><span class="s2">.</span><span class="s1">_zod</span><span class="s2">.</span><span class="s1">parent</span><span class="s2">;</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">p</span><span class="s2">) {</span>
+            <span class="s0">const </span><span class="s1">pm </span><span class="s2">= { </span><span class="s1">...</span><span class="s2">(</span><span class="s0">this</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">p</span><span class="s2">) ?? {}) };</span>
+            <span class="s0">delete </span><span class="s1">pm</span><span class="s2">.</span><span class="s1">id</span><span class="s2">; </span><span class="s5">// do not inherit id</span>
+            <span class="s0">const </span><span class="s1">f </span><span class="s2">= { </span><span class="s1">...pm</span><span class="s2">, </span><span class="s1">...</span><span class="s0">this</span><span class="s2">.</span><span class="s1">_map</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">schema</span><span class="s2">) };</span>
+            <span class="s0">return </span><span class="s1">Object</span><span class="s2">.</span><span class="s1">keys</span><span class="s2">(</span><span class="s1">f</span><span class="s2">).</span><span class="s1">length </span><span class="s2">? </span><span class="s1">f </span><span class="s2">: </span><span class="s1">undefined</span><span class="s2">;</span>
+        <span class="s2">}</span>
+        <span class="s0">return this</span><span class="s2">.</span><span class="s1">_map</span><span class="s2">.</span><span class="s1">get</span><span class="s2">(</span><span class="s1">schema</span><span class="s2">);</span>
+    <span class="s2">}</span>
+    <span class="s1">has</span><span class="s2">(</span><span class="s1">schema</span><span class="s2">) {</span>
+        <span class="s0">return this</span><span class="s2">.</span><span class="s1">_map</span><span class="s2">.</span><span class="s1">has</span><span class="s2">(</span><span class="s1">schema</span><span class="s2">);</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+<span class="s5">// registries</span>
+<span class="s0">export function </span><span class="s1">registry</span><span class="s2">() {</span>
+    <span class="s0">return new </span><span class="s1">$ZodRegistry</span><span class="s2">();</span>
+<span class="s2">}</span>
+<span class="s2">(</span><span class="s1">_a </span><span class="s2">= </span><span class="s1">globalThis</span><span class="s2">).</span><span class="s1">__zod_globalRegistry </span><span class="s2">?? (</span><span class="s1">_a</span><span class="s2">.</span><span class="s1">__zod_globalRegistry </span><span class="s2">= </span><span class="s1">registry</span><span class="s2">());</span>
+<span class="s0">export const </span><span class="s1">globalRegistry </span><span class="s2">= </span><span class="s1">globalThis</span><span class="s2">.</span><span class="s1">__zod_globalRegistry</span><span class="s2">;</span>
+</pre>
+</body>
+</html>

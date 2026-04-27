@@ -1,0 +1,1246 @@
+<html>
+<head>
+<title>api.cjs</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #6aab73;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #cf8e6d;}
+.s4 { color: #2aacb8;}
+.s5 { color: #7a7e85;}
+.s6 { color: #5f826b; font-style: italic;}
+.s7 { color: #67a37c; font-style: italic;}
+</style>
+</head>
+<body bgcolor="#191a1c">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+api.cjs</font>
+</center></td></tr></table>
+<pre><span class="s0">&quot;use strict&quot;</span><span class="s1">;</span>
+<span class="s3">var </span><span class="s2">__createBinding </span><span class="s1">= (</span><span class="s3">this </span><span class="s1">&amp;&amp; </span><span class="s3">this</span><span class="s1">.</span><span class="s2">__createBinding</span><span class="s1">) || (</span><span class="s2">Object</span><span class="s1">.</span><span class="s2">create </span><span class="s1">? (</span><span class="s3">function</span><span class="s1">(</span><span class="s2">o</span><span class="s1">, </span><span class="s2">m</span><span class="s1">, </span><span class="s2">k</span><span class="s1">, </span><span class="s2">k2</span><span class="s1">) {</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">k2 </span><span class="s1">=== </span><span class="s2">undefined</span><span class="s1">) </span><span class="s2">k2 </span><span class="s1">= </span><span class="s2">k</span><span class="s1">;</span>
+    <span class="s3">var </span><span class="s2">desc </span><span class="s1">= </span><span class="s2">Object</span><span class="s1">.</span><span class="s2">getOwnPropertyDescriptor</span><span class="s1">(</span><span class="s2">m</span><span class="s1">, </span><span class="s2">k</span><span class="s1">);</span>
+    <span class="s3">if </span><span class="s1">(!</span><span class="s2">desc </span><span class="s1">|| (</span><span class="s0">&quot;get&quot; </span><span class="s3">in </span><span class="s2">desc </span><span class="s1">? !</span><span class="s2">m</span><span class="s1">.</span><span class="s2">__esModule </span><span class="s1">: </span><span class="s2">desc</span><span class="s1">.</span><span class="s2">writable </span><span class="s1">|| </span><span class="s2">desc</span><span class="s1">.</span><span class="s2">configurable</span><span class="s1">)) {</span>
+      <span class="s2">desc </span><span class="s1">= { </span><span class="s2">enumerable</span><span class="s1">: </span><span class="s3">true</span><span class="s1">, </span><span class="s2">get</span><span class="s1">: </span><span class="s3">function</span><span class="s1">() { </span><span class="s3">return </span><span class="s2">m</span><span class="s1">[</span><span class="s2">k</span><span class="s1">]; } };</span>
+    <span class="s1">}</span>
+    <span class="s2">Object</span><span class="s1">.</span><span class="s2">defineProperty</span><span class="s1">(</span><span class="s2">o</span><span class="s1">, </span><span class="s2">k2</span><span class="s1">, </span><span class="s2">desc</span><span class="s1">);</span>
+<span class="s1">}) : (</span><span class="s3">function</span><span class="s1">(</span><span class="s2">o</span><span class="s1">, </span><span class="s2">m</span><span class="s1">, </span><span class="s2">k</span><span class="s1">, </span><span class="s2">k2</span><span class="s1">) {</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">k2 </span><span class="s1">=== </span><span class="s2">undefined</span><span class="s1">) </span><span class="s2">k2 </span><span class="s1">= </span><span class="s2">k</span><span class="s1">;</span>
+    <span class="s2">o</span><span class="s1">[</span><span class="s2">k2</span><span class="s1">] = </span><span class="s2">m</span><span class="s1">[</span><span class="s2">k</span><span class="s1">];</span>
+<span class="s1">}));</span>
+<span class="s3">var </span><span class="s2">__setModuleDefault </span><span class="s1">= (</span><span class="s3">this </span><span class="s1">&amp;&amp; </span><span class="s3">this</span><span class="s1">.</span><span class="s2">__setModuleDefault</span><span class="s1">) || (</span><span class="s2">Object</span><span class="s1">.</span><span class="s2">create </span><span class="s1">? (</span><span class="s3">function</span><span class="s1">(</span><span class="s2">o</span><span class="s1">, </span><span class="s2">v</span><span class="s1">) {</span>
+    <span class="s2">Object</span><span class="s1">.</span><span class="s2">defineProperty</span><span class="s1">(</span><span class="s2">o</span><span class="s1">, </span><span class="s0">&quot;default&quot;</span><span class="s1">, { </span><span class="s2">enumerable</span><span class="s1">: </span><span class="s3">true</span><span class="s1">, </span><span class="s2">value</span><span class="s1">: </span><span class="s2">v </span><span class="s1">});</span>
+<span class="s1">}) : </span><span class="s3">function</span><span class="s1">(</span><span class="s2">o</span><span class="s1">, </span><span class="s2">v</span><span class="s1">) {</span>
+    <span class="s2">o</span><span class="s1">[</span><span class="s0">&quot;default&quot;</span><span class="s1">] = </span><span class="s2">v</span><span class="s1">;</span>
+<span class="s1">});</span>
+<span class="s3">var </span><span class="s2">__importStar </span><span class="s1">= (</span><span class="s3">this </span><span class="s1">&amp;&amp; </span><span class="s3">this</span><span class="s1">.</span><span class="s2">__importStar</span><span class="s1">) || </span><span class="s3">function </span><span class="s1">(</span><span class="s2">mod</span><span class="s1">) {</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">mod </span><span class="s1">&amp;&amp; </span><span class="s2">mod</span><span class="s1">.</span><span class="s2">__esModule</span><span class="s1">) </span><span class="s3">return </span><span class="s2">mod</span><span class="s1">;</span>
+    <span class="s3">var </span><span class="s2">result </span><span class="s1">= {};</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">mod </span><span class="s1">!= </span><span class="s3">null</span><span class="s1">) </span><span class="s3">for </span><span class="s1">(</span><span class="s3">var </span><span class="s2">k </span><span class="s3">in </span><span class="s2">mod</span><span class="s1">) </span><span class="s3">if </span><span class="s1">(</span><span class="s2">k </span><span class="s1">!== </span><span class="s0">&quot;default&quot; </span><span class="s1">&amp;&amp; </span><span class="s2">Object</span><span class="s1">.</span><span class="s2">prototype</span><span class="s1">.</span><span class="s2">hasOwnProperty</span><span class="s1">.</span><span class="s2">call</span><span class="s1">(</span><span class="s2">mod</span><span class="s1">, </span><span class="s2">k</span><span class="s1">)) </span><span class="s2">__createBinding</span><span class="s1">(</span><span class="s2">result</span><span class="s1">, </span><span class="s2">mod</span><span class="s1">, </span><span class="s2">k</span><span class="s1">);</span>
+    <span class="s2">__setModuleDefault</span><span class="s1">(</span><span class="s2">result</span><span class="s1">, </span><span class="s2">mod</span><span class="s1">);</span>
+    <span class="s3">return </span><span class="s2">result</span><span class="s1">;</span>
+<span class="s1">};</span>
+<span class="s2">Object</span><span class="s1">.</span><span class="s2">defineProperty</span><span class="s1">(</span><span class="s2">exports</span><span class="s1">, </span><span class="s0">&quot;__esModule&quot;</span><span class="s1">, { </span><span class="s2">value</span><span class="s1">: </span><span class="s3">true </span><span class="s1">});</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">TimePrecision </span><span class="s1">= </span><span class="s3">void </span><span class="s4">0</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_string </span><span class="s1">= </span><span class="s2">_string</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_coercedString </span><span class="s1">= </span><span class="s2">_coercedString</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_email </span><span class="s1">= </span><span class="s2">_email</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_guid </span><span class="s1">= </span><span class="s2">_guid</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_uuid </span><span class="s1">= </span><span class="s2">_uuid</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_uuidv4 </span><span class="s1">= </span><span class="s2">_uuidv4</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_uuidv6 </span><span class="s1">= </span><span class="s2">_uuidv6</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_uuidv7 </span><span class="s1">= </span><span class="s2">_uuidv7</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_url </span><span class="s1">= </span><span class="s2">_url</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_emoji </span><span class="s1">= </span><span class="s2">_emoji</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_nanoid </span><span class="s1">= </span><span class="s2">_nanoid</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_cuid </span><span class="s1">= </span><span class="s2">_cuid</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_cuid2 </span><span class="s1">= </span><span class="s2">_cuid2</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_ulid </span><span class="s1">= </span><span class="s2">_ulid</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_xid </span><span class="s1">= </span><span class="s2">_xid</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_ksuid </span><span class="s1">= </span><span class="s2">_ksuid</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_ipv4 </span><span class="s1">= </span><span class="s2">_ipv4</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_ipv6 </span><span class="s1">= </span><span class="s2">_ipv6</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_mac </span><span class="s1">= </span><span class="s2">_mac</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_cidrv4 </span><span class="s1">= </span><span class="s2">_cidrv4</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_cidrv6 </span><span class="s1">= </span><span class="s2">_cidrv6</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_base64 </span><span class="s1">= </span><span class="s2">_base64</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_base64url </span><span class="s1">= </span><span class="s2">_base64url</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_e164 </span><span class="s1">= </span><span class="s2">_e164</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_jwt </span><span class="s1">= </span><span class="s2">_jwt</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_isoDateTime </span><span class="s1">= </span><span class="s2">_isoDateTime</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_isoDate </span><span class="s1">= </span><span class="s2">_isoDate</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_isoTime </span><span class="s1">= </span><span class="s2">_isoTime</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_isoDuration </span><span class="s1">= </span><span class="s2">_isoDuration</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_number </span><span class="s1">= </span><span class="s2">_number</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_coercedNumber </span><span class="s1">= </span><span class="s2">_coercedNumber</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_int </span><span class="s1">= </span><span class="s2">_int</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_float32 </span><span class="s1">= </span><span class="s2">_float32</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_float64 </span><span class="s1">= </span><span class="s2">_float64</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_int32 </span><span class="s1">= </span><span class="s2">_int32</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_uint32 </span><span class="s1">= </span><span class="s2">_uint32</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_boolean </span><span class="s1">= </span><span class="s2">_boolean</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_coercedBoolean </span><span class="s1">= </span><span class="s2">_coercedBoolean</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_bigint </span><span class="s1">= </span><span class="s2">_bigint</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_coercedBigint </span><span class="s1">= </span><span class="s2">_coercedBigint</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_int64 </span><span class="s1">= </span><span class="s2">_int64</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_uint64 </span><span class="s1">= </span><span class="s2">_uint64</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_symbol </span><span class="s1">= </span><span class="s2">_symbol</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_undefined </span><span class="s1">= </span><span class="s2">_undefined</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_null </span><span class="s1">= </span><span class="s2">_null</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_any </span><span class="s1">= </span><span class="s2">_any</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_unknown </span><span class="s1">= </span><span class="s2">_unknown</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_never </span><span class="s1">= </span><span class="s2">_never</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_void </span><span class="s1">= </span><span class="s2">_void</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_date </span><span class="s1">= </span><span class="s2">_date</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_coercedDate </span><span class="s1">= </span><span class="s2">_coercedDate</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_nan </span><span class="s1">= </span><span class="s2">_nan</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_lt </span><span class="s1">= </span><span class="s2">_lt</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_lte </span><span class="s1">= </span><span class="s2">_lte</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_max </span><span class="s1">= </span><span class="s2">_lte</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_lte </span><span class="s1">= </span><span class="s2">_lte</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_max </span><span class="s1">= </span><span class="s2">_lte</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_gt </span><span class="s1">= </span><span class="s2">_gt</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_gte </span><span class="s1">= </span><span class="s2">_gte</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_min </span><span class="s1">= </span><span class="s2">_gte</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_gte </span><span class="s1">= </span><span class="s2">_gte</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_min </span><span class="s1">= </span><span class="s2">_gte</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_positive </span><span class="s1">= </span><span class="s2">_positive</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_negative </span><span class="s1">= </span><span class="s2">_negative</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_nonpositive </span><span class="s1">= </span><span class="s2">_nonpositive</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_nonnegative </span><span class="s1">= </span><span class="s2">_nonnegative</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_multipleOf </span><span class="s1">= </span><span class="s2">_multipleOf</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_maxSize </span><span class="s1">= </span><span class="s2">_maxSize</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_minSize </span><span class="s1">= </span><span class="s2">_minSize</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_size </span><span class="s1">= </span><span class="s2">_size</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_maxLength </span><span class="s1">= </span><span class="s2">_maxLength</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_minLength </span><span class="s1">= </span><span class="s2">_minLength</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_length </span><span class="s1">= </span><span class="s2">_length</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_regex </span><span class="s1">= </span><span class="s2">_regex</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_lowercase </span><span class="s1">= </span><span class="s2">_lowercase</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_uppercase </span><span class="s1">= </span><span class="s2">_uppercase</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_includes </span><span class="s1">= </span><span class="s2">_includes</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_startsWith </span><span class="s1">= </span><span class="s2">_startsWith</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_endsWith </span><span class="s1">= </span><span class="s2">_endsWith</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_property </span><span class="s1">= </span><span class="s2">_property</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_mime </span><span class="s1">= </span><span class="s2">_mime</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_overwrite </span><span class="s1">= </span><span class="s2">_overwrite</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_normalize </span><span class="s1">= </span><span class="s2">_normalize</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_trim </span><span class="s1">= </span><span class="s2">_trim</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_toLowerCase </span><span class="s1">= </span><span class="s2">_toLowerCase</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_toUpperCase </span><span class="s1">= </span><span class="s2">_toUpperCase</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_slugify </span><span class="s1">= </span><span class="s2">_slugify</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_array </span><span class="s1">= </span><span class="s2">_array</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_union </span><span class="s1">= </span><span class="s2">_union</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_xor </span><span class="s1">= </span><span class="s2">_xor</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_discriminatedUnion </span><span class="s1">= </span><span class="s2">_discriminatedUnion</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_intersection </span><span class="s1">= </span><span class="s2">_intersection</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_tuple </span><span class="s1">= </span><span class="s2">_tuple</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_record </span><span class="s1">= </span><span class="s2">_record</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_map </span><span class="s1">= </span><span class="s2">_map</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_set </span><span class="s1">= </span><span class="s2">_set</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_enum </span><span class="s1">= </span><span class="s2">_enum</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_nativeEnum </span><span class="s1">= </span><span class="s2">_nativeEnum</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_literal </span><span class="s1">= </span><span class="s2">_literal</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_file </span><span class="s1">= </span><span class="s2">_file</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_transform </span><span class="s1">= </span><span class="s2">_transform</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_optional </span><span class="s1">= </span><span class="s2">_optional</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_nullable </span><span class="s1">= </span><span class="s2">_nullable</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_default </span><span class="s1">= </span><span class="s2">_default</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_nonoptional </span><span class="s1">= </span><span class="s2">_nonoptional</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_success </span><span class="s1">= </span><span class="s2">_success</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_catch </span><span class="s1">= </span><span class="s2">_catch</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_pipe </span><span class="s1">= </span><span class="s2">_pipe</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_readonly </span><span class="s1">= </span><span class="s2">_readonly</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_templateLiteral </span><span class="s1">= </span><span class="s2">_templateLiteral</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_lazy </span><span class="s1">= </span><span class="s2">_lazy</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_promise </span><span class="s1">= </span><span class="s2">_promise</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_custom </span><span class="s1">= </span><span class="s2">_custom</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_refine </span><span class="s1">= </span><span class="s2">_refine</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_superRefine </span><span class="s1">= </span><span class="s2">_superRefine</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_check </span><span class="s1">= </span><span class="s2">_check</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">describe </span><span class="s1">= </span><span class="s2">describe</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">meta </span><span class="s1">= </span><span class="s2">meta</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_stringbool </span><span class="s1">= </span><span class="s2">_stringbool</span><span class="s1">;</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">_stringFormat </span><span class="s1">= </span><span class="s2">_stringFormat</span><span class="s1">;</span>
+<span class="s3">const </span><span class="s2">checks </span><span class="s1">= </span><span class="s2">__importStar</span><span class="s1">(</span><span class="s2">require</span><span class="s1">(</span><span class="s0">&quot;./checks.cjs&quot;</span><span class="s1">));</span>
+<span class="s3">const </span><span class="s2">registries </span><span class="s1">= </span><span class="s2">__importStar</span><span class="s1">(</span><span class="s2">require</span><span class="s1">(</span><span class="s0">&quot;./registries.cjs&quot;</span><span class="s1">));</span>
+<span class="s3">const </span><span class="s2">schemas </span><span class="s1">= </span><span class="s2">__importStar</span><span class="s1">(</span><span class="s2">require</span><span class="s1">(</span><span class="s0">&quot;./schemas.cjs&quot;</span><span class="s1">));</span>
+<span class="s3">const </span><span class="s2">util </span><span class="s1">= </span><span class="s2">__importStar</span><span class="s1">(</span><span class="s2">require</span><span class="s1">(</span><span class="s0">&quot;./util.cjs&quot;</span><span class="s1">));</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_string</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_coercedString</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">coerce</span><span class="s1">: </span><span class="s3">true</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_email</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;email&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_guid</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;guid&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_uuid</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;uuid&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_uuidv4</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;uuid&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">version</span><span class="s1">: </span><span class="s0">&quot;v4&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_uuidv6</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;uuid&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">version</span><span class="s1">: </span><span class="s0">&quot;v6&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_uuidv7</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;uuid&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">version</span><span class="s1">: </span><span class="s0">&quot;v7&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_url</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;url&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_emoji</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;emoji&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_nanoid</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;nanoid&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_cuid</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;cuid&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_cuid2</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;cuid2&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_ulid</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;ulid&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_xid</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;xid&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_ksuid</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;ksuid&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_ipv4</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;ipv4&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_ipv6</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;ipv6&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_mac</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;mac&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_cidrv4</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;cidrv4&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_cidrv6</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;cidrv6&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_base64</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;base64&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_base64url</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;base64url&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_e164</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;e164&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_jwt</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;jwt&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s2">exports</span><span class="s1">.</span><span class="s2">TimePrecision </span><span class="s1">= {</span>
+    <span class="s2">Any</span><span class="s1">: </span><span class="s3">null</span><span class="s1">,</span>
+    <span class="s2">Minute</span><span class="s1">: -</span><span class="s4">1</span><span class="s1">,</span>
+    <span class="s2">Second</span><span class="s1">: </span><span class="s4">0</span><span class="s1">,</span>
+    <span class="s2">Millisecond</span><span class="s1">: </span><span class="s4">3</span><span class="s1">,</span>
+    <span class="s2">Microsecond</span><span class="s1">: </span><span class="s4">6</span><span class="s1">,</span>
+<span class="s1">};</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_isoDateTime</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;datetime&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">offset</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">local</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">precision</span><span class="s1">: </span><span class="s3">null</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_isoDate</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;date&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_isoTime</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;time&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">precision</span><span class="s1">: </span><span class="s3">null</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_isoDuration</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;duration&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_number</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;number&quot;</span><span class="s1">,</span>
+        <span class="s2">checks</span><span class="s1">: [],</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_coercedNumber</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;number&quot;</span><span class="s1">,</span>
+        <span class="s2">coerce</span><span class="s1">: </span><span class="s3">true</span><span class="s1">,</span>
+        <span class="s2">checks</span><span class="s1">: [],</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_int</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;number&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;number_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;safeint&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_float32</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;number&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;number_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;float32&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_float64</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;number&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;number_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;float64&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_int32</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;number&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;number_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;int32&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_uint32</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;number&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;number_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;uint32&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_boolean</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;boolean&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_coercedBoolean</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;boolean&quot;</span><span class="s1">,</span>
+        <span class="s2">coerce</span><span class="s1">: </span><span class="s3">true</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_bigint</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;bigint&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_coercedBigint</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;bigint&quot;</span><span class="s1">,</span>
+        <span class="s2">coerce</span><span class="s1">: </span><span class="s3">true</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_int64</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;bigint&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;bigint_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;int64&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_uint64</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;bigint&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;bigint_format&quot;</span><span class="s1">,</span>
+        <span class="s2">abort</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;uint64&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_symbol</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;symbol&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_undefined</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;undefined&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_null</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;null&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_any</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;any&quot;</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_unknown</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;unknown&quot;</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_never</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;never&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_void</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;void&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_date</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;date&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_coercedDate</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;date&quot;</span><span class="s1">,</span>
+        <span class="s2">coerce</span><span class="s1">: </span><span class="s3">true</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_nan</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;nan&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_lt</span><span class="s1">(</span><span class="s2">value</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">checks</span><span class="s1">.</span><span class="s2">$ZodCheckLessThan</span><span class="s1">({</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;less_than&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+        <span class="s2">value</span><span class="s1">,</span>
+        <span class="s2">inclusive</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_lte</span><span class="s1">(</span><span class="s2">value</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">checks</span><span class="s1">.</span><span class="s2">$ZodCheckLessThan</span><span class="s1">({</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;less_than&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+        <span class="s2">value</span><span class="s1">,</span>
+        <span class="s2">inclusive</span><span class="s1">: </span><span class="s3">true</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_gt</span><span class="s1">(</span><span class="s2">value</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">checks</span><span class="s1">.</span><span class="s2">$ZodCheckGreaterThan</span><span class="s1">({</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;greater_than&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+        <span class="s2">value</span><span class="s1">,</span>
+        <span class="s2">inclusive</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_gte</span><span class="s1">(</span><span class="s2">value</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">checks</span><span class="s1">.</span><span class="s2">$ZodCheckGreaterThan</span><span class="s1">({</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;greater_than&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+        <span class="s2">value</span><span class="s1">,</span>
+        <span class="s2">inclusive</span><span class="s1">: </span><span class="s3">true</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_positive</span><span class="s1">(</span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return </span><span class="s2">_gt</span><span class="s1">(</span><span class="s4">0</span><span class="s1">, </span><span class="s2">params</span><span class="s1">);</span>
+<span class="s1">}</span>
+<span class="s5">// negative</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_negative</span><span class="s1">(</span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return </span><span class="s2">_lt</span><span class="s1">(</span><span class="s4">0</span><span class="s1">, </span><span class="s2">params</span><span class="s1">);</span>
+<span class="s1">}</span>
+<span class="s5">// nonpositive</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_nonpositive</span><span class="s1">(</span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return </span><span class="s2">_lte</span><span class="s1">(</span><span class="s4">0</span><span class="s1">, </span><span class="s2">params</span><span class="s1">);</span>
+<span class="s1">}</span>
+<span class="s5">// nonnegative</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_nonnegative</span><span class="s1">(</span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return </span><span class="s2">_gte</span><span class="s1">(</span><span class="s4">0</span><span class="s1">, </span><span class="s2">params</span><span class="s1">);</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_multipleOf</span><span class="s1">(</span><span class="s2">value</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">checks</span><span class="s1">.</span><span class="s2">$ZodCheckMultipleOf</span><span class="s1">({</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;multiple_of&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+        <span class="s2">value</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_maxSize</span><span class="s1">(</span><span class="s2">maximum</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">checks</span><span class="s1">.</span><span class="s2">$ZodCheckMaxSize</span><span class="s1">({</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;max_size&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+        <span class="s2">maximum</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_minSize</span><span class="s1">(</span><span class="s2">minimum</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">checks</span><span class="s1">.</span><span class="s2">$ZodCheckMinSize</span><span class="s1">({</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;min_size&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+        <span class="s2">minimum</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_size</span><span class="s1">(</span><span class="s2">size</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">checks</span><span class="s1">.</span><span class="s2">$ZodCheckSizeEquals</span><span class="s1">({</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;size_equals&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+        <span class="s2">size</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_maxLength</span><span class="s1">(</span><span class="s2">maximum</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">const </span><span class="s2">ch </span><span class="s1">= </span><span class="s3">new </span><span class="s2">checks</span><span class="s1">.</span><span class="s2">$ZodCheckMaxLength</span><span class="s1">({</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;max_length&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+        <span class="s2">maximum</span><span class="s1">,</span>
+    <span class="s1">});</span>
+    <span class="s3">return </span><span class="s2">ch</span><span class="s1">;</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_minLength</span><span class="s1">(</span><span class="s2">minimum</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">checks</span><span class="s1">.</span><span class="s2">$ZodCheckMinLength</span><span class="s1">({</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;min_length&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+        <span class="s2">minimum</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_length</span><span class="s1">(</span><span class="s2">length</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">checks</span><span class="s1">.</span><span class="s2">$ZodCheckLengthEquals</span><span class="s1">({</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;length_equals&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+        <span class="s2">length</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_regex</span><span class="s1">(</span><span class="s2">pattern</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">checks</span><span class="s1">.</span><span class="s2">$ZodCheckRegex</span><span class="s1">({</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;regex&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+        <span class="s2">pattern</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_lowercase</span><span class="s1">(</span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">checks</span><span class="s1">.</span><span class="s2">$ZodCheckLowerCase</span><span class="s1">({</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;lowercase&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_uppercase</span><span class="s1">(</span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">checks</span><span class="s1">.</span><span class="s2">$ZodCheckUpperCase</span><span class="s1">({</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;uppercase&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_includes</span><span class="s1">(</span><span class="s2">includes</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">checks</span><span class="s1">.</span><span class="s2">$ZodCheckIncludes</span><span class="s1">({</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;includes&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+        <span class="s2">includes</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_startsWith</span><span class="s1">(</span><span class="s2">prefix</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">checks</span><span class="s1">.</span><span class="s2">$ZodCheckStartsWith</span><span class="s1">({</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;starts_with&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+        <span class="s2">prefix</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_endsWith</span><span class="s1">(</span><span class="s2">suffix</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">checks</span><span class="s1">.</span><span class="s2">$ZodCheckEndsWith</span><span class="s1">({</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">: </span><span class="s0">&quot;ends_with&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+        <span class="s2">suffix</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_property</span><span class="s1">(</span><span class="s2">property</span><span class="s1">, </span><span class="s2">schema</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">checks</span><span class="s1">.</span><span class="s2">$ZodCheckProperty</span><span class="s1">({</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;property&quot;</span><span class="s1">,</span>
+        <span class="s2">property</span><span class="s1">,</span>
+        <span class="s2">schema</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_mime</span><span class="s1">(</span><span class="s2">types</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">checks</span><span class="s1">.</span><span class="s2">$ZodCheckMimeType</span><span class="s1">({</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;mime_type&quot;</span><span class="s1">,</span>
+        <span class="s2">mime</span><span class="s1">: </span><span class="s2">types</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_overwrite</span><span class="s1">(</span><span class="s2">tx</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">checks</span><span class="s1">.</span><span class="s2">$ZodCheckOverwrite</span><span class="s1">({</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;overwrite&quot;</span><span class="s1">,</span>
+        <span class="s2">tx</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// normalize</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_normalize</span><span class="s1">(</span><span class="s2">form</span><span class="s1">) {</span>
+    <span class="s3">return </span><span class="s2">_overwrite</span><span class="s1">((</span><span class="s2">input</span><span class="s1">) =&gt; </span><span class="s2">input</span><span class="s1">.</span><span class="s2">normalize</span><span class="s1">(</span><span class="s2">form</span><span class="s1">));</span>
+<span class="s1">}</span>
+<span class="s5">// trim</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_trim</span><span class="s1">() {</span>
+    <span class="s3">return </span><span class="s2">_overwrite</span><span class="s1">((</span><span class="s2">input</span><span class="s1">) =&gt; </span><span class="s2">input</span><span class="s1">.</span><span class="s2">trim</span><span class="s1">());</span>
+<span class="s1">}</span>
+<span class="s5">// toLowerCase</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_toLowerCase</span><span class="s1">() {</span>
+    <span class="s3">return </span><span class="s2">_overwrite</span><span class="s1">((</span><span class="s2">input</span><span class="s1">) =&gt; </span><span class="s2">input</span><span class="s1">.</span><span class="s2">toLowerCase</span><span class="s1">());</span>
+<span class="s1">}</span>
+<span class="s5">// toUpperCase</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_toUpperCase</span><span class="s1">() {</span>
+    <span class="s3">return </span><span class="s2">_overwrite</span><span class="s1">((</span><span class="s2">input</span><span class="s1">) =&gt; </span><span class="s2">input</span><span class="s1">.</span><span class="s2">toUpperCase</span><span class="s1">());</span>
+<span class="s1">}</span>
+<span class="s5">// slugify</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_slugify</span><span class="s1">() {</span>
+    <span class="s3">return </span><span class="s2">_overwrite</span><span class="s1">((</span><span class="s2">input</span><span class="s1">) =&gt; </span><span class="s2">util</span><span class="s1">.</span><span class="s2">slugify</span><span class="s1">(</span><span class="s2">input</span><span class="s1">));</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_array</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">element</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;array&quot;</span><span class="s1">,</span>
+        <span class="s2">element</span><span class="s1">,</span>
+        <span class="s5">// get element() {</span>
+        <span class="s5">//   return element;</span>
+        <span class="s5">// },</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_union</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">options</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;union&quot;</span><span class="s1">,</span>
+        <span class="s2">options</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s3">function </span><span class="s2">_xor</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">options</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;union&quot;</span><span class="s1">,</span>
+        <span class="s2">options</span><span class="s1">,</span>
+        <span class="s2">inclusive</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_discriminatedUnion</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">discriminator</span><span class="s1">, </span><span class="s2">options</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;union&quot;</span><span class="s1">,</span>
+        <span class="s2">options</span><span class="s1">,</span>
+        <span class="s2">discriminator</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_intersection</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">left</span><span class="s1">, </span><span class="s2">right</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;intersection&quot;</span><span class="s1">,</span>
+        <span class="s2">left</span><span class="s1">,</span>
+        <span class="s2">right</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// export function _tuple(</span>
+<span class="s5">//   Class: util.SchemaClass&lt;schemas.$ZodTuple&gt;,</span>
+<span class="s5">//   items: [],</span>
+<span class="s5">//   params?: string | $ZodTupleParams</span>
+<span class="s5">// ): schemas.$ZodTuple&lt;[], null&gt;;</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_tuple</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">items</span><span class="s1">, </span><span class="s2">_paramsOrRest</span><span class="s1">, </span><span class="s2">_params</span><span class="s1">) {</span>
+    <span class="s3">const </span><span class="s2">hasRest </span><span class="s1">= </span><span class="s2">_paramsOrRest </span><span class="s3">instanceof </span><span class="s2">schemas</span><span class="s1">.</span><span class="s2">$ZodType</span><span class="s1">;</span>
+    <span class="s3">const </span><span class="s2">params </span><span class="s1">= </span><span class="s2">hasRest </span><span class="s1">? </span><span class="s2">_params </span><span class="s1">: </span><span class="s2">_paramsOrRest</span><span class="s1">;</span>
+    <span class="s3">const </span><span class="s2">rest </span><span class="s1">= </span><span class="s2">hasRest </span><span class="s1">? </span><span class="s2">_paramsOrRest </span><span class="s1">: </span><span class="s3">null</span><span class="s1">;</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;tuple&quot;</span><span class="s1">,</span>
+        <span class="s2">items</span><span class="s1">,</span>
+        <span class="s2">rest</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_record</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">keyType</span><span class="s1">, </span><span class="s2">valueType</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;record&quot;</span><span class="s1">,</span>
+        <span class="s2">keyType</span><span class="s1">,</span>
+        <span class="s2">valueType</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_map</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">keyType</span><span class="s1">, </span><span class="s2">valueType</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;map&quot;</span><span class="s1">,</span>
+        <span class="s2">keyType</span><span class="s1">,</span>
+        <span class="s2">valueType</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_set</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">valueType</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;set&quot;</span><span class="s1">,</span>
+        <span class="s2">valueType</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_enum</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">values</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">const </span><span class="s2">entries </span><span class="s1">= </span><span class="s2">Array</span><span class="s1">.</span><span class="s2">isArray</span><span class="s1">(</span><span class="s2">values</span><span class="s1">) ? </span><span class="s2">Object</span><span class="s1">.</span><span class="s2">fromEntries</span><span class="s1">(</span><span class="s2">values</span><span class="s1">.</span><span class="s2">map</span><span class="s1">((</span><span class="s2">v</span><span class="s1">) =&gt; [</span><span class="s2">v</span><span class="s1">, </span><span class="s2">v</span><span class="s1">])) : </span><span class="s2">values</span><span class="s1">;</span>
+    <span class="s5">// if (Array.isArray(values)) {</span>
+    <span class="s5">//   for (const value of values) {</span>
+    <span class="s5">//     entries[value] = value;</span>
+    <span class="s5">//   }</span>
+    <span class="s5">// } else {</span>
+    <span class="s5">//   Object.assign(entries, values);</span>
+    <span class="s5">// }</span>
+    <span class="s5">// const entries: util.EnumLike = {};</span>
+    <span class="s5">// for (const val of values) {</span>
+    <span class="s5">//   entries[val] = val;</span>
+    <span class="s5">// }</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;enum&quot;</span><span class="s1">,</span>
+        <span class="s2">entries</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s6">/** </span><span class="s7">@deprecated </span><span class="s6">This API has been merged into `z.enum()`. Use `z.enum()` instead.</span>
+ <span class="s6">*</span>
+ <span class="s6">* ```ts</span>
+ <span class="s6">* enum Colors { red, green, blue }</span>
+ <span class="s6">* z.enum(Colors);</span>
+ <span class="s6">* ```</span>
+ <span class="s6">*/</span>
+<span class="s3">function </span><span class="s2">_nativeEnum</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">entries</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;enum&quot;</span><span class="s1">,</span>
+        <span class="s2">entries</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_literal</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">value</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;literal&quot;</span><span class="s1">,</span>
+        <span class="s2">values</span><span class="s1">: </span><span class="s2">Array</span><span class="s1">.</span><span class="s2">isArray</span><span class="s1">(</span><span class="s2">value</span><span class="s1">) ? </span><span class="s2">value </span><span class="s1">: [</span><span class="s2">value</span><span class="s1">],</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_file</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;file&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_transform</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">fn</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;transform&quot;</span><span class="s1">,</span>
+        <span class="s2">transform</span><span class="s1">: </span><span class="s2">fn</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_optional</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">innerType</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;optional&quot;</span><span class="s1">,</span>
+        <span class="s2">innerType</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_nullable</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">innerType</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;nullable&quot;</span><span class="s1">,</span>
+        <span class="s2">innerType</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_default</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">innerType</span><span class="s1">, </span><span class="s2">defaultValue</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;default&quot;</span><span class="s1">,</span>
+        <span class="s2">innerType</span><span class="s1">,</span>
+        <span class="s2">get defaultValue</span><span class="s1">() {</span>
+            <span class="s3">return typeof </span><span class="s2">defaultValue </span><span class="s1">=== </span><span class="s0">&quot;function&quot; </span><span class="s1">? </span><span class="s2">defaultValue</span><span class="s1">() : </span><span class="s2">util</span><span class="s1">.</span><span class="s2">shallowClone</span><span class="s1">(</span><span class="s2">defaultValue</span><span class="s1">);</span>
+        <span class="s1">},</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_nonoptional</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">innerType</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;nonoptional&quot;</span><span class="s1">,</span>
+        <span class="s2">innerType</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_success</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">innerType</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;success&quot;</span><span class="s1">,</span>
+        <span class="s2">innerType</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_catch</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">innerType</span><span class="s1">, </span><span class="s2">catchValue</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;catch&quot;</span><span class="s1">,</span>
+        <span class="s2">innerType</span><span class="s1">,</span>
+        <span class="s2">catchValue</span><span class="s1">: (</span><span class="s3">typeof </span><span class="s2">catchValue </span><span class="s1">=== </span><span class="s0">&quot;function&quot; </span><span class="s1">? </span><span class="s2">catchValue </span><span class="s1">: () =&gt; </span><span class="s2">catchValue</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_pipe</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">in_</span><span class="s1">, </span><span class="s2">out</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;pipe&quot;</span><span class="s1">,</span>
+        <span class="s3">in</span><span class="s1">: </span><span class="s2">in_</span><span class="s1">,</span>
+        <span class="s2">out</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_readonly</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">innerType</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;readonly&quot;</span><span class="s1">,</span>
+        <span class="s2">innerType</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_templateLiteral</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">parts</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;template_literal&quot;</span><span class="s1">,</span>
+        <span class="s2">parts</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_lazy</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">getter</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;lazy&quot;</span><span class="s1">,</span>
+        <span class="s2">getter</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_promise</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">innerType</span><span class="s1">) {</span>
+    <span class="s3">return new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;promise&quot;</span><span class="s1">,</span>
+        <span class="s2">innerType</span><span class="s1">,</span>
+    <span class="s1">});</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_custom</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">fn</span><span class="s1">, </span><span class="s2">_params</span><span class="s1">) {</span>
+    <span class="s3">const </span><span class="s2">norm </span><span class="s1">= </span><span class="s2">util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">_params</span><span class="s1">);</span>
+    <span class="s2">norm</span><span class="s1">.</span><span class="s2">abort </span><span class="s1">?? (</span><span class="s2">norm</span><span class="s1">.</span><span class="s2">abort </span><span class="s1">= </span><span class="s3">true</span><span class="s1">); </span><span class="s5">// default to abort:false</span>
+    <span class="s3">const </span><span class="s2">schema </span><span class="s1">= </span><span class="s3">new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;custom&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;custom&quot;</span><span class="s1">,</span>
+        <span class="s2">fn</span><span class="s1">: </span><span class="s2">fn</span><span class="s1">,</span>
+        <span class="s2">...norm</span><span class="s1">,</span>
+    <span class="s1">});</span>
+    <span class="s3">return </span><span class="s2">schema</span><span class="s1">;</span>
+<span class="s1">}</span>
+<span class="s5">// same as _custom but defaults to abort:false</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_refine</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">fn</span><span class="s1">, </span><span class="s2">_params</span><span class="s1">) {</span>
+    <span class="s3">const </span><span class="s2">schema </span><span class="s1">= </span><span class="s3">new </span><span class="s2">Class</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;custom&quot;</span><span class="s1">,</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;custom&quot;</span><span class="s1">,</span>
+        <span class="s2">fn</span><span class="s1">: </span><span class="s2">fn</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">_params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+    <span class="s3">return </span><span class="s2">schema</span><span class="s1">;</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_superRefine</span><span class="s1">(</span><span class="s2">fn</span><span class="s1">) {</span>
+    <span class="s3">const </span><span class="s2">ch </span><span class="s1">= </span><span class="s2">_check</span><span class="s1">((</span><span class="s2">payload</span><span class="s1">) =&gt; {</span>
+        <span class="s2">payload</span><span class="s1">.</span><span class="s2">addIssue </span><span class="s1">= (</span><span class="s2">issue</span><span class="s1">) =&gt; {</span>
+            <span class="s3">if </span><span class="s1">(</span><span class="s3">typeof </span><span class="s2">issue </span><span class="s1">=== </span><span class="s0">&quot;string&quot;</span><span class="s1">) {</span>
+                <span class="s2">payload</span><span class="s1">.</span><span class="s2">issues</span><span class="s1">.</span><span class="s2">push</span><span class="s1">(</span><span class="s2">util</span><span class="s1">.</span><span class="s2">issue</span><span class="s1">(</span><span class="s2">issue</span><span class="s1">, </span><span class="s2">payload</span><span class="s1">.</span><span class="s2">value</span><span class="s1">, </span><span class="s2">ch</span><span class="s1">.</span><span class="s2">_zod</span><span class="s1">.</span><span class="s2">def</span><span class="s1">));</span>
+            <span class="s1">}</span>
+            <span class="s3">else </span><span class="s1">{</span>
+                <span class="s5">// for Zod 3 backwards compatibility</span>
+                <span class="s3">const </span><span class="s2">_issue </span><span class="s1">= </span><span class="s2">issue</span><span class="s1">;</span>
+                <span class="s3">if </span><span class="s1">(</span><span class="s2">_issue</span><span class="s1">.</span><span class="s2">fatal</span><span class="s1">)</span>
+                    <span class="s2">_issue</span><span class="s1">.</span><span class="s2">continue </span><span class="s1">= </span><span class="s3">false</span><span class="s1">;</span>
+                <span class="s2">_issue</span><span class="s1">.</span><span class="s2">code </span><span class="s1">?? (</span><span class="s2">_issue</span><span class="s1">.</span><span class="s2">code </span><span class="s1">= </span><span class="s0">&quot;custom&quot;</span><span class="s1">);</span>
+                <span class="s2">_issue</span><span class="s1">.</span><span class="s2">input </span><span class="s1">?? (</span><span class="s2">_issue</span><span class="s1">.</span><span class="s2">input </span><span class="s1">= </span><span class="s2">payload</span><span class="s1">.</span><span class="s2">value</span><span class="s1">);</span>
+                <span class="s2">_issue</span><span class="s1">.</span><span class="s2">inst </span><span class="s1">?? (</span><span class="s2">_issue</span><span class="s1">.</span><span class="s2">inst </span><span class="s1">= </span><span class="s2">ch</span><span class="s1">);</span>
+                <span class="s2">_issue</span><span class="s1">.</span><span class="s2">continue </span><span class="s1">?? (</span><span class="s2">_issue</span><span class="s1">.</span><span class="s2">continue </span><span class="s1">= !</span><span class="s2">ch</span><span class="s1">.</span><span class="s2">_zod</span><span class="s1">.</span><span class="s2">def</span><span class="s1">.</span><span class="s2">abort</span><span class="s1">); </span><span class="s5">// abort is always undefined, so this is always true...</span>
+                <span class="s2">payload</span><span class="s1">.</span><span class="s2">issues</span><span class="s1">.</span><span class="s2">push</span><span class="s1">(</span><span class="s2">util</span><span class="s1">.</span><span class="s2">issue</span><span class="s1">(</span><span class="s2">_issue</span><span class="s1">));</span>
+            <span class="s1">}</span>
+        <span class="s1">};</span>
+        <span class="s3">return </span><span class="s2">fn</span><span class="s1">(</span><span class="s2">payload</span><span class="s1">.</span><span class="s2">value</span><span class="s1">, </span><span class="s2">payload</span><span class="s1">);</span>
+    <span class="s1">});</span>
+    <span class="s3">return </span><span class="s2">ch</span><span class="s1">;</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_check</span><span class="s1">(</span><span class="s2">fn</span><span class="s1">, </span><span class="s2">params</span><span class="s1">) {</span>
+    <span class="s3">const </span><span class="s2">ch </span><span class="s1">= </span><span class="s3">new </span><span class="s2">checks</span><span class="s1">.</span><span class="s2">$ZodCheck</span><span class="s1">({</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;custom&quot;</span><span class="s1">,</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">params</span><span class="s1">),</span>
+    <span class="s1">});</span>
+    <span class="s2">ch</span><span class="s1">.</span><span class="s2">_zod</span><span class="s1">.</span><span class="s2">check </span><span class="s1">= </span><span class="s2">fn</span><span class="s1">;</span>
+    <span class="s3">return </span><span class="s2">ch</span><span class="s1">;</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">describe</span><span class="s1">(</span><span class="s2">description</span><span class="s1">) {</span>
+    <span class="s3">const </span><span class="s2">ch </span><span class="s1">= </span><span class="s3">new </span><span class="s2">checks</span><span class="s1">.</span><span class="s2">$ZodCheck</span><span class="s1">({ </span><span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;describe&quot; </span><span class="s1">});</span>
+    <span class="s2">ch</span><span class="s1">.</span><span class="s2">_zod</span><span class="s1">.</span><span class="s2">onattach </span><span class="s1">= [</span>
+        <span class="s1">(</span><span class="s2">inst</span><span class="s1">) =&gt; {</span>
+            <span class="s3">const </span><span class="s2">existing </span><span class="s1">= </span><span class="s2">registries</span><span class="s1">.</span><span class="s2">globalRegistry</span><span class="s1">.</span><span class="s2">get</span><span class="s1">(</span><span class="s2">inst</span><span class="s1">) ?? {};</span>
+            <span class="s2">registries</span><span class="s1">.</span><span class="s2">globalRegistry</span><span class="s1">.</span><span class="s2">add</span><span class="s1">(</span><span class="s2">inst</span><span class="s1">, { </span><span class="s2">...existing</span><span class="s1">, </span><span class="s2">description </span><span class="s1">});</span>
+        <span class="s1">},</span>
+    <span class="s1">];</span>
+    <span class="s2">ch</span><span class="s1">.</span><span class="s2">_zod</span><span class="s1">.</span><span class="s2">check </span><span class="s1">= () =&gt; { }; </span><span class="s5">// no-op check</span>
+    <span class="s3">return </span><span class="s2">ch</span><span class="s1">;</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">meta</span><span class="s1">(</span><span class="s2">metadata</span><span class="s1">) {</span>
+    <span class="s3">const </span><span class="s2">ch </span><span class="s1">= </span><span class="s3">new </span><span class="s2">checks</span><span class="s1">.</span><span class="s2">$ZodCheck</span><span class="s1">({ </span><span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;meta&quot; </span><span class="s1">});</span>
+    <span class="s2">ch</span><span class="s1">.</span><span class="s2">_zod</span><span class="s1">.</span><span class="s2">onattach </span><span class="s1">= [</span>
+        <span class="s1">(</span><span class="s2">inst</span><span class="s1">) =&gt; {</span>
+            <span class="s3">const </span><span class="s2">existing </span><span class="s1">= </span><span class="s2">registries</span><span class="s1">.</span><span class="s2">globalRegistry</span><span class="s1">.</span><span class="s2">get</span><span class="s1">(</span><span class="s2">inst</span><span class="s1">) ?? {};</span>
+            <span class="s2">registries</span><span class="s1">.</span><span class="s2">globalRegistry</span><span class="s1">.</span><span class="s2">add</span><span class="s1">(</span><span class="s2">inst</span><span class="s1">, { </span><span class="s2">...existing</span><span class="s1">, </span><span class="s2">...metadata </span><span class="s1">});</span>
+        <span class="s1">},</span>
+    <span class="s1">];</span>
+    <span class="s2">ch</span><span class="s1">.</span><span class="s2">_zod</span><span class="s1">.</span><span class="s2">check </span><span class="s1">= () =&gt; { }; </span><span class="s5">// no-op check</span>
+    <span class="s3">return </span><span class="s2">ch</span><span class="s1">;</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_stringbool</span><span class="s1">(</span><span class="s2">Classes</span><span class="s1">, </span><span class="s2">_params</span><span class="s1">) {</span>
+    <span class="s3">const </span><span class="s2">params </span><span class="s1">= </span><span class="s2">util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">_params</span><span class="s1">);</span>
+    <span class="s3">let </span><span class="s2">truthyArray </span><span class="s1">= </span><span class="s2">params</span><span class="s1">.</span><span class="s2">truthy </span><span class="s1">?? [</span><span class="s0">&quot;true&quot;</span><span class="s1">, </span><span class="s0">&quot;1&quot;</span><span class="s1">, </span><span class="s0">&quot;yes&quot;</span><span class="s1">, </span><span class="s0">&quot;on&quot;</span><span class="s1">, </span><span class="s0">&quot;y&quot;</span><span class="s1">, </span><span class="s0">&quot;enabled&quot;</span><span class="s1">];</span>
+    <span class="s3">let </span><span class="s2">falsyArray </span><span class="s1">= </span><span class="s2">params</span><span class="s1">.</span><span class="s2">falsy </span><span class="s1">?? [</span><span class="s0">&quot;false&quot;</span><span class="s1">, </span><span class="s0">&quot;0&quot;</span><span class="s1">, </span><span class="s0">&quot;no&quot;</span><span class="s1">, </span><span class="s0">&quot;off&quot;</span><span class="s1">, </span><span class="s0">&quot;n&quot;</span><span class="s1">, </span><span class="s0">&quot;disabled&quot;</span><span class="s1">];</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">params</span><span class="s1">.</span><span class="s2">case </span><span class="s1">!== </span><span class="s0">&quot;sensitive&quot;</span><span class="s1">) {</span>
+        <span class="s2">truthyArray </span><span class="s1">= </span><span class="s2">truthyArray</span><span class="s1">.</span><span class="s2">map</span><span class="s1">((</span><span class="s2">v</span><span class="s1">) =&gt; (</span><span class="s3">typeof </span><span class="s2">v </span><span class="s1">=== </span><span class="s0">&quot;string&quot; </span><span class="s1">? </span><span class="s2">v</span><span class="s1">.</span><span class="s2">toLowerCase</span><span class="s1">() : </span><span class="s2">v</span><span class="s1">));</span>
+        <span class="s2">falsyArray </span><span class="s1">= </span><span class="s2">falsyArray</span><span class="s1">.</span><span class="s2">map</span><span class="s1">((</span><span class="s2">v</span><span class="s1">) =&gt; (</span><span class="s3">typeof </span><span class="s2">v </span><span class="s1">=== </span><span class="s0">&quot;string&quot; </span><span class="s1">? </span><span class="s2">v</span><span class="s1">.</span><span class="s2">toLowerCase</span><span class="s1">() : </span><span class="s2">v</span><span class="s1">));</span>
+    <span class="s1">}</span>
+    <span class="s3">const </span><span class="s2">truthySet </span><span class="s1">= </span><span class="s3">new </span><span class="s2">Set</span><span class="s1">(</span><span class="s2">truthyArray</span><span class="s1">);</span>
+    <span class="s3">const </span><span class="s2">falsySet </span><span class="s1">= </span><span class="s3">new </span><span class="s2">Set</span><span class="s1">(</span><span class="s2">falsyArray</span><span class="s1">);</span>
+    <span class="s3">const </span><span class="s2">_Codec </span><span class="s1">= </span><span class="s2">Classes</span><span class="s1">.</span><span class="s2">Codec </span><span class="s1">?? </span><span class="s2">schemas</span><span class="s1">.</span><span class="s2">$ZodCodec</span><span class="s1">;</span>
+    <span class="s3">const </span><span class="s2">_Boolean </span><span class="s1">= </span><span class="s2">Classes</span><span class="s1">.</span><span class="s2">Boolean </span><span class="s1">?? </span><span class="s2">schemas</span><span class="s1">.</span><span class="s2">$ZodBoolean</span><span class="s1">;</span>
+    <span class="s3">const </span><span class="s2">_String </span><span class="s1">= </span><span class="s2">Classes</span><span class="s1">.</span><span class="s2">String </span><span class="s1">?? </span><span class="s2">schemas</span><span class="s1">.</span><span class="s2">$ZodString</span><span class="s1">;</span>
+    <span class="s3">const </span><span class="s2">stringSchema </span><span class="s1">= </span><span class="s3">new </span><span class="s2">_String</span><span class="s1">({ </span><span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">, </span><span class="s2">error</span><span class="s1">: </span><span class="s2">params</span><span class="s1">.</span><span class="s2">error </span><span class="s1">});</span>
+    <span class="s3">const </span><span class="s2">booleanSchema </span><span class="s1">= </span><span class="s3">new </span><span class="s2">_Boolean</span><span class="s1">({ </span><span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;boolean&quot;</span><span class="s1">, </span><span class="s2">error</span><span class="s1">: </span><span class="s2">params</span><span class="s1">.</span><span class="s2">error </span><span class="s1">});</span>
+    <span class="s3">const </span><span class="s2">codec </span><span class="s1">= </span><span class="s3">new </span><span class="s2">_Codec</span><span class="s1">({</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;pipe&quot;</span><span class="s1">,</span>
+        <span class="s3">in</span><span class="s1">: </span><span class="s2">stringSchema</span><span class="s1">,</span>
+        <span class="s2">out</span><span class="s1">: </span><span class="s2">booleanSchema</span><span class="s1">,</span>
+        <span class="s2">transform</span><span class="s1">: ((</span><span class="s2">input</span><span class="s1">, </span><span class="s2">payload</span><span class="s1">) =&gt; {</span>
+            <span class="s3">let </span><span class="s2">data </span><span class="s1">= </span><span class="s2">input</span><span class="s1">;</span>
+            <span class="s3">if </span><span class="s1">(</span><span class="s2">params</span><span class="s1">.</span><span class="s2">case </span><span class="s1">!== </span><span class="s0">&quot;sensitive&quot;</span><span class="s1">)</span>
+                <span class="s2">data </span><span class="s1">= </span><span class="s2">data</span><span class="s1">.</span><span class="s2">toLowerCase</span><span class="s1">();</span>
+            <span class="s3">if </span><span class="s1">(</span><span class="s2">truthySet</span><span class="s1">.</span><span class="s2">has</span><span class="s1">(</span><span class="s2">data</span><span class="s1">)) {</span>
+                <span class="s3">return true</span><span class="s1">;</span>
+            <span class="s1">}</span>
+            <span class="s3">else if </span><span class="s1">(</span><span class="s2">falsySet</span><span class="s1">.</span><span class="s2">has</span><span class="s1">(</span><span class="s2">data</span><span class="s1">)) {</span>
+                <span class="s3">return false</span><span class="s1">;</span>
+            <span class="s1">}</span>
+            <span class="s3">else </span><span class="s1">{</span>
+                <span class="s2">payload</span><span class="s1">.</span><span class="s2">issues</span><span class="s1">.</span><span class="s2">push</span><span class="s1">({</span>
+                    <span class="s2">code</span><span class="s1">: </span><span class="s0">&quot;invalid_value&quot;</span><span class="s1">,</span>
+                    <span class="s2">expected</span><span class="s1">: </span><span class="s0">&quot;stringbool&quot;</span><span class="s1">,</span>
+                    <span class="s2">values</span><span class="s1">: [</span><span class="s2">...truthySet</span><span class="s1">, </span><span class="s2">...falsySet</span><span class="s1">],</span>
+                    <span class="s2">input</span><span class="s1">: </span><span class="s2">payload</span><span class="s1">.</span><span class="s2">value</span><span class="s1">,</span>
+                    <span class="s2">inst</span><span class="s1">: </span><span class="s2">codec</span><span class="s1">,</span>
+                    <span class="s3">continue</span><span class="s1">: </span><span class="s3">false</span><span class="s1">,</span>
+                <span class="s1">});</span>
+                <span class="s3">return </span><span class="s1">{};</span>
+            <span class="s1">}</span>
+        <span class="s1">}),</span>
+        <span class="s2">reverseTransform</span><span class="s1">: ((</span><span class="s2">input</span><span class="s1">, </span><span class="s2">_payload</span><span class="s1">) =&gt; {</span>
+            <span class="s3">if </span><span class="s1">(</span><span class="s2">input </span><span class="s1">=== </span><span class="s3">true</span><span class="s1">) {</span>
+                <span class="s3">return </span><span class="s2">truthyArray</span><span class="s1">[</span><span class="s4">0</span><span class="s1">] || </span><span class="s0">&quot;true&quot;</span><span class="s1">;</span>
+            <span class="s1">}</span>
+            <span class="s3">else </span><span class="s1">{</span>
+                <span class="s3">return </span><span class="s2">falsyArray</span><span class="s1">[</span><span class="s4">0</span><span class="s1">] || </span><span class="s0">&quot;false&quot;</span><span class="s1">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}),</span>
+        <span class="s2">error</span><span class="s1">: </span><span class="s2">params</span><span class="s1">.</span><span class="s2">error</span><span class="s1">,</span>
+    <span class="s1">});</span>
+    <span class="s3">return </span><span class="s2">codec</span><span class="s1">;</span>
+<span class="s1">}</span>
+<span class="s5">// @__NO_SIDE_EFFECTS__</span>
+<span class="s3">function </span><span class="s2">_stringFormat</span><span class="s1">(</span><span class="s2">Class</span><span class="s1">, </span><span class="s2">format</span><span class="s1">, </span><span class="s2">fnOrRegex</span><span class="s1">, </span><span class="s2">_params </span><span class="s1">= {}) {</span>
+    <span class="s3">const </span><span class="s2">params </span><span class="s1">= </span><span class="s2">util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">_params</span><span class="s1">);</span>
+    <span class="s3">const </span><span class="s2">def </span><span class="s1">= {</span>
+        <span class="s2">...util</span><span class="s1">.</span><span class="s2">normalizeParams</span><span class="s1">(</span><span class="s2">_params</span><span class="s1">),</span>
+        <span class="s2">check</span><span class="s1">: </span><span class="s0">&quot;string_format&quot;</span><span class="s1">,</span>
+        <span class="s2">type</span><span class="s1">: </span><span class="s0">&quot;string&quot;</span><span class="s1">,</span>
+        <span class="s2">format</span><span class="s1">,</span>
+        <span class="s2">fn</span><span class="s1">: </span><span class="s3">typeof </span><span class="s2">fnOrRegex </span><span class="s1">=== </span><span class="s0">&quot;function&quot; </span><span class="s1">? </span><span class="s2">fnOrRegex </span><span class="s1">: (</span><span class="s2">val</span><span class="s1">) =&gt; </span><span class="s2">fnOrRegex</span><span class="s1">.</span><span class="s2">test</span><span class="s1">(</span><span class="s2">val</span><span class="s1">),</span>
+        <span class="s2">...params</span><span class="s1">,</span>
+    <span class="s1">};</span>
+    <span class="s3">if </span><span class="s1">(</span><span class="s2">fnOrRegex </span><span class="s3">instanceof </span><span class="s2">RegExp</span><span class="s1">) {</span>
+        <span class="s2">def</span><span class="s1">.</span><span class="s2">pattern </span><span class="s1">= </span><span class="s2">fnOrRegex</span><span class="s1">;</span>
+    <span class="s1">}</span>
+    <span class="s3">const </span><span class="s2">inst </span><span class="s1">= </span><span class="s3">new </span><span class="s2">Class</span><span class="s1">(</span><span class="s2">def</span><span class="s1">);</span>
+    <span class="s3">return </span><span class="s2">inst</span><span class="s1">;</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>
