@@ -126,6 +126,40 @@ def get_accounts(user_id: int, current_user_id: int = Depends(get_current_user_i
     return accounts
 
 
+@app.get("/admin/users-accounts")
+def get_all_users_accounts(current_user_id: int = Depends(get_current_user_id)):
+    conn = get_connection()
+    cur = conn.cursor()
+
+    try:
+        cur.execute("SELECT is_admin FROM users WHERE id = %s;", (current_user_id,))
+        user = cur.fetchone()
+
+        if not user or not user[0]:
+            raise HTTPException(status_code=403, detail="Admin access required")
+
+        cur.execute("""
+            SELECT 
+                u.id AS user_id,
+                u.username,
+                u.full_name,
+                u.is_admin,
+                a.id AS account_id,
+                a.account_type,
+                a.balance,
+                a.account_number
+            FROM users u
+            LEFT JOIN accounts a ON u.id = a.user_id
+            ORDER BY u.id, a.id;
+        """)
+
+        results = cur.fetchall()
+        return results
+
+    finally:
+        cur.close()
+        conn.close()
+
 @app.get("/transactions/{account_id}")
 def get_transactions(account_id: int, current_user_id: int = Depends(get_current_user_id)):
     conn = get_connection()
