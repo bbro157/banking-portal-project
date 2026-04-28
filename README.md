@@ -140,6 +140,7 @@ You should see a message indicating the API is running.
 
 1. Navigate to the frontend folder:
    (Below is just an example you will need full file path)
+   
    cd banking-portal-frontend
 
 3. Install dependencies:
