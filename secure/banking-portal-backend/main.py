@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jose import jwt, JWTError
 from datetime import datetime, timedelta
+from passlib.context import CryptContext
 
 app = FastAPI()
 
@@ -12,6 +13,7 @@ SECRET_KEY = "supersecretkey"
 ALGORITHM = "HS256"
 
 security = HTTPBearer()
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 app.add_middleware(
     CORSMiddleware,
@@ -40,6 +42,14 @@ class RegisterRequest(BaseModel):
 class LoginRequest(BaseModel):
     username: str
     password: str
+
+
+def hash_password(password: str):
+    return pwd_context.hash(password)
+
+
+def verify_password(plain_password: str, hashed_password: str):
+    return pwd_context.verify(plain_password, hashed_password)
 
 
 def create_token(user_id: int, username: str):
@@ -72,6 +82,64 @@ def root():
     return {"message": "Secure Banking API is running"}
 
 
+@app.post("/register")
+def register_user(data: RegisterRequest):
+    conn = get_connection()
+    cur = conn.cursor()
+
+    try:
+        cur.execute(
+            "SELECT id FROM users WHERE username = %s;",
+            (data.username,)
+        )
+        existing_user = cur.fetchone()
+
+        if existing_user:
+            raise HTTPException(status_code=400, detail="Username already exists")
+
+        hashed_password = hash_password(data.password)
+
+        cur.execute("""
+            INSERT INTO users (username, password, full_name, is_admin)
+            VALUES (%s, %s, %s, FALSE)
+            RETURNING id;
+        """, (data.username, hashed_password, data.full_name))
+
+        new_user_id = cur.fetchone()[0]
+
+        checking_account_number = f"CHK{10000 + new_user_id}"
+        savings_account_number = f"SAV{10000 + new_user_id}"
+
+        cur.execute("""
+            INSERT INTO accounts (user_id, account_type, balance, account_number)
+            VALUES (%s, %s, %s, %s);
+        """, (new_user_id, "checking", 0.00, checking_account_number))
+
+        cur.execute("""
+            INSERT INTO accounts (user_id, account_type, balance, account_number)
+            VALUES (%s, %s, %s, %s);
+        """, (new_user_id, "savings", 0.00, savings_account_number))
+
+        conn.commit()
+
+        return {
+            "message": "User created successfully",
+            "user_id": new_user_id
+        }
+
+    except HTTPException:
+        conn.rollback()
+        raise
+
+    except Exception as e:
+        conn.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
+
+    finally:
+        cur.close()
+        conn.close()
+
+
 @app.post("/login")
 def login_user(data: LoginRequest):
     conn = get_connection()
@@ -79,14 +147,19 @@ def login_user(data: LoginRequest):
 
     try:
         cur.execute("""
-            SELECT id, username, full_name, is_admin
+            SELECT id, username, full_name, is_admin, password
             FROM users
-            WHERE username = %s AND password = %s;
-        """, (data.username, data.password))
+            WHERE username = %s;
+        """, (data.username,))
 
         user = cur.fetchone()
 
         if not user:
+            raise HTTPException(status_code=401, detail="Invalid username or password")
+
+        stored_hash = user[4]
+
+        if not verify_password(data.password, stored_hash):
             raise HTTPException(status_code=401, detail="Invalid username or password")
 
         token = create_token(user[0], user[1])
@@ -159,6 +232,7 @@ def get_all_users_accounts(current_user_id: int = Depends(get_current_user_id)):
     finally:
         cur.close()
         conn.close()
+
 
 @app.get("/transactions/{account_id}")
 def get_transactions(account_id: int, current_user_id: int = Depends(get_current_user_id)):
