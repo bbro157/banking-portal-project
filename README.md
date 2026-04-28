@@ -1,6 +1,6 @@
 # Banking Portal Project
 
-A banking backend project with both **insecure** and **secure** implementations, along with example exploits for security testing.
+A banking backend and front end project with both **insecure** and **secure** implementations, along with example exploits for security testing.
 
 Tested on Windows with Python 3.10+ and PostgreSQL.
 
