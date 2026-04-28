@@ -153,7 +153,7 @@ You should see a message indicating the API is running.
 
 
 
-Warning:
+**Warning:**
 Make sure when switching between the insecure and secure versions, you use the relevant seed and schema that is in the backend, you will need to delete the database in between and remake it, and then run the relevent starting insecure seed and schema or secure seed and schema depending on which backend you are running
 
 
