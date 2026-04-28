@@ -15,6 +15,7 @@ function LoginPage() {
       });
 
       const user = response.data;
+      localStorage.setItem("token", user.access_token);
 
       if (user.is_admin) {
         navigate("/admin");

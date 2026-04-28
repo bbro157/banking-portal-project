@@ -1,8 +1,8 @@
 INSERT INTO users (username, password, full_name, is_admin)
 VALUES
-('dev', 'dev123', 'Developer Admin', TRUE),
-('alice', 'password123', 'Alice Johnson', FALSE),
-('bob', 'password123', 'Bob Smith', FALSE);
+('dev', '$2b$12$GvK2OhDq0gyGc0tVgdM/6upe5QOUuPSzgizhsrgMNtaWUGNeHYXjS', 'Developer Admin', TRUE),
+('alice', '$2b$12$3Mto8duToCpJeIherzOqguKKDFa/2bOtHz4CCerduyigsN8gRDxty', 'Alice Johnson', FALSE),
+('bob', '$2b$12$Jbz.pQmFfaIpl8IM9BOAiuST71rGPCJKl4jwv0shEz4Rf9Qmh1.Si', 'Bob Smith', FALSE);
 
 INSERT INTO accounts (user_id, account_type, balance, account_number)
 VALUES
